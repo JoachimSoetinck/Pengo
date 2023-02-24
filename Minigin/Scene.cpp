@@ -1,42 +1,68 @@
+#include "MiniginPCH.h"
 #include "Scene.h"
+
 #include "GameObject.h"
 
 using namespace dae;
 
-unsigned int Scene::m_idCounter = 0;
+unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name)
+	: m_Name(name)
+{}
 
-Scene::~Scene() = default;
-
-void Scene::Add(std::shared_ptr<GameObject> object)
+Scene::~Scene()
 {
-	m_objects.emplace_back(std::move(object));
+
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Add(const std::shared_ptr<GameObject>& object)
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
-}
-
-void Scene::RemoveAll()
-{
-	m_objects.clear();
+	m_Objects.push_back(object);
 }
 
 void Scene::Update()
 {
-	for(auto& object : m_objects)
-	{
-		object->Update();
-	}
+	for (size_t idx = 0; idx < m_Objects.size(); ++idx)
+		m_Objects[idx]->Update();
+}
+
+void dae::Scene::FixedUpdate()
+{
+	for (const auto& object : m_Objects)
+		object->FixedUpdate();
 }
 
 void Scene::Render() const
 {
-	for (const auto& object : m_objects)
-	{
+	for (const auto& object : m_Objects)
 		object->Render();
-	}
 }
+
+void Scene::Initialize()
+{
+
+}
+
+void Scene::ResetScene()
+{
+	m_Objects.clear();
+
+	Initialize();
+}
+
+
+std::string Scene::GetName() const
+{
+	return m_Name;
+}
+
+void dae::Scene::DeleteObjects()
+{
+	m_Objects.erase(std::remove_if(m_Objects.begin(),
+		m_Objects.end(),
+		[](std::shared_ptr<GameObject> object) {return object->GetMarkedForDelete(); }),
+		m_Objects.end());
+}
+
 

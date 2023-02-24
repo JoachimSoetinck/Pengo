@@ -3,18 +3,17 @@
 
 void dae::SceneManager::Update()
 {
-	for(auto& scene : m_scenes)
-	{
-		scene->Update();
-	}
+	m_ActiveScene->Update();
+}
+
+void dae::SceneManager::FixedUpdate(float)
+{
+	m_ActiveScene->FixedUpdate();
 }
 
 void dae::SceneManager::Render()
 {
-	for (const auto& scene : m_scenes)
-	{
-		scene->Render();
-	}
+	m_ActiveScene->Render();
 }
 
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
@@ -23,3 +22,35 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	m_scenes.push_back(scene);
 	return *scene;
 }
+
+void dae::SceneManager::AddScene(std::shared_ptr<Scene> scene)
+{
+	m_scenes.push_back(scene);
+	if (!m_ActiveScene)
+		m_ActiveScene = scene;
+}
+
+std::shared_ptr<dae::Scene> dae::SceneManager::GetCurrentScene() const
+{
+	return m_ActiveScene;
+}
+
+void dae::SceneManager::SetActiveScene(const std::string& name)
+{
+	for (auto& scene : m_scenes)
+	{
+		if (scene->GetName() == name)
+		{
+			m_ActiveScene = scene;
+			m_ActiveScene->ResetScene();
+			return;
+		}
+	}
+}
+
+void dae::SceneManager::RemoveMarkedForDeleteItems()
+{
+	m_ActiveScene->DeleteObjects();
+}
+
+

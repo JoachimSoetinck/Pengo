@@ -16,15 +16,18 @@ void dae::ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::string& file) const
+dae::Texture2D* dae::ResourceManager::LoadTexture(const std::string& file)
 {
+
 	const auto fullPath = m_dataPath + file;
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr)
 	{
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
-	return std::make_shared<Texture2D>(texture);
+	const auto pTexture = std::make_shared<Texture2D>(texture);
+	m_pTextures.emplace_back(pTexture);
+	return pTexture.get();
 }
 
 std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
