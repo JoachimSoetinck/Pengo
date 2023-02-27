@@ -69,6 +69,12 @@
     <ClInclude Include="FPSComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteCompenent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -120,6 +126,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteCompenent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
