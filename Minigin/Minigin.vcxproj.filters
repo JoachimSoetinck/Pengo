@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{43a94e41-99b9-499c-8b3c-0a6140349557}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LevelCreator">
+      <UniqueIdentifier>{18ae8d94-465b-46c7-a517-dacb2365b436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -75,6 +78,12 @@
     <ClInclude Include="SpriteCompenent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="LevelCreator.h">
+      <Filter>LevelCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>LevelCreator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -130,6 +139,12 @@
     </ClCompile>
     <ClCompile Include="SpriteCompenent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers.cpp">
+      <Filter>LevelCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelCreator.cpp">
+      <Filter>LevelCreator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
