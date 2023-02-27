@@ -21,7 +21,6 @@ bool dae::LevelCreator::CreateLevel(const std::wstring& filePath)
 
 	if (pFile != nullptr)
 	{
-
 		fseek(pFile, 0, SEEK_END);
 		const size_t size = ftell(pFile);
 		fseek(pFile, 0, SEEK_SET);

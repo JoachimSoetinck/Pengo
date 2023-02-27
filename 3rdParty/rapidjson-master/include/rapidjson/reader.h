@@ -123,6 +123,10 @@ RAPIDJSON_DIAG_OFF(effc++)
     RAPIDJSON_MULTILINEMACRO_END
 #endif
 
+#pragma warning(push)
+#pragma warning(disable: 6313)
+
+
 #include "error/error.h" // ParseErrorCode, ParseResult
 
 RAPIDJSON_NAMESPACE_BEGIN
