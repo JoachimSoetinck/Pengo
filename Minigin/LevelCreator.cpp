@@ -11,7 +11,11 @@
 #include <filereadstream.h>
 #pragma warning(pop)
 
-bool dae::LevelCreator::CreateLevel(const std::wstring& filePath)
+#include "Scene.h"
+#include "SpriteCompenent.h"
+
+
+bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, std::shared_ptr<dae::Scene> scene)
 {
 	std::wstring fileName = filePath;
 	rapidjson::Document jsonFile;
@@ -31,9 +35,69 @@ bool dae::LevelCreator::CreateLevel(const std::wstring& filePath)
 		fclose(pFile);
 	}
 
-	const rapidjson::Value& testValue = jsonFile["levelData"];
-	int test = testValue.GetInt();
-	test;
+	//const rapidjson::Value& testValue = jsonFile["levelData"];
+	const rapidjson::Value& r = jsonFile["BlockColums"];
+	const rapidjson::Value& c = jsonFile["BlockRows"];
+	const rapidjson::Value& positionBlocks = jsonFile["BlockSpawns"];
+	
+	auto places = positionBlocks.IsArray();
+	std::vector<int> positions;
+
+	for (rapidjson::SizeType i = 0; i < positionBlocks.Size(); i++) // Uses SizeType instead of size_t
+		 positions.push_back(positionBlocks[i].GetInt());
+
+	
+	SDL_Rect src = { 0,0,30,30 };
+	auto go = std::make_shared<dae::GameObject>();
+
+	int nr = 0;
+	for (int i = 0; i < r.GetInt(); ++i)
+	{
+		for (int j = 0; j < c.GetInt(); ++j)
+		{
+			if (std::find(positions.begin(), positions.end(), nr) != positions.end())
+			{
+				go = std::make_shared<dae::GameObject>();
+				go->AddComponent(new SpriteComponent(go.get(), Sprite("Blocks.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
+				go->SetPosition(150 + i * 25, 75 + j * 25);
+				scene->Add(go);
+			}
+			
+			++nr;
+		}
+	}
+
+
+	src = { 0,0,16,24 };
+	for (int i = 0; i < r.GetInt(); ++i)
+	{
+
+		go = std::make_shared<dae::GameObject>();
+		go->AddComponent(new SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
+		go->SetPosition(150 + i * 25, 50);
+		scene->Add(go);
+
+		go = std::make_shared<dae::GameObject>();
+		go->AddComponent(new SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
+		go->SetPosition(150 + i * 25, 50 + (c.GetInt()+1)* 25);
+		scene->Add(go);
+	}
+
+	for (int i = -1; i <= c.GetInt(); ++i)
+	{
+
+		go = std::make_shared<dae::GameObject>();
+		go->AddComponent(new SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
+		go->SetPosition(125 , 75 + 25 *i);
+		scene->Add(go);
+
+		go = std::make_shared<dae::GameObject>();
+		go->AddComponent(new SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
+		go->SetPosition(125 + (r.GetInt() + 1) * 25, 75 + 25 * i);
+		scene->Add(go);
+
+
+	}
 
 
 
