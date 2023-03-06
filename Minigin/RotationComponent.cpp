@@ -13,7 +13,6 @@ void dae::RotationComponent::Update()
 	m_CurrentAngle += m_RotationSpeed * Time::GetDeltaTime();
 
 	m_pGameObject->SetRotation(m_CurrentAngle);
-	std::cout << m_pGameObject->GetRotation() << std::endl;
 }
 
 void dae::RotationComponent::Render() const
