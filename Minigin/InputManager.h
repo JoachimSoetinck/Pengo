@@ -56,7 +56,6 @@ namespace dae
 
 	public:
 		//reducing long name in code
-		using PlayerAction = std::map<KeyBinding, std::unique_ptr<Command>>;
 
 		InputManager();
 		~InputManager();
@@ -67,8 +66,8 @@ namespace dae
 		bool IsKeyDown(const SDL_Scancode& key) const;
 		void AddInput(const int& playerNr, const KeyBinding& button, Command* pCommand);
 		
-		PlayerAction& GetPlayer2Commands();
-		PlayerAction& GetPlayer1Commands();
+		std::map<KeyBinding, std::unique_ptr<Command>>& GetPlayer2Commands();
+		std::map<KeyBinding, std::unique_ptr<Command>>& GetPlayer1Commands();
 	
 
 	private:
@@ -76,12 +75,12 @@ namespace dae
 		XboxControllerImpl* m_pImpl = nullptr;
 
 		bool HandleKeyBoard();
-		bool HandleEvent(const SDL_Event& e, const PlayerAction& commands);
-		void HandleKeyDown(const PlayerAction& action) const;
+		bool HandleEvent(const SDL_Event& e, const std::map<KeyBinding, std::unique_ptr<Command>>& commands);
+		void HandleKeyDown(const std::map<KeyBinding, std::unique_ptr<Command>>& action) const;
 	
 
-		PlayerAction m_Player1Commands{};
-		PlayerAction m_Player2Commands{};
+		std::map<KeyBinding, std::unique_ptr<Command>> m_Player1Commands{};
+		std::map<KeyBinding, std::unique_ptr<Command>> m_Player2Commands{};
 
 		
 		

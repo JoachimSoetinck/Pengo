@@ -6,7 +6,6 @@
 #pragma comment(lib,"XInput.lib")
 #pragma comment(lib,"Xinput9_1_0.lib")
 
-using PlayerAction = std::map<dae::KeyBinding, std::unique_ptr<dae::Command>>;
 
 class dae::InputManager::XboxControllerImpl
 {
@@ -24,10 +23,10 @@ class dae::InputManager::XboxControllerImpl
 		XINPUT_STATE m_PreviousStatePlayer2{};
 		XINPUT_STATE m_CurrentStatePlayer2{};
 
-		PlayerAction m_Player1Commands{};
-		PlayerAction m_Player2Commands{};
+		std::map<KeyBinding, std::unique_ptr<Command>> m_Player1Commands{};
+		std::map<KeyBinding, std::unique_ptr<Command>> m_Player2Commands{};
 
-		void HandleCommands( PlayerAction& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
+		void HandleCommands(std::map<KeyBinding, std::unique_ptr<Command>>& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
 
 };
 
@@ -66,10 +65,10 @@ void dae::InputManager::XboxControllerImpl::HandlePlayers()
 	HandleCommands(dae::InputManager::GetInstance().GetPlayer1Commands(), m_CurrentState, m_PreviousState);
 }
 
-void dae::InputManager::XboxControllerImpl::HandleCommands( PlayerAction& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState)
+void dae::InputManager::XboxControllerImpl::HandleCommands(std::map<KeyBinding, std::unique_ptr<Command>>& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState)
 {
 	// https://stackoverflow.com/questions/26281979/c-loop-through-map
-	for (PlayerAction::const_iterator it = commandMap.begin(); it != commandMap.end(); ++it)
+	for (std::map<KeyBinding, std::unique_ptr<Command>>::const_iterator it = commandMap.begin(); it != commandMap.end(); ++it)
 	{
 		switch ((*it).first.InputState)
 		{
@@ -136,13 +135,13 @@ bool dae::InputManager::HandleKeyBoard()
 	return true;
 }
 
-bool dae::InputManager::HandleEvent(const SDL_Event& e, const PlayerAction& commands)
+bool dae::InputManager::HandleEvent(const SDL_Event& e, const std::map<KeyBinding, std::unique_ptr<Command>>& commands)
 {
 	if (e.type == SDL_QUIT) return false;
 
 	if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 	{
-		for (PlayerAction::const_iterator it = commands.begin(); it != commands.end(); ++it)
+		for (std::map<KeyBinding, std::unique_ptr<Command>>::const_iterator it = commands.begin(); it != commands.end(); ++it)
 		{
 			if ((*it).first.KeyboardKey == e.key.keysym.scancode
 				&& (*it).first.InputState == InputState::Pressed)
@@ -152,7 +151,7 @@ bool dae::InputManager::HandleEvent(const SDL_Event& e, const PlayerAction& comm
 
 	if (e.type == SDL_KEYUP)
 	{
-		for (PlayerAction::const_iterator commandIt = commands.begin(); commandIt != commands.end(); ++commandIt)
+		for (std::map<KeyBinding, std::unique_ptr<Command>>::const_iterator commandIt = commands.begin(); commandIt != commands.end(); ++commandIt)
 		{
 			if ((*commandIt).first.KeyboardKey == e.key.keysym.scancode
 				&& (*commandIt).first.InputState == InputState::Up)
@@ -163,9 +162,9 @@ bool dae::InputManager::HandleEvent(const SDL_Event& e, const PlayerAction& comm
 	return true;
 }
 
-void dae::InputManager::HandleKeyDown(const PlayerAction& commands) const
+void dae::InputManager::HandleKeyDown(const std::map<KeyBinding, std::unique_ptr<Command>>& commands) const
 {
-	for (PlayerAction::const_iterator it = commands.begin(); it != commands.end(); ++it)
+	for (std::map<KeyBinding, std::unique_ptr<Command>>::const_iterator it = commands.begin(); it != commands.end(); ++it)
 	{
 		switch ((*it).first.InputState)
 		{
@@ -200,12 +199,12 @@ void dae::InputManager::AddInput(const int& playerNr, const KeyBinding& button, 
 	}
 }
 
-PlayerAction& dae::InputManager::GetPlayer2Commands()
+std::map<dae::KeyBinding, std::unique_ptr<dae::Command>>& dae::InputManager::GetPlayer2Commands()
 {
 	return m_Player2Commands;
 }
 
-PlayerAction& dae::InputManager::GetPlayer1Commands()
+std::map<dae::KeyBinding, std::unique_ptr<dae::Command>>& dae::InputManager::GetPlayer1Commands()
 {
 	return m_Player1Commands;
 }
