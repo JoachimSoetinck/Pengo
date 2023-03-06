@@ -29,6 +29,17 @@ const glm::vec3& dae::Transform::GetWorldPosition()
 	return m_worldPosition;
 }
 
+
+double dae::Transform::GetRotation() const
+{
+	return m_localRotation;
+}
+
+const glm::vec2& dae::Transform::GetCenter()
+{
+	return m_center;
+}
+
 void dae::Transform::SetLocalPosition(const float x, const float y, const float z)
 {
 	m_localPosition.x = x;
@@ -44,16 +55,10 @@ void dae::Transform::SetLocalPosition(const glm::vec3& pos)
 	m_positionIsDirty = true;
 }
 
-void dae::Transform::SetRotation(float x, float y, float z)
-{
-	m_localRotation.x = x;
-	m_localRotation.y = y;
-	m_localRotation.z = z;
-}
 
-void dae::Transform::SetRotation(const glm::vec3& pos)
+void dae::Transform::SetRotation(const int angle)
 {
-	m_localRotation = pos;
+	m_localRotation = angle;
 }
 
 void dae::Transform::SetDirty()

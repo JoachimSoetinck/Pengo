@@ -45,6 +45,9 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 		std::vector<BaseComponent*> GetComponents() const { return m_pComponents; };
+
+		void SetRotation(const double angle) { m_Transform.SetRotation(angle); }
+		double GetRotation() const;
 		bool GetMarkedForDelete() const;
 
 	private:

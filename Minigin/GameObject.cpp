@@ -59,6 +59,11 @@ void dae::GameObject::SetPosition(float x, float y)
 
 
 
+double dae::GameObject::GetRotation() const
+{
+	return m_Transform.GetRotation();
+}
+
 bool dae::GameObject::GetMarkedForDelete() const
 {
 	return m_MarkedForDelete;

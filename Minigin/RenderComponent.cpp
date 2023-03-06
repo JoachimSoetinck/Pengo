@@ -25,12 +25,12 @@ void dae::RenderComponent::Render() const
 
 		if (m_srcRect.h <= 0 || m_srcRect.w <= 0)
 		{
-			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+			Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y, m_pGameObject->GetRotation());
 		}
 
 		else
 		{
-			Renderer::GetInstance().RenderTexture(*m_Texture, m_srcRect, pos.x, pos.y);
+			Renderer::GetInstance().RenderTexture(*m_Texture, m_srcRect, pos.x, pos.y, m_pGameObject->GetRotation());
 		}
 	}
 

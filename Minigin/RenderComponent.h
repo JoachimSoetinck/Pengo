@@ -40,7 +40,7 @@ namespace dae
 
 		void SetRect(const SDL_Rect& rect);
 
-		void ChangeRotation(float rotation) { rotationAngle = rotation; };
+		
 
 	private:
 		Texture2D* m_Texture;
