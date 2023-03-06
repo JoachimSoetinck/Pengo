@@ -4,6 +4,9 @@
 #include <XInput.h>
 #include "Command.h"
 #include "Singleton.h"
+#include <map>
+#include <memory>
+
 
 namespace dae
 {

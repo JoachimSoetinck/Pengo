@@ -6,6 +6,7 @@
 #pragma comment(lib,"XInput.lib")
 #pragma comment(lib,"Xinput9_1_0.lib")
 
+#
 
 class dae::InputManager::XboxControllerImpl
 {
