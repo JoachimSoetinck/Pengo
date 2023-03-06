@@ -27,6 +27,9 @@ namespace dae
 		//Setters
 		void SetLocalPosition(float x, float y, float z);
 		void SetLocalPosition(const glm::vec3& pos);
+
+		void SetRotation(float x, float y, float z);
+		void SetRotation(const glm::vec3& pos);
 		void SetDirty();
 	private:
 		//Update
@@ -35,6 +38,9 @@ namespace dae
 		GameObject* m_pOwner;
 		glm::vec3 m_localPosition;
 		glm::vec3 m_worldPosition;
+
+		glm::vec3 m_localRotation{0,0,0};
+		glm::vec3 m_WorldRotation{0,0,0};
 		bool m_positionIsDirty = false;
 	};
 };

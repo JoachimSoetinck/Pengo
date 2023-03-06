@@ -44,6 +44,18 @@ void dae::Transform::SetLocalPosition(const glm::vec3& pos)
 	m_positionIsDirty = true;
 }
 
+void dae::Transform::SetRotation(float x, float y, float z)
+{
+	m_localRotation.x = x;
+	m_localRotation.y = y;
+	m_localRotation.z = z;
+}
+
+void dae::Transform::SetRotation(const glm::vec3& pos)
+{
+	m_localRotation = pos;
+}
+
 void dae::Transform::SetDirty()
 {
 	m_positionIsDirty = true;

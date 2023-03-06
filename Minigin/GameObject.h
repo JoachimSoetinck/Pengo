@@ -18,13 +18,14 @@ namespace dae
 
 		glm::vec3 GetLocalPosition() const { return m_Transform.GetLocalPosition(); }
 		glm::vec3 GetWorldPosition() { return m_Transform.GetWorldPosition(); }
+		
 		void SetPosition(float x, float y);
 		
 
 		BaseComponent* AddComponent(BaseComponent* component);
 		template <typename T> T* GetComponent() const;
 
-		template <typename T> void RemoveComponent(BaseComponent* pComp);
+		template <typename T> void RemoveComponent(T* pComp);
 
 
 		dae::GameObject* GetParent() const;
@@ -32,7 +33,7 @@ namespace dae
 		std::vector<std::shared_ptr<dae::GameObject>> GetChildren() const;
 
 		void RemoveChild(dae::GameObject* go);
-		void AddChild(std::shared_ptr<dae::GameObject> go, bool keepTransform = false);
+		void AddChild(std::shared_ptr<dae::GameObject> go, bool keepTransform = true);
 
 		GameObject() :m_Transform(this) {}
 		virtual ~GameObject();
@@ -48,6 +49,7 @@ namespace dae
 
 	private:
 		void SetParent(dae::GameObject* parent, bool keepWorldPosition = false);
+		bool m_KeepWorldPosition = false;
 		Transform m_Transform;
 		std::vector<BaseComponent*> m_pComponents{};
 
@@ -78,8 +80,11 @@ namespace dae
 	}
 
 	template<typename T>
-	inline void GameObject::RemoveComponent(BaseComponent* pComp)
+	inline void GameObject::RemoveComponent(T* pComp)
 	{
-		m_pComponents.erase(std::remove(m_pComponents.begin(), m_pComponents.end(), pComp));
+		auto t = m_pComponents.erase(std::remove(m_pComponents.begin(), m_pComponents.end(), pComp));
+		
+		delete pComp;
+		pComp = nullptr;
 	}
 }
