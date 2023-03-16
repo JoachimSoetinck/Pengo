@@ -190,6 +190,7 @@
     <ClInclude Include="imgui_impl_opengl2.h" />
     <ClInclude Include="imgui_impl_sdl2.h" />
     <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imgui_plot.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
@@ -232,6 +233,10 @@
     </ClCompile>
     <ClCompile Include="imgui_impl_opengl2.cpp" />
     <ClCompile Include="imgui_impl_sdl2.cpp">
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</TreatWarningAsError>
+      <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
+    </ClCompile>
+    <ClCompile Include="imgui_plot.cpp">
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</TreatWarningAsError>
       <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
     </ClCompile>

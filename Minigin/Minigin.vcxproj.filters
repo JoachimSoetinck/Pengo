@@ -120,6 +120,9 @@
     <ClInclude Include="imstb_truetype.h">
       <Filter>Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="imgui_plot.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -207,6 +210,9 @@
       <Filter>Imgui</Filter>
     </ClCompile>
     <ClCompile Include="imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_plot.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
   </ItemGroup>
