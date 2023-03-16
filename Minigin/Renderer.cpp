@@ -2,6 +2,9 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
+#include "imgui.h"
+#include "imgui_impl_sdl2.h"
+#include "imgui_impl_opengl2.h"
 
 int GetOpenGLDriverIndex()
 {
@@ -25,6 +28,12 @@ void dae::Renderer::Init(SDL_Window* window)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
+	ImGui_ImplOpenGL2_Init();
+
 }
 
 void dae::Renderer::Render() const
@@ -40,6 +49,10 @@ void dae::Renderer::Render() const
 
 void dae::Renderer::Destroy()
 {
+	ImGui_ImplOpenGL2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
 	if (m_renderer != nullptr)
 	{
 		SDL_DestroyRenderer(m_renderer);
@@ -58,7 +71,7 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 
 
 
-void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height, double angle,const SDL_Point* center) const
+void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height, double angle, const SDL_Point* center) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -66,7 +79,7 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	dst.w = static_cast<int>(width);
 	dst.h = static_cast<int>(height);
 	//SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
-	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(),nullptr, &dst, angle,center, SDL_RendererFlip::SDL_FLIP_NONE);
+	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst, angle, center, SDL_RendererFlip::SDL_FLIP_NONE);
 }
 
 void dae::Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& srcRect, float x, float y, const double angle) const
@@ -77,7 +90,7 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const SDL_Rect& srcR
 	dst.w = static_cast<int>(srcRect.w);
 	dst.h = static_cast<int>(srcRect.h);
 
-	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &dst, angle,NULL, SDL_RendererFlip::SDL_FLIP_NONE);
+	SDL_RenderCopyEx(GetSDLRenderer(), texture.GetSDLTexture(), &srcRect, &dst, angle, NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 }
 
 
