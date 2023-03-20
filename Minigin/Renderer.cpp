@@ -34,6 +34,8 @@ void dae::Renderer::Init(SDL_Window* window)
 	ImGui_ImplSDL2_InitForOpenGL(window, SDL_GL_GetCurrentContext());
 	ImGui_ImplOpenGL2_Init();
 
+
+
 }
 
 void dae::Renderer::Render() const
@@ -43,6 +45,7 @@ void dae::Renderer::Render() const
 	SDL_RenderClear(m_renderer);
 
 	SceneManager::GetInstance().Render();
+
 
 	SDL_RenderPresent(m_renderer);
 }
@@ -58,6 +61,8 @@ void dae::Renderer::Destroy()
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
 	}
+
+	
 }
 
 void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const double angle) const
