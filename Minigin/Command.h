@@ -1,6 +1,10 @@
 #pragma once
+#include "PengoComponent.h"
+
 namespace dae
 {
+	class GameObject;
+
 	class Command
 	{
 	public:
@@ -21,5 +25,18 @@ namespace dae
 	public:
 		TestCommand();
 		void Execute() override;
+	};
+
+
+
+	class MoveCommand : public Command
+	{
+	public:
+		MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::PengoState movingDirection);
+		void Execute() override;
+
+	private:
+		std::shared_ptr<GameObject> m_pObject;
+		PengoComponent::PengoState m_PlayerState;
 	};
 }

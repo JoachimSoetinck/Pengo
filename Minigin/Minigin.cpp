@@ -72,7 +72,6 @@ dae::Minigin::Minigin(const std::string& dataPath)
 
 dae::Minigin::~Minigin()
 {
-	InputManager::GetInstance().Destroy();
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;

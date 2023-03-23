@@ -123,6 +123,18 @@
     <ClInclude Include="imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
+    <ClInclude Include="PengoComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseController.h">
+      <Filter>Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -214,6 +226,18 @@
     </ClCompile>
     <ClCompile Include="imgui_plot.cpp">
       <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="PengoComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseController.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="XboxController.cpp">
+      <Filter>Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
