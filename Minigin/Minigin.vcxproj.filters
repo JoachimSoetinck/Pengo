@@ -132,9 +132,6 @@
     <ClInclude Include="RigidBody.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="XboxController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BaseController.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -146,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="LivesDisplayComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="XboxController.h">
+      <Filter>Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

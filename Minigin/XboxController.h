@@ -1,6 +1,4 @@
 #pragma once
-#include <XInput.h>
-
 #include "BaseController.h"
 
 namespace dae
@@ -12,20 +10,20 @@ namespace dae
 	public:
 		enum class Button
 		{
-			ButtonA = XINPUT_GAMEPAD_A,
-			ButtonB = XINPUT_GAMEPAD_B,
-			ButtonX = XINPUT_GAMEPAD_X,
-			ButtonY = XINPUT_GAMEPAD_Y,
-			ButtonDPADUp = XINPUT_GAMEPAD_DPAD_UP,
-			ButtonDPADDown = XINPUT_GAMEPAD_DPAD_DOWN,
-			ButtonDPADLeft = XINPUT_GAMEPAD_DPAD_LEFT,
-			ButtonDPADRight = XINPUT_GAMEPAD_DPAD_RIGHT,
-			ButtonStart = XINPUT_GAMEPAD_START,
-			ButtonBack = XINPUT_GAMEPAD_BACK,
-			ButtonLeftThumb = XINPUT_GAMEPAD_LEFT_THUMB,
-			ButtonRightThumb = XINPUT_GAMEPAD_RIGHT_THUMB,
-			ButtonLeftShoulder = XINPUT_GAMEPAD_LEFT_SHOULDER,
-			ButtonRightShoulder = XINPUT_GAMEPAD_RIGHT_SHOULDER,
+			ButtonA = 0x1000,
+			ButtonB = 0x2000,
+			ButtonX = 0x4000,
+			ButtonY = 0x8000,
+			ButtonDPADUp = 0x0001,
+			ButtonDPADDown = 0x0002,
+			ButtonDPADLeft = 0x0004,
+			ButtonDPADRight = 0x0008,
+			ButtonStart = 0x0010,
+			ButtonBack = 0x0020,
+			ButtonLeftThumb = 0x0040,
+			ButtonRightThumb = 0x0080,
+			ButtonLeftShoulder = 0x0100,
+			ButtonRightShoulder = 0x0200,
 		};
 		void Update() const override;
 
