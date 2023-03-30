@@ -19,16 +19,6 @@ namespace dae
 	};
 
 
-
-	class TestCommand : public Command
-	{
-	public:
-		TestCommand();
-		void Execute() override;
-	};
-
-
-
 	class MoveCommand : public Command
 	{
 	public:

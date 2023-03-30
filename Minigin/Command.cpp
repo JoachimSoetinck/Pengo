@@ -4,14 +4,6 @@
 
 
 
-dae::TestCommand::TestCommand()
-{
-}
-
-void dae::TestCommand::Execute()
-{
-	std::cout << "test\n";
-}
 
 
 

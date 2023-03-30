@@ -51,7 +51,7 @@ namespace dae
 		void Update();
 
 
-		int AddPlayer(bool IsKeyBoard = false);
+		int AddPlayer(bool IsKeyBoard);
 		
 
 		bool IsPressed(XboxController::Button button, int playerNr) const;
