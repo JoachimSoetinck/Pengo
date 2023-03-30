@@ -3,6 +3,7 @@
 #include <windows.h>
 #pragma comment(lib,"xinput.lib")
 #include "XboxController.h"
+#include <Xinput.h>
 
 
 using namespace dae;
