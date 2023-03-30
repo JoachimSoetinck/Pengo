@@ -29,4 +29,14 @@ namespace dae
 		std::shared_ptr<GameObject> m_pObject;
 		PengoComponent::PengoState m_PlayerState;
 	};
+
+	class DieCommand : public Command
+	{
+	public:
+		DieCommand(std::shared_ptr<GameObject> obj);
+		void Execute() override;
+
+	private:
+		std::shared_ptr<GameObject> m_pObject;
+	};
 }

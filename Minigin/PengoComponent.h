@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "RigidBody.h"
+#include "Subject.h"
 
 namespace dae
 {
@@ -12,7 +13,7 @@ namespace dae
 			Left, Right, Up, Down, Pushing, Idle
 		};
 
-		PengoComponent(GameObject* gameObject);
+		PengoComponent(GameObject* gameObject, GameObject* livesDisplay=nullptr);
 		~PengoComponent() override = default;
 		PengoComponent(const PengoComponent& other) = delete;
 		PengoComponent(PengoComponent&& other) noexcept = delete;
@@ -22,6 +23,12 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;
+
+
+		int GetLives() const { return m_nrOfLives; };
+		void Start();
+		void Die();
+
 
 		void SetState(PengoState state);
 	
@@ -34,6 +41,8 @@ namespace dae
 
 		int m_nrOfLives{ 3 };
 		int m_score{ 0 };
+
+		std::unique_ptr<Subject> m_PlayerSubject;
 
 		void Push();
 

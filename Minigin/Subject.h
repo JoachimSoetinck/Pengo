@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Observer.h"
 
 namespace dae
 {
@@ -11,11 +12,11 @@ namespace dae
 	public:
 		Subject() = default;
 		~Subject();
-		void AddObserver(Observer* observer);
-		void RemoveObserver(Observer* observer);
-		void Notify(int eventType, GameObject* object);
+		void AddObserver(std::shared_ptr<Observer> observer);
+		void RemoveObserver(std::shared_ptr<Observer> observer);
+		void Notify(Event eventType, GameObject* object);
 
 	private:
-		std::vector<Observer*> m_Observers;
+		std::vector<std::shared_ptr<Observer>> m_Observers;
 	};
 }

@@ -16,3 +16,12 @@ void dae::MoveCommand::Execute()
 	if(m_pObject->GetComponent<dae::PengoComponent>())
 	m_pObject->GetComponent<dae::PengoComponent>()->SetState(m_PlayerState);
 }
+
+dae::DieCommand::DieCommand(std::shared_ptr<GameObject> obj): m_pObject{obj}
+{
+}
+
+void dae::DieCommand::Execute()
+{
+	m_pObject->GetComponent<PengoComponent>()->Die();
+}

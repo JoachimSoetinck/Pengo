@@ -1,20 +1,18 @@
 #include "Subject.h"
 #include "GameObject.h"
-#include "Observer.h"
+
 
 dae::Subject::~Subject()
 {
-	for (auto observer : m_Observers) {
-		delete observer;
-	}
+	
 }
 
-void dae::Subject::AddObserver(Observer* observer)
+void dae::Subject::AddObserver(std::shared_ptr<Observer> observer)
 {
 	m_Observers.push_back(observer);
 }
 
-void dae::Subject::RemoveObserver(Observer* observer)
+void dae::Subject::RemoveObserver(std::shared_ptr<Observer> observer)
 {
 	for (size_t i = 0; i < m_Observers.size(); ++i) {
 
@@ -24,7 +22,7 @@ void dae::Subject::RemoveObserver(Observer* observer)
 	}
 }
 
-void dae::Subject::Notify(int eventType, GameObject* object)
+void dae::Subject::Notify(Event eventType, GameObject* object)
 {
 	for (auto observer : m_Observers) {
 		observer->OnNotify(eventType, object);

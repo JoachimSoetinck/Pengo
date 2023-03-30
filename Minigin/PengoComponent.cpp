@@ -1,10 +1,21 @@
 #include "PengoComponent.h"
 #include "GameObject.h"
+#include "Observer.h"
+#include "LivesDisplayComponent.h"
 
-dae::PengoComponent::PengoComponent(GameObject* gameObject): BaseComponent(gameObject),
+dae::PengoComponent::PengoComponent(GameObject* gameObject, GameObject* livesDisplay): BaseComponent(gameObject),
 m_RigidBody{GetGameObject()->GetComponent<RigidBody>()}
 {
+	m_PlayerSubject = std::make_unique<Subject>();
+
+	if (livesDisplay != nullptr)
+	{
+		m_PlayerSubject->AddObserver(std::make_shared<LivesDisplayComponent>(livesDisplay));
+	}
 }
+
+
+
 
 void dae::PengoComponent::Push()
 {
@@ -29,6 +40,17 @@ void dae::PengoComponent::FixedUpdate()
 			m_RigidBody->Move(m_direction);
 	}
 
+}
+
+void dae::PengoComponent::Start()
+{
+	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
+}
+
+void dae::PengoComponent::Die()
+{
+	--m_nrOfLives;
+	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
 }
 
 void dae::PengoComponent::SetState(PengoState state)
@@ -63,8 +85,6 @@ void dae::PengoComponent::SetState(PengoState state)
 	case PengoState::Up:
 	{
 		m_direction = { 0,-1 };
-
-
 		break;
 	}
 

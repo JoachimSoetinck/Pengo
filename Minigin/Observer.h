@@ -4,12 +4,18 @@
 
 namespace dae
 {
+	enum class Event
+	{
+		PlayerDied,
+		PlayerStart
+	};
+
 	class Observer
 	{
 	public:
 		Observer() = default;
-		virtual ~Observer() {}
-		virtual void OnNotify(int event, GameObject* gameObject) = 0;
+		virtual ~Observer() = default;
+		virtual void OnNotify(Event event, GameObject* gameObject) = 0;
 	private:
 	};
 }
