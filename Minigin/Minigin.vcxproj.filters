@@ -147,6 +147,9 @@
     <ClInclude Include="XboxController.h">
       <Filter>Input</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreDisplayComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -255,6 +258,9 @@
       <Filter>Observer</Filter>
     </ClCompile>
     <ClCompile Include="LivesDisplayComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplayComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

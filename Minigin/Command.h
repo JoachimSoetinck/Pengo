@@ -39,4 +39,14 @@ namespace dae
 	private:
 		std::shared_ptr<GameObject> m_pObject;
 	};
+
+	class GivePointsCommand : public Command
+	{
+	public:
+		GivePointsCommand(std::shared_ptr<GameObject> obj, int );
+		void Execute() override;
+
+	private:
+		std::shared_ptr<GameObject> m_pObject;
+	};
 }

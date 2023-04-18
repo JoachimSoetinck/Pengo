@@ -7,12 +7,12 @@ dae::Subject::~Subject()
 	
 }
 
-void dae::Subject::AddObserver(std::shared_ptr<Observer> observer)
+void dae::Subject::AddObserver(Observer* observer)
 {
 	m_Observers.push_back(observer);
 }
 
-void dae::Subject::RemoveObserver(std::shared_ptr<Observer> observer)
+void dae::Subject::RemoveObserver(Observer* observer)
 {
 	for (size_t i = 0; i < m_Observers.size(); ++i) {
 

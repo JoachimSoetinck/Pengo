@@ -209,6 +209,7 @@
     <ClInclude Include="RotationComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteCompenent.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="RotationComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="SpriteCompenent.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />

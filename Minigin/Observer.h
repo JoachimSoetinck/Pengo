@@ -7,7 +7,8 @@ namespace dae
 	enum class Event
 	{
 		PlayerDied,
-		PlayerStart
+		PlayerStart,
+		GivePoints
 	};
 
 	class Observer

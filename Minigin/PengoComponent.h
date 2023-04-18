@@ -13,12 +13,14 @@ namespace dae
 			Left, Right, Up, Down, Pushing, Idle
 		};
 
-		PengoComponent(GameObject* gameObject, GameObject* livesDisplay=nullptr);
+		PengoComponent(GameObject* gameObject);
 		~PengoComponent() override = default;
 		PengoComponent(const PengoComponent& other) = delete;
 		PengoComponent(PengoComponent&& other) noexcept = delete;
 		PengoComponent& operator=(const PengoComponent& other) = delete;
 		PengoComponent& operator=(PengoComponent&& other) noexcept = delete;
+
+		void AddObserver(Observer* obj);
 
 		void Update() override;
 		void Render() const override;
@@ -26,8 +28,10 @@ namespace dae
 
 
 		int GetLives() const { return m_nrOfLives; };
+		int GetScore() const { return m_score; };
 		void Start();
 		void Die();
+		void GivePoints(int score);
 
 
 		void SetState(PengoState state);

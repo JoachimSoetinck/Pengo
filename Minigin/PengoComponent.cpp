@@ -2,16 +2,14 @@
 #include "GameObject.h"
 #include "Observer.h"
 #include "LivesDisplayComponent.h"
+#include "ScoreDisplayComponent.h"
 
-dae::PengoComponent::PengoComponent(GameObject* gameObject, GameObject* livesDisplay): BaseComponent(gameObject),
-m_RigidBody{GetGameObject()->GetComponent<RigidBody>()}
+dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
+m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
 
-	if (livesDisplay != nullptr)
-	{
-		m_PlayerSubject->AddObserver(std::make_shared<LivesDisplayComponent>(livesDisplay));
-	}
+
 }
 
 
@@ -23,6 +21,11 @@ void dae::PengoComponent::Push()
 }
 
 
+
+void dae::PengoComponent::AddObserver(Observer* obj)
+{
+	m_PlayerSubject->AddObserver(obj);
+}
 
 void dae::PengoComponent::Update()
 {
@@ -44,13 +47,20 @@ void dae::PengoComponent::FixedUpdate()
 
 void dae::PengoComponent::Start()
 {
-	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
+	m_PlayerSubject->Notify(Event::PlayerStart, this->GetGameObject());
 }
 
 void dae::PengoComponent::Die()
 {
-	--m_nrOfLives;
+	if (m_nrOfLives > 0)
+		--m_nrOfLives;
 	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
+}
+
+void dae::PengoComponent::GivePoints(int score)
+{
+	m_score += score;
+	m_PlayerSubject->Notify(Event::GivePoints, this->GetGameObject());
 }
 
 void dae::PengoComponent::SetState(PengoState state)

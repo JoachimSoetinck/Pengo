@@ -25,3 +25,13 @@ void dae::DieCommand::Execute()
 {
 	m_pObject->GetComponent<PengoComponent>()->Die();
 }
+
+dae::GivePointsCommand::GivePointsCommand(std::shared_ptr<GameObject> obj, int NrOfPoints) : m_pObject{ obj }
+{
+
+}
+
+void dae::GivePointsCommand::Execute()
+{
+	m_pObject->GetComponent<PengoComponent>()->GivePoints(100);
+}

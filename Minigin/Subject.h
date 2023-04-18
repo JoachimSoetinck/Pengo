@@ -12,11 +12,11 @@ namespace dae
 	public:
 		Subject() = default;
 		~Subject();
-		void AddObserver(std::shared_ptr<Observer> observer);
-		void RemoveObserver(std::shared_ptr<Observer> observer);
+		void AddObserver(Observer* observer);
+		void RemoveObserver(Observer* observer);
 		void Notify(Event eventType, GameObject* object);
 
 	private:
-		std::vector<std::shared_ptr<Observer>> m_Observers;
+		std::vector<Observer*> m_Observers;
 	};
 }
