@@ -26,6 +26,7 @@ namespace dae
 		RenderComponent& operator=(const RenderComponent& other) = delete;
 		RenderComponent& operator=(RenderComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate()  override;

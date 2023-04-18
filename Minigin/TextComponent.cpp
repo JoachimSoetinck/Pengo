@@ -46,6 +46,10 @@ dae::TextComponent::TextComponent(dae::GameObject* pGO)
 	m_NeedsUpdate = false;
 }
 
+void dae::TextComponent::Initialize()
+{
+}
+
 void dae::TextComponent::Update()
 {
 	if (m_NeedsUpdate)

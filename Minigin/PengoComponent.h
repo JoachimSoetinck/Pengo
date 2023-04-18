@@ -22,6 +22,7 @@ namespace dae
 
 		void AddObserver(Observer* obj);
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

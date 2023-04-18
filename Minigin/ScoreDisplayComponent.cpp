@@ -8,6 +8,10 @@ m_text{ "" }
 {
 }
 
+void dae::ScoreDisplayComponent::Initialize()
+{
+}
+
 void dae::ScoreDisplayComponent::Update()
 {
 }

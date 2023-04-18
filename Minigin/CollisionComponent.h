@@ -10,13 +10,14 @@ namespace dae {
 	public:
 		CollisionComponent(dae::GameObject* go, const SDL_Rect& rect);
 
-		~CollisionComponent() override = default;
+		~CollisionComponent() override;
 
 		CollisionComponent(const CollisionComponent& other) = delete;
 		CollisionComponent(CollisionComponent&& other) noexcept = delete;
 		CollisionComponent& operator=(const CollisionComponent& other) = delete;
 		CollisionComponent& operator=(CollisionComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;
@@ -24,6 +25,8 @@ namespace dae {
 	private:
 		bool m_IsEnabled = true;
 		SDL_Rect m_Rect;
+
+		bool HandleCollision(CollisionComponent* other);
 	};
 
 }

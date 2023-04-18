@@ -18,6 +18,7 @@ public:
 	SpriteComponent& operator=(const SpriteComponent& other) = delete;
 	SpriteComponent& operator=(SpriteComponent&& other) noexcept = delete;
 
+	void Initialize() override;
 	void Update() override;
 	void FixedUpdate() override;
 	void Render() const override;

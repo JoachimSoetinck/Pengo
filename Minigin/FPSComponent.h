@@ -17,6 +17,7 @@ namespace dae {
 		FPSComponent& operator=(const FPSComponent& other) = delete;
 		FPSComponent& operator=(FPSComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

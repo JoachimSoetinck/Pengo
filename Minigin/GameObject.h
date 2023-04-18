@@ -11,16 +11,17 @@ namespace dae
 	class GameObject final
 	{
 	public:
-		virtual void Update();
-		virtual void FixedUpdate();
-		virtual void Render() const;
+		void Initalize();
+		void Update();
+		void FixedUpdate();
+		void Render() const;
 		void Delete();
 
 		glm::vec3 GetLocalPosition() const { return m_Transform.GetLocalPosition(); }
 		glm::vec3 GetWorldPosition() { return m_Transform.GetWorldPosition(); }
-		
+
 		void SetPosition(float x, float y);
-		
+
 
 		BaseComponent* AddComponent(BaseComponent* component);
 		template <typename T> T* GetComponent() const;
@@ -86,7 +87,7 @@ namespace dae
 	inline void GameObject::RemoveComponent(T* pComp)
 	{
 		auto t = m_pComponents.erase(std::remove(m_pComponents.begin(), m_pComponents.end(), pComp));
-		
+
 		delete pComp;
 		pComp = nullptr;
 	}

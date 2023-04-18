@@ -10,6 +10,10 @@ dae::RigidBody::RigidBody(dae::GameObject* object, const glm::vec2& speed) :
 {
 }
 
+void dae::RigidBody::Initialize()
+{
+}
+
 void dae::RigidBody::Render() const
 {
 

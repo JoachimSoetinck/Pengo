@@ -14,6 +14,7 @@ namespace dae
 		RigidBody& operator=(const RigidBody& other) = delete;
 		RigidBody& operator=(RigidBody&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override {};
 		void FixedUpdate() override {};
 		void Render() const override;

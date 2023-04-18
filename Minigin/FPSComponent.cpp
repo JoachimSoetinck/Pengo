@@ -10,6 +10,10 @@ dae::FPSComponent::FPSComponent(dae::GameObject* go, TextComponent* tc)
 {
 }
 
+void dae::FPSComponent::Initialize()
+{
+}
+
 void dae::FPSComponent::Update()
 {
 	if (pTextComponent)

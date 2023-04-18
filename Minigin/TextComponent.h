@@ -19,6 +19,7 @@ namespace dae {
 		TextComponent& operator=(const TextComponent& other) = delete;
 		TextComponent& operator=(TextComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

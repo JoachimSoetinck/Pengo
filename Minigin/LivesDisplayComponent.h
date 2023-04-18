@@ -18,6 +18,7 @@ namespace dae {
 		LivesDisplayComponent& operator=(const LivesDisplayComponent& other) = delete;
 		LivesDisplayComponent& operator=(LivesDisplayComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

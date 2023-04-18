@@ -28,6 +28,9 @@
     <Filter Include="Observer">
       <UniqueIdentifier>{3d5650e6-f439-44e2-ac01-5b6c94c94ff8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{b930fe7c-9a5b-4c8b-95d1-148da5df36a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -268,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

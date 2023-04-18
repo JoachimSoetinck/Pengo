@@ -20,6 +20,10 @@ SpriteComponent::SpriteComponent(dae::GameObject* pGO, const Sprite& sourcePart,
 	}
 }
 
+void SpriteComponent::Initialize()
+{
+}
+
 void SpriteComponent::Update()
 {
 	m_curTimer += dae::Time::GetInstance().GetDeltaTime();

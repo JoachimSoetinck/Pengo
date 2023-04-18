@@ -11,6 +11,10 @@ dae::RenderComponent::RenderComponent(dae::GameObject* go, const std::string& fi
 	SetTexture(file);
 }
 
+void dae::RenderComponent::Initialize()
+{
+}
+
 void dae::RenderComponent::Update()
 {
 

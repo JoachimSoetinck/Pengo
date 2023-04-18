@@ -41,7 +41,8 @@ void Scene::Render() const
 
 void Scene::Initialize()
 {
-
+	for (const auto& object : m_Objects)
+		object->Initalize();
 }
 
 void Scene::ResetScene()

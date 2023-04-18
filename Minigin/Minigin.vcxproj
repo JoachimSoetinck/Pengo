@@ -182,6 +182,7 @@
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseController.h" />
     <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSComponent.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BaseController.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />

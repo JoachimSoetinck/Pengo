@@ -4,6 +4,15 @@
 #include <algorithm>
 
 
+void dae::GameObject::Initalize()
+{
+	for (BaseComponent* component : m_pComponents)
+	{
+		component->Initialize();
+	}
+
+}
+
 void dae::GameObject::Update()
 {
 	for (size_t i = 0; i < m_pComponents.size(); i++)

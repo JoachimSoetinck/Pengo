@@ -27,6 +27,10 @@ void dae::PengoComponent::AddObserver(Observer* obj)
 	m_PlayerSubject->AddObserver(obj);
 }
 
+void dae::PengoComponent::Initialize()
+{
+}
+
 void dae::PengoComponent::Update()
 {
 }

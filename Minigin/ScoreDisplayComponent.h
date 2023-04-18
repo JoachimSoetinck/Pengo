@@ -18,6 +18,7 @@ namespace dae {
 		ScoreDisplayComponent& operator=(const ScoreDisplayComponent& other) = delete;
 		ScoreDisplayComponent& operator=(ScoreDisplayComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

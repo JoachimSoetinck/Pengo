@@ -13,10 +13,11 @@ namespace dae
 		virtual ~Scene();
 
 		void Add(const std::shared_ptr<GameObject>& object);
+		
 		void Update();
 		void FixedUpdate();
 		void Render() const;
-		virtual void Initialize();
+		void Initialize();
 		void ResetScene();
 
 		std::string	GetName() const;

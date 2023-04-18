@@ -17,6 +17,7 @@ namespace dae {
 		RotationComponent& operator=(const RotationComponent& other) = delete;
 		RotationComponent& operator=(RotationComponent&& other) noexcept = delete;
 
+		void Initialize() override;
 		void Update() override;
 		void Render() const override;
 		void FixedUpdate() override;

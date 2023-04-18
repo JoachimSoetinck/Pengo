@@ -8,6 +8,10 @@ m_CurrentAngle{ go->GetRotation()}
 	
 }
 
+void dae::RotationComponent::Initialize()
+{
+}
+
 void dae::RotationComponent::Update()
 {
 	m_CurrentAngle += m_RotationSpeed * Time::GetDeltaTime();
