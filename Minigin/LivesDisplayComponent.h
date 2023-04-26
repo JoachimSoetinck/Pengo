@@ -11,7 +11,7 @@ namespace dae {
 	public:
 		LivesDisplayComponent(dae::GameObject* go);
 
-		~LivesDisplayComponent() override = default;
+		~LivesDisplayComponent() ;
 
 		LivesDisplayComponent(const LivesDisplayComponent& other) = delete;
 		LivesDisplayComponent(LivesDisplayComponent&& other) noexcept = delete;

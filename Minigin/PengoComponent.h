@@ -14,7 +14,7 @@ namespace dae
 		};
 
 		PengoComponent(GameObject* gameObject);
-		~PengoComponent() override = default;
+		~PengoComponent() override ;
 		PengoComponent(const PengoComponent& other) = delete;
 		PengoComponent(PengoComponent&& other) noexcept = delete;
 		PengoComponent& operator=(const PengoComponent& other) = delete;

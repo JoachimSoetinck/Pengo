@@ -8,6 +8,10 @@ m_text{ "" }
 {
 }
 
+dae::LivesDisplayComponent::~LivesDisplayComponent()
+{
+}
+
 void dae::LivesDisplayComponent::Initialize()
 {
 }

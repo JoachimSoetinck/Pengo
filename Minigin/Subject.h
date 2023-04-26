@@ -16,6 +16,10 @@ namespace dae
 		void RemoveObserver(Observer* observer);
 		void Notify(Event eventType, GameObject* object);
 
+		std::vector<Observer*> GetObservers()const {
+			return m_Observers;
+		};
+
 	private:
 		std::vector<Observer*> m_Observers;
 	};

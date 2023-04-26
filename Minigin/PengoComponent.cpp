@@ -12,6 +12,14 @@ m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() }
 
 }
 
+dae::PengoComponent::~PengoComponent()
+{
+	for (auto o : m_PlayerSubject->GetObservers())
+	{
+		m_PlayerSubject->RemoveObserver(o);
+	}
+}
+
 
 
 
