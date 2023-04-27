@@ -5,7 +5,7 @@
 #include "Timer.h"
 
 
-SpriteComponent::SpriteComponent(dae::GameObject* pGO, const Sprite& sourcePart, const SDL_Rect& dstRect, float animationTime, bool flip)
+dae::SpriteComponent::SpriteComponent(dae::GameObject* pGO, const Sprite& sourcePart, const SDL_Rect& dstRect, float animationTime, bool flip)
 	:BaseComponent(pGO)
 	, m_Sprite(sourcePart)
 	, m_AnimationTime(animationTime)
@@ -20,11 +20,11 @@ SpriteComponent::SpriteComponent(dae::GameObject* pGO, const Sprite& sourcePart,
 	}
 }
 
-void SpriteComponent::Initialize()
+void dae::SpriteComponent::Initialize()
 {
 }
 
-void SpriteComponent::Update()
+void dae::SpriteComponent::Update()
 {
 	m_curTimer += dae::Time::GetInstance().GetDeltaTime();
 	if (m_curTimer >= m_AnimationTime)
@@ -34,31 +34,36 @@ void SpriteComponent::Update()
 	}
 }
 
-void SpriteComponent::FixedUpdate()
+void dae::SpriteComponent::FixedUpdate()
 {
 }
 
-void SpriteComponent::Render() const
+void dae::SpriteComponent::Render() const
 {
 	const auto pos = GetGameObject()->GetLocalPosition();
 
-	const SDL_Rect dstRect{ static_cast<int>(m_DstRect.x + pos.x), static_cast<int>(m_DstRect.y + pos.y), m_DstRect.w,m_DstRect.h };
+	if (m_isVisible)
+	{
+		const SDL_Rect dstRect{ static_cast<int>(m_DstRect.x + pos.x), static_cast<int>(m_DstRect.y + pos.y), m_DstRect.w,m_DstRect.h };
 
-	const auto texture = m_Sprite.GetTexture();
-	dae::Renderer::GetInstance().RenderTexture(*texture, m_Sprite.SrcRect, dstRect, m_Rotation, m_Flip);
+		const auto texture = m_Sprite.GetTexture();
+
+		dae::Renderer::GetInstance().RenderTexture(*texture, m_Sprite.SrcRect, dstRect, m_Rotation, m_Flip);
+	}
+	
 }
 
-void SpriteComponent::SetFlip(bool flip)
+void dae::SpriteComponent::SetFlip(bool flip)
 {
 	m_Flip = flip;
 }
 
-void SpriteComponent::SetRotation(float angle)
+void dae::SpriteComponent::SetRotation(float angle)
 {
 	m_Rotation = angle;
 }
 
-void SpriteComponent::ResetSprite()
+void dae::SpriteComponent::ResetSprite()
 {
 
 	m_Flip = false;
@@ -69,7 +74,7 @@ void SpriteComponent::ResetSprite()
 
 }
 
-void SpriteComponent::UpdateFrame()
+void dae::SpriteComponent::UpdateFrame()
 {
 	if (m_currentCol != m_Sprite.Cols)
 	{

@@ -11,6 +11,11 @@ void dae::GameObject::Initalize()
 		component->Initialize();
 	}
 
+	for (size_t i = 0; i < m_pChildren.size(); i++)
+	{
+		m_pChildren[i]->Initalize(); 
+	}
+
 }
 
 void dae::GameObject::Update()
