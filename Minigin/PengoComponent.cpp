@@ -4,6 +4,10 @@
 #include "LivesDisplayComponent.h"
 #include "ScoreDisplayComponent.h"
 #include "SpriteCompenent.h"
+#include "WallManagers.h"
+#include "WallComponent.h"
+#include "GameInfo.h"
+#include "GameObject.h"
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() }
@@ -38,11 +42,15 @@ void dae::PengoComponent::AddObserver(Observer* obj)
 
 void dae::PengoComponent::Initialize()
 {
+	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
+
+	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
+	m_currentBlock = m_StartBlock;
 }
 
 void dae::PengoComponent::Update()
 {
-	
+
 }
 
 void dae::PengoComponent::Render() const
@@ -51,11 +59,7 @@ void dae::PengoComponent::Render() const
 
 void dae::PengoComponent::FixedUpdate()
 {
-	if (m_RigidBody)
-	{
-		if (m_direction != glm::ivec2{ 0,0 })
-			m_RigidBody->Move(m_direction);
-	}
+
 
 }
 
@@ -80,48 +84,40 @@ void dae::PengoComponent::GivePoints(int score)
 void dae::PengoComponent::SetState(PengoState state)
 {
 	m_currentState = state;
+}
 
+void dae::PengoComponent::Move(PengoState state)
+{
+	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
 
-	switch (m_currentState)
+	switch (state)
 	{
-	case PengoState::Idle:
-	{
-		m_direction = { 0,0 };
-		
+	case dae::PengoComponent::PengoState::Left:
+		newPos.x -= 25;
 		break;
-	}
 
-	case PengoState::Left:
-	{
-		m_direction = { -1,0 };
-		
+	case dae::PengoComponent::PengoState::Right:
+		newPos.x += 25;
 		break;
-	}
+	case dae::PengoComponent::PengoState::Up:
+		newPos.y -= 25;
 
-	case PengoState::Right:
-	{
-		m_direction = { 1,0 };
 		break;
-	}
-
-	case PengoState::Up:
-	{
-		m_direction = { 0,-1 };
-		
-		break;
-	}
-
-	case PengoState::Down:
-	{
-		m_direction = { 0,1 };
-		break;
-	}
-	case PengoState::Pushing:
+	case dae::PengoComponent::PengoState::Down:
 	{
 
+		newPos.y += 25;
 		break;
 	}
 	default:
 		break;
 	}
+
+
+	auto w = dae::WallManager::GetInstance().FindWall(newPos);
+	if (w)
+		m_pGameObject->SetPosition(newPos.x, newPos.y);
+
+
+
 }

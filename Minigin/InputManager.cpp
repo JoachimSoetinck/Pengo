@@ -40,7 +40,7 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_KEYDOWN) {
 			for (const auto& controller : m_ConsoleCommands)
 			{
-				if (controller->state == EInputState::Down)
+				if (controller->state == EInputState::Down )
 				{
 					if (e.key.keysym.scancode == controller->Key)
 						controller->command.get()->Execute();
@@ -53,7 +53,7 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_KEYUP) {
 			for (const auto& controller : m_ConsoleCommands)
 			{
-				if (controller->state == EInputState::Up)
+				if (controller->state == EInputState::Up || controller->state == EInputState::Pressed)
 				{
 					if (e.key.keysym.scancode == controller->Key)
 						controller->command.get()->Execute();
@@ -61,6 +61,9 @@ bool dae::InputManager::ProcessInput()
 			}
 
 		}
+
+	
+
 		if (e.type == SDL_MOUSEBUTTONDOWN && m_isPressed == false)
 		{
 			if (e.button.button == SDL_BUTTON_LEFT)

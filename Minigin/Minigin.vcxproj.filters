@@ -165,6 +165,12 @@
     <ClInclude Include="WallComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="WallManagers.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -289,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="WallComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WallManagers.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInfo.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "CollisionComponent.h"
 #include "TextComponent.h"
 #include "WallComponent.h"
+#include "Renderer.h"
 
 
 GridComponent::GridComponent(dae::GameObject* go, int columns, int rows,std::vector<int> walls ,glm::ivec2 startpos, SDL_Rect dest): BaseComponent(go),
@@ -30,12 +31,13 @@ void GridComponent::Initialize()
 		{
 			auto go = std::make_shared<dae::GameObject>();
 			go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Blocks.png", 1, 1, src), m_BlockSize));
+			//go->AddComponent(new dae::TextComponent(go.get(), std::to_string(nr), font));
 			if (std::find(m_Wallpositions.begin(), m_Wallpositions.end(), nr) != m_Wallpositions.end())
 			{
-				go->AddComponent(new dae::WallComponent(go.get()));
+				go->AddComponent(new dae::WallComponent(go.get(), nr));
 			}
 			else
-				go->AddComponent(new dae::WallComponent(go.get(), dae::WallComponent::WallType::Ground));
+				go->AddComponent(new dae::WallComponent(go.get(),nr, dae::WallComponent::WallType::Ground));
 			
 			go->SetPosition(m_startPos.x + i * m_BlockSize.w, 75 + j * m_BlockSize.w);
 			m_pGameObject->AddChild(go);
@@ -80,7 +82,19 @@ void GridComponent::Update()
 
 void GridComponent::Render() const
 {
+	for (auto child : m_pGameObject->GetChildren())
+	{
+		auto p = child.get()->GetLocalPosition();
+		p.x += child.get()->GetComponent<dae::SpriteComponent>()->GetDestRect().w / 2;
+		p.y += child.get()->GetComponent<dae::SpriteComponent>()->GetDestRect().h / 2;
 
+		if (child->GetComponent<dae::WallComponent>())
+		{
+			SDL_SetRenderDrawColor(dae::Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 0);
+			SDL_RenderDrawPoint(dae::Renderer::GetInstance().GetSDLRenderer(), p.x, p.y);
+		}
+	
+	}
 }
 
 void GridComponent::FixedUpdate()

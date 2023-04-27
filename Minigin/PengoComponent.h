@@ -27,7 +27,6 @@ namespace dae
 		void Render() const override;
 		void FixedUpdate() override;
 
-
 		int GetLives() const { return m_nrOfLives; };
 		int GetScore() const { return m_score; };
 		void Start();
@@ -36,6 +35,8 @@ namespace dae
 
 
 		void SetState(PengoState state);
+
+		void Move(PengoState state);
 	
 
 	private:
@@ -49,8 +50,13 @@ namespace dae
 
 		std::unique_ptr<Subject> m_PlayerSubject;
 
+		int m_StartBlock = 0;
+		int m_currentBlock{};
 	
 		void Push();
+		
+		bool m_isMoving;
+		
 
 	
 	};

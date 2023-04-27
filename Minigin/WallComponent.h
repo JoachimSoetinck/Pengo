@@ -16,7 +16,7 @@ namespace dae {
 			Ground
 		};
 
-		WallComponent(dae::GameObject* go, WallType wallType=WallType::MoveableWall);
+		WallComponent(dae::GameObject* go,  int nr, WallType wallType=WallType::MoveableWall);
 
 		~WallComponent() override = default;
 
@@ -31,10 +31,17 @@ namespace dae {
 		void FixedUpdate() override;
 
 		WallType GetType() const { return m_WallType; };
+		int GetNr() const { return m_Nr; };
+		glm::ivec2 GetCenter() const { return m_Center; };
+
+		bool IsPointInWall(glm::ivec2 p);
 
 	private:
 		WallType m_WallType;
 		SpriteComponent* m_SpriteComp;
+		int m_Nr;
+
+		glm::ivec2 m_Center{};
 
 		
 	};
