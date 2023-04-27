@@ -10,10 +10,10 @@
 #include "GameObject.h"
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
-m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() }
+m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
+m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
-
 
 }
 
@@ -30,7 +30,36 @@ dae::PengoComponent::~PengoComponent()
 
 void dae::PengoComponent::Push()
 {
-	std::cout << "Push \m";
+
+	//center of player
+	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y};
+
+	switch (m_currentState)
+	{
+	case dae::PengoComponent::PengoState::Left:
+		pushblock.x -= 25;
+		break;
+	case dae::PengoComponent::PengoState::Right:
+		pushblock.x += 25;
+		break;
+	case dae::PengoComponent::PengoState::Up:
+		pushblock.y -= 25;
+		break;
+	case dae::PengoComponent::PengoState::Down:
+	{
+		pushblock.y += 25;
+		break;
+	}
+	default:
+		break;
+	}
+
+	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
+	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
+	{
+		std::cout << "player can push wall\n";
+	}
+	
 }
 
 
@@ -89,23 +118,31 @@ void dae::PengoComponent::SetState(PengoState state)
 void dae::PengoComponent::Move(PengoState state)
 {
 	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
-
+	SetState(state);
+	SDL_Rect src{0,0,16,16};
 	switch (state)
 	{
 	case dae::PengoComponent::PengoState::Left:
+		src = { 32,0,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.x -= 25;
 		break;
 
 	case dae::PengoComponent::PengoState::Right:
+		src = { 96,0,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.x += 25;
 		break;
 	case dae::PengoComponent::PengoState::Up:
+		src = { 64,0,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.y -= 25;
 
 		break;
 	case dae::PengoComponent::PengoState::Down:
 	{
-
+		src = { 0,0,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.y += 25;
 		break;
 	}

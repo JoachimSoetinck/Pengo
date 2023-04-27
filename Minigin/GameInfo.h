@@ -22,6 +22,8 @@ namespace dae
 	private:
 		int NrOfRows;
 		int NrOfColums;
+
+	
 	};
 
 }

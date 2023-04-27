@@ -32,7 +32,7 @@ namespace dae
 		void Start();
 		void Die();
 		void GivePoints(int score);
-
+		void Push();
 
 		void SetState(PengoState state);
 
@@ -53,10 +53,10 @@ namespace dae
 		int m_StartBlock = 0;
 		int m_currentBlock{};
 	
-		void Push();
+		
 		
 		bool m_isMoving;
-		
+		glm::ivec2 m_playerSize{};
 
 	
 	};

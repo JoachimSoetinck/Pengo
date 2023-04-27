@@ -17,6 +17,18 @@ void dae::MoveCommand::Execute()
 	m_pObject->GetComponent<dae::PengoComponent>()->Move(m_PlayerState);
 }
 
+
+
+dae::PushCommand::PushCommand(std::shared_ptr<GameObject> obj) : m_pObject{ obj }
+{
+}
+
+void dae::PushCommand::Execute()
+{
+	if (m_pObject->GetComponent<dae::PengoComponent>())
+		m_pObject->GetComponent<dae::PengoComponent>()->Push();
+}
+
 dae::DieCommand::DieCommand(std::shared_ptr<GameObject> obj): m_pObject{obj}
 {
 }
