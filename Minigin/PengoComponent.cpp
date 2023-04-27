@@ -115,7 +115,7 @@ void dae::PengoComponent::Move(PengoState state)
 
 
 	auto w = dae::WallManager::GetInstance().FindWall(newPos);
-	if (w)
+	if (w && w->GetType() == WallComponent::WallType::Ground)
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 
 
