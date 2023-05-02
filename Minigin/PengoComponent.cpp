@@ -50,7 +50,7 @@ void dae::PengoComponent::Push()
 	case dae::PengoComponent::PengoState::Down:
 	{
 		direction = MovementDirection::Down;
-		pushblock.y += 25;
+		pushblock.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	}
 	default:
@@ -136,25 +136,25 @@ void dae::PengoComponent::Move(PengoState state)
 	case dae::PengoComponent::PengoState::Left:
 		src = { 32,0,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
-		newPos.x -= 25;
+		newPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 
 	case dae::PengoComponent::PengoState::Right:
 		src = { 96,0,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
-		newPos.x += 25;
+		newPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	case dae::PengoComponent::PengoState::Up:
 		src = { 64,0,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
-		newPos.y -= 25;
+		newPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 
 		break;
 	case dae::PengoComponent::PengoState::Down:
 	{
 		src = { 0,0,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
-		newPos.y += 25;
+		newPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	}
 	default:

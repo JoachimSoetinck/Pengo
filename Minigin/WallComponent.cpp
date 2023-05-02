@@ -5,6 +5,7 @@
 #include "RigidBody.h"
 #include "CollisionComponent.h"
 #include "Helpers.h"
+#include "GameInfo.h"
 
 
 dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType) : BaseComponent(go),
@@ -81,29 +82,21 @@ void dae::WallComponent::FixedUpdate()
 
 void dae::WallComponent::HandleMovement()
 {
-	SDL_Rect pushblock = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y - 3 , 20,20 };
-
-	auto w = dae::WallManager::GetInstance().FindCollisionWithWall(this);
-
 
 	if (m_IsMoving && m_pGameObject->GetComponent<RigidBody>())
 	{
 		switch (m_pushDirection)
 		{
 		case dae::MovementDirection::Left:
-			//pushblock = { m_pGameObject->GetLocalPosition().x - 25, m_pGameObject->GetLocalPosition().y };
 			m_pGameObject->GetComponent<RigidBody>()->Move({ -1,0 });
 			break;
 		case dae::MovementDirection::Right:
-			//pushblock = { m_pGameObject->GetLocalPosition().x + 25, m_pGameObject->GetLocalPosition().y };
 			m_pGameObject->GetComponent<RigidBody>()->Move({ 1,0 });
 			break;
 		case dae::MovementDirection::Up:
-			//pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y +25};
 			m_pGameObject->GetComponent<RigidBody>()->Move({ 0,-1 });
 			break;
 		case dae::MovementDirection::Down:
-			//pushblock = { m_pGameObject->GetLocalPosition().x + 25, m_pGameObject->GetLocalPosition().y -25 };
 			m_pGameObject->GetComponent<RigidBody>()->Move({ 0,1 });
 			break;
 		default:
@@ -144,20 +137,21 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 		return;
 	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
 
+	dae::GameInfo::GetInstance().GetPlayerSize().w;
 	switch (m_pushDirection)
 	{
 	case dae::MovementDirection::Left:
-		previousWallPos.x += 25;
+		previousWallPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		
 		break;
 	case dae::MovementDirection::Right:
-		previousWallPos.x -= 25;
+		previousWallPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	case dae::MovementDirection::Up:
-		previousWallPos.y += 25;
+		previousWallPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	case dae::MovementDirection::Down:
-		previousWallPos.y -= 25;
+		previousWallPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	default:
 		break;
