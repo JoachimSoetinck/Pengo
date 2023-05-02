@@ -33,20 +33,24 @@ void dae::PengoComponent::Push()
 
 	//center of player
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y};
-
+	MovementDirection direction{};
 	switch (m_currentState)
 	{
 	case dae::PengoComponent::PengoState::Left:
 		pushblock.x -= 25;
+		direction = MovementDirection::Left;
 		break;
 	case dae::PengoComponent::PengoState::Right:
+		direction = MovementDirection::Right	;
 		pushblock.x += 25;
 		break;
 	case dae::PengoComponent::PengoState::Up:
+		direction = MovementDirection::Up;
 		pushblock.y -= 25;
 		break;
 	case dae::PengoComponent::PengoState::Down:
 	{
+		direction = MovementDirection::Down;
 		pushblock.y += 25;
 		break;
 	}
@@ -57,7 +61,7 @@ void dae::PengoComponent::Push()
 	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
 	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
 	{
-		std::cout << "player can push wall\n";
+		w->EnableMovement(direction);
 	}
 	
 }

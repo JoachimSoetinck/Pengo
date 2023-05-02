@@ -28,8 +28,8 @@ void dae::RigidBody::Move(const glm::vec2& direction)
 		m_Velocity.y = direction.y * dae::Time::GetInstance().GetDeltaTime() * m_MovementSpeed.y;
 
 		auto newPos = GetGameObject()->GetLocalPosition();
-		newPos.x += blockSize * m_MovementSpeed.x;
-		newPos.y += blockSize * m_MovementSpeed.y;
+		newPos.x += m_Velocity.x;
+		newPos.y += m_Velocity.y;
 
 		GetGameObject()->SetPosition(newPos.x, newPos.y);
 	}

@@ -4,7 +4,7 @@
 #include "CollisionManager.h"
 
 dae::CollisionComponent::CollisionComponent(dae::GameObject* go, const SDL_Rect& rect) :BaseComponent(go),
-m_Rect{0,0,rect.w, rect.h}
+m_Rect{0,0,rect.w, rect.h}, m_Info{new HitInfo()}
 {
 	
 
@@ -13,6 +13,9 @@ m_Rect{0,0,rect.w, rect.h}
 dae::CollisionComponent::~CollisionComponent()
 {
 	CollisionManager::GetInstance().RemoveComponent(this);
+
+	delete m_Info;
+	m_Info = nullptr;
 }
 
 void dae::CollisionComponent::Initialize()
@@ -27,8 +30,12 @@ void dae::CollisionComponent::Update()
 
 void dae::CollisionComponent::Render() const
 {
-	SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(),255, 255, 255, 0);
-	SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &m_Rect);
+	if (m_IsEnabled)
+	{
+		SDL_SetRenderDrawColor(Renderer::GetInstance().GetSDLRenderer(), 255, 255, 255, 0);
+		SDL_RenderDrawRect(Renderer::GetInstance().GetSDLRenderer(), &m_Rect);
+	}
+	
 }
 
 void dae::CollisionComponent::FixedUpdate()
@@ -41,16 +48,33 @@ void dae::CollisionComponent::FixedUpdate()
 
 	for (auto collision : collisions)
 	{
-		//skipping same collision
-		if (collision == this)
-			continue;
-
-		if (HandleCollision(collision))
+		if (collision->m_IsEnabled)
 		{
-			std::cout << "Hit";
+			//skipping same collision
+			if (collision == this)
+				continue;
 
-		
+			if (HandleCollision(collision))
+			{
+
+				m_Info->gameObject = collision->GetGameObject();
+				OnTrigger(m_Info);
+			}
 		}
+		
+	}
+}
+
+void dae::CollisionComponent::SetCollisionCallback(CollisionCallback callback)
+{
+	m_CollisionCallback = callback;
+}
+
+void dae::CollisionComponent::OnTrigger(HitInfo* hit)
+{
+	if (m_CollisionCallback)
+	{
+		m_CollisionCallback(hit);
 	}
 }
 

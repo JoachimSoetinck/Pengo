@@ -1,6 +1,7 @@
 #include "WallManagers.h"
 #include "WallComponent.h"
 #include "GameObject.h"
+#include "SpriteCompenent.h"
 
 dae::WallManager::WallManager() :
 	m_GroundPieces(std::vector<WallComponent*>())
@@ -14,7 +15,7 @@ void dae::WallManager::AddComponent(WallComponent* wall)
 	{
 		m_GroundPieces.push_back(wall);
 	}
-} 
+}
 
 void dae::WallManager::RemoveComponent(WallComponent* wall)
 {
@@ -60,14 +61,49 @@ const std::vector<dae::WallComponent*>& dae::WallManager::GetGroundPieces() cons
 
 bool dae::WallManager::IsPointInWall(glm::ivec2 p)
 {
-	bool r =false;
+	bool r = false;
 	for (auto w : m_GroundPieces)
 	{
-		 r = w->IsPointInWall(p);
-		 
-		 if (r == true)
-			 break;
+		r = w->IsPointInWall(p);
+
+		if (r == true)
+			break;
 	}
 
 	return r;
+}
+
+dae::WallComponent* dae::WallManager::FindCollisionWithWall(WallComponent* wall)
+{
+	for (auto comp : m_GroundPieces)
+	{
+		if (comp->GetType() == dae::WallComponent::WallType::MoveableWall && comp->IsMoving()&& comp != wall)
+		{
+
+			SDL_Rect r1 = { wall->GetGameObject()->GetLocalPosition().x,
+							wall->GetGameObject()->GetLocalPosition().y,
+							20,
+							20 };
+			SDL_Rect other = { comp->GetGameObject()->GetLocalPosition().x,
+							comp->GetGameObject()->GetLocalPosition().y,
+							comp->GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,
+							comp->GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h };
+
+			if ((r1.x + r1.w) < other.x || (other.x + other.w) < r1.x)
+			{
+				return nullptr;
+			}
+
+			if (r1.y > (other.y + other.h) || other.y > (r1.y + r1.h))
+			{
+				return nullptr;
+			}
+
+			return comp;
+		}
+
+
+	}
+
+	return nullptr;
 }

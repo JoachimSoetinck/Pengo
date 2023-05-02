@@ -21,6 +21,8 @@ namespace dae
 		const std::vector<WallComponent*>& GetGroundPieces() const;
 		bool IsPointInWall(glm::ivec2 p);
 
+		WallComponent* FindCollisionWithWall(WallComponent* wall);
+
 	private:
 		std::vector<WallComponent*> m_GroundPieces;
 	};

@@ -1,10 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Helpers.h"
 
 namespace dae {
 	class GameObject;
 	class SpriteComponent;
 
+	struct HitInfo;
 	
 	class WallComponent final : public  BaseComponent
 	{
@@ -30,11 +32,18 @@ namespace dae {
 		void Render() const override;
 		void FixedUpdate() override;
 
+		void HandleMovement();
+
+
 		WallType GetType() const { return m_WallType; };
 		int GetNr() const { return m_Nr; };
 		glm::ivec2 GetCenter() const { return m_Center; };
 
 		bool IsPointInWall(glm::ivec2 p);
+		bool IsMoving() const { return m_IsMoving; };
+		void EnableMovement(MovementDirection direction);
+		void DisableMovement() { m_IsMoving = false; };
+		void OnHit(HitInfo* hit);
 
 	private:
 		WallType m_WallType;
@@ -43,7 +52,13 @@ namespace dae {
 
 		glm::ivec2 m_Center{};
 
+		MovementDirection m_pushDirection{};
+		bool m_IsMoving{ false };
+
+		
 		
 	};
+
+	
 
 }
