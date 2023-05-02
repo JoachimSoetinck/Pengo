@@ -66,6 +66,7 @@ void dae::WallComponent::Initialize()
 
 void dae::WallComponent::Update()
 {
+	m_Center = m_pGameObject->GetLocalPosition();
 }
 
 void dae::WallComponent::Render() const
@@ -146,6 +147,8 @@ void dae::WallComponent::EnableMovement(MovementDirection directio)
 
 void dae::WallComponent::OnHit(HitInfo* hit)
 {
-	if (hit->gameObject->GetComponent<WallComponent>())
-		hit->gameObject->GetComponent<WallComponent>()->DisableMovement();
+	DisableMovement();
+
+	
+
 }

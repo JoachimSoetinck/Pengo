@@ -1,13 +1,12 @@
 #include "PengoComponent.h"
 #include "GameObject.h"
 #include "Observer.h"
-#include "LivesDisplayComponent.h"
-#include "ScoreDisplayComponent.h"
 #include "SpriteCompenent.h"
 #include "WallManagers.h"
 #include "WallComponent.h"
 #include "GameInfo.h"
 #include "GameObject.h"
+#include "CollisionComponent.h"
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -32,7 +31,7 @@ void dae::PengoComponent::Push()
 {
 
 	//center of player
-	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y};
+	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
 	switch (m_currentState)
 	{
@@ -41,7 +40,7 @@ void dae::PengoComponent::Push()
 		direction = MovementDirection::Left;
 		break;
 	case dae::PengoComponent::PengoState::Right:
-		direction = MovementDirection::Right	;
+		direction = MovementDirection::Right;
 		pushblock.x += 25;
 		break;
 	case dae::PengoComponent::PengoState::Up:
@@ -61,9 +60,17 @@ void dae::PengoComponent::Push()
 	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
 	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
 	{
+		auto go = std::make_shared<dae::GameObject>();
+		go = std::make_shared<dae::GameObject>();
+		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, {0,0,0,0}), dae::GameInfo::GetInstance().GetPlayerSize(), 0.8f));
+		go->AddComponent(new dae::WallComponent(go.get(), dae::WallManager::GetInstance().GetGroundPieces().size(), dae::WallComponent::WallType::Ground));
+		go->AddComponent(new dae::CollisionComponent(go.get(), dae::GameInfo::GetInstance().GetCollisionSize()));
+		go->SetPosition(pushblock.x, pushblock.y);
+		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go); 
+		go->Initalize();
 		w->EnableMovement(direction);
 	}
-	
+
 }
 
 
@@ -123,7 +130,7 @@ void dae::PengoComponent::Move(PengoState state)
 {
 	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
 	SetState(state);
-	SDL_Rect src{0,0,16,16};
+	SDL_Rect src{ 0,0,16,16 };
 	switch (state)
 	{
 	case dae::PengoComponent::PengoState::Left:

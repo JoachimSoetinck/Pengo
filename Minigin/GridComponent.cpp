@@ -8,6 +8,7 @@
 #include "WallComponent.h"
 #include "Renderer.h"
 #include "RigidBody.h"
+#include "GameInfo.h"
 
 
 GridComponent::GridComponent(dae::GameObject* go, int columns, int rows,std::vector<int> walls ,glm::ivec2 startpos, SDL_Rect dest): BaseComponent(go),
@@ -21,6 +22,7 @@ m_Wallpositions{walls}
 
 void GridComponent::Initialize()
 {
+	dae::GameInfo::GetInstance().SetGameObject(m_pGameObject);
 	SDL_Rect src = { 0,0,30,30 };
 	SDL_Rect collisionSize = { 0,0,24,24 };
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
