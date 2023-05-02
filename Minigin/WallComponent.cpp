@@ -111,14 +111,7 @@ void dae::WallComponent::HandleMovement()
 		}
 	}
 
-	//if (m_IsMoving)
-	//{
-	//	if (w && w->GetType() == WallType::MoveableWall )
-	//	{
-	//		this->m_IsMoving == false;
-	//		m_pGameObject->SetPosition(w->GetCenter().x, w->GetCenter().y);
-	//	}
-	//}
+
 
 }
 
@@ -147,7 +140,32 @@ void dae::WallComponent::EnableMovement(MovementDirection directio)
 
 void dae::WallComponent::OnHit(HitInfo* hit)
 {
+	if (!m_IsMoving)
+		return;
+	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
+
+	switch (m_pushDirection)
+	{
+	case dae::MovementDirection::Left:
+		previousWallPos.x += 25;
+		
+		break;
+	case dae::MovementDirection::Right:
+		previousWallPos.x -= 25;
+		break;
+	case dae::MovementDirection::Up:
+		previousWallPos.y += 25;
+		break;
+	case dae::MovementDirection::Down:
+		previousWallPos.y -= 25;
+		break;
+	default:
+		break;
+	}
+
+	m_pGameObject->SetPosition(previousWallPos.x, previousWallPos.y);
 	DisableMovement();
+	
 
 	
 
