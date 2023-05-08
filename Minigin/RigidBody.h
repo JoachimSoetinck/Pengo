@@ -3,7 +3,7 @@
 namespace dae
 {
 
-	class RigidBody : public dae::BaseComponent
+	class RigidBody : public BaseComponent
 	{
 	public:
 		RigidBody(dae::GameObject* object, const glm::vec2& speed = { 50,50 });
@@ -15,8 +15,8 @@ namespace dae
 		RigidBody& operator=(RigidBody&& other) noexcept = delete;
 
 		void Initialize() override;
-		void Update() override {};
-		void FixedUpdate() override {};
+		void Update() override;
+		void FixedUpdate() override;
 		void Render() const override;
 		void Move(const glm::vec2& moveVec);
 

@@ -87,12 +87,6 @@
     <ClInclude Include="SpriteCompenent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LevelCreator.h">
-      <Filter>LevelCreator</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers.h">
-      <Filter>LevelCreator</Filter>
-    </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -129,9 +123,6 @@
     <ClInclude Include="imgui_plot.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="PengoComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -144,31 +135,13 @@
     <ClInclude Include="Subject.h">
       <Filter>Observer</Filter>
     </ClInclude>
-    <ClInclude Include="LivesDisplayComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="XboxController.h">
       <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreDisplayComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="GridComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WallComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WallManagers.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="GameInfo.h">
       <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -224,12 +197,6 @@
     <ClCompile Include="SpriteCompenent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Helpers.cpp">
-      <Filter>LevelCreator</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelCreator.cpp">
-      <Filter>LevelCreator</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
@@ -263,9 +230,6 @@
     <ClCompile Include="imgui_plot.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="PengoComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="RigidBody.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -278,28 +242,10 @@
     <ClCompile Include="Subject.cpp">
       <Filter>Observer</Filter>
     </ClCompile>
-    <ClCompile Include="LivesDisplayComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreDisplayComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="GridComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="WallComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="WallManagers.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="GameInfo.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>

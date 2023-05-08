@@ -1,6 +1,5 @@
-#include "MiniginPCH.h"
 #include "RigidBody.h"
-
+#include "MiniginPCH.h"
 #include "GameObject.h"
 #include "Timer.h"
 
@@ -11,6 +10,14 @@ dae::RigidBody::RigidBody(dae::GameObject* object, const glm::vec2& speed) :
 }
 
 void dae::RigidBody::Initialize()
+{
+}
+
+void dae::RigidBody::Update()
+{
+}
+
+void dae::RigidBody::FixedUpdate()
 {
 }
 

@@ -3,10 +3,9 @@
 #include "Singleton.h"
 #include <map>
 #include <memory>
-
 #include "Command.h"
-
 #include "XboxController.h"
+#include "MiniginPCH.h"
 
 
 namespace dae
