@@ -34,7 +34,7 @@ void GridComponent::Initialize()
 		{
 			auto go = std::make_shared<dae::GameObject>();
 			go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Blocks.png", 1, 1, src), m_BlockSize));
-			go->AddComponent(new dae::RigidBody(go.get()));
+			go->AddComponent(new dae::RigidBody(go.get(), {200,200}));
 			//go->AddComponent(new dae::TextComponent(go.get(), std::to_string(nr), font));
 			if (std::find(m_Wallpositions.begin(), m_Wallpositions.end(), nr) != m_Wallpositions.end())
 			{

@@ -15,7 +15,8 @@ namespace dae {
 			Border,
 			MoveableWall,
 			EnemySpawn,
-			Ground
+			Ground,
+			IndestructableWall
 		};
 
 		WallComponent(dae::GameObject* go,  int nr, WallType wallType=WallType::MoveableWall);
@@ -44,6 +45,8 @@ namespace dae {
 		void EnableMovement(MovementDirection direction);
 		void DisableMovement() { m_IsMoving = false; };
 		void OnHit(HitInfo* hit);
+
+		void SetWallType(WallType type) { m_WallType = type; };
 
 	private:
 		WallType m_WallType;

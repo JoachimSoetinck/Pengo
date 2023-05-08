@@ -135,6 +135,7 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 {
 	if (!m_IsMoving)
 		return;
+
 	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
 
 	dae::GameInfo::GetInstance().GetPlayerSize().w;
@@ -142,7 +143,6 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	{
 	case dae::MovementDirection::Left:
 		previousWallPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
-		
 		break;
 	case dae::MovementDirection::Right:
 		previousWallPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
@@ -157,7 +157,11 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 		break;
 	}
 
+	auto w = WallManager::GetInstance().FindWall(previousWallPos);
+	WallManager::GetInstance().RemoveComponent(w);
+
 	m_pGameObject->SetPosition(previousWallPos.x, previousWallPos.y);
+	auto p = m_pGameObject->GetComponent<WallComponent>()->GetType();
 	DisableMovement();
 	
 

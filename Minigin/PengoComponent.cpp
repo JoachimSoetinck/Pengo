@@ -32,25 +32,30 @@ void dae::PengoComponent::Push()
 
 	//center of player
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
+	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
 	switch (m_currentState)
 	{
 	case dae::PengoComponent::PengoState::Left:
-		pushblock.x -= 25;
+		pushblock.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;
+		pushblockNext.x -= dae::GameInfo::GetInstance().GetPlayerSize().w * 2;
 		direction = MovementDirection::Left;
 		break;
 	case dae::PengoComponent::PengoState::Right:
 		direction = MovementDirection::Right;
-		pushblock.x += 25;
+		pushblock.x += dae::GameInfo::GetInstance().GetPlayerSize().w;
+		pushblockNext.x += dae::GameInfo::GetInstance().GetPlayerSize().w * 2;
 		break;
 	case dae::PengoComponent::PengoState::Up:
 		direction = MovementDirection::Up;
-		pushblock.y -= 25;
+		pushblock.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;
+		pushblockNext.y -= dae::GameInfo::GetInstance().GetPlayerSize().w * 2;
 		break;
 	case dae::PengoComponent::PengoState::Down:
 	{
 		direction = MovementDirection::Down;
-		pushblock.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
+		pushblock.y += dae::GameInfo::GetInstance().GetPlayerSize().w;
+		pushblockNext.y += dae::GameInfo::GetInstance().GetPlayerSize().w * 2;
 		break;
 	}
 	default:
@@ -58,18 +63,27 @@ void dae::PengoComponent::Push()
 	}
 
 	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
-	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
+	auto wAfter = dae::WallManager::GetInstance().FindWall(pushblockNext);
+	if (w && w->GetType() == WallComponent::WallType::MoveableWall && wAfter && wAfter->GetType() == dae::WallComponent::WallType::Ground)
 	{
 		auto go = std::make_shared<dae::GameObject>();
 		go = std::make_shared<dae::GameObject>();
-		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, {0,0,0,0}), dae::GameInfo::GetInstance().GetPlayerSize(), 0.8f));
+		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, { 0,0,0,0 }), dae::GameInfo::GetInstance().GetPlayerSize(), 0.8f));
 		go->AddComponent(new dae::WallComponent(go.get(), dae::WallManager::GetInstance().GetGroundPieces().size(), dae::WallComponent::WallType::Ground));
 		go->AddComponent(new dae::CollisionComponent(go.get(), dae::GameInfo::GetInstance().GetCollisionSize()));
 		go->SetPosition(pushblock.x, pushblock.y);
-		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go); 
+		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go);
 		go->Initalize();
 		w->EnableMovement(direction);
 	}
+	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
+		&& wAfter && (wAfter->GetType() == dae::WallComponent::WallType::MoveableWall || wAfter->GetType() == dae::WallComponent::WallType::Border))
+	{
+		w->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
+		w->GetGameObject()->GetComponent<CollisionComponent>()->Disable();
+		w->GetGameObject()->GetComponent<WallComponent>()->SetWallType(WallComponent::WallType::Ground);
+	}
+
 
 }
 
