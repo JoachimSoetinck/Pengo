@@ -23,6 +23,7 @@
 #include <SDLSoundSystem.h>
 #include "RenderComponent.h"
 #include "MenuButtonComponent.h"
+#include "Main.h"
 
 
 
@@ -40,58 +41,18 @@ void load()
 	button->SetPosition(150, 150);
 	Start->Add(button);
 
-
-
-	
-
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", scene);
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	glm::ivec2 pos{ 0,50 };
+	glm::ivec2 pos2{ 0,25 };
 
 
-	auto How = std::make_shared<dae::GameObject>();
-	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (Controller)", font));
-	How->SetPosition(0, 0);
-	scene->Add(How);
-
-	How = std::make_shared<dae::GameObject>();
-	How->AddComponent(new dae::TextComponent(How.get(), "DIE: X ", font));
-	How->SetPosition(0, 25);
-	scene->Add(How);
-	How = std::make_shared<dae::GameObject>();
-	How->AddComponent(new dae::TextComponent(How.get(), "Points: B ", font));
-	How->SetPosition(0, 50);
-	scene->Add(How);
-
-
-	auto tc = std::make_shared<dae::GameObject>();
-	tc->AddComponent(new dae::TextComponent(tc.get(), "Lives:", font));
-	tc->AddComponent(new dae::LivesDisplayComponent(tc.get()));
-	tc->SetPosition(10, 350);
-	scene->Add(tc);
-
-	auto score = std::make_shared<dae::GameObject>();
-	score->AddComponent(new dae::TextComponent(score.get(), "Score:", font));
-	score->AddComponent(new dae::ScoreDisplayComponent(score.get()));
-	score->SetPosition(10, 370);
-	scene->Add(score);
+	CreateInfo(font, scene, pos2, pos);
 
 
 	auto go = std::make_shared<dae::GameObject>();
-	SDL_Rect src{ 0,0,16,16 };
-	SDL_Rect dest{ 0,0,20,20 };
 
-	go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Pengo.png", 2, 1, src), dest, 0.8f));
-	go->AddComponent(new dae::RigidBody(go.get()));
-	go->AddComponent(new dae::CollisionComponent(go.get(), dest));
-	auto pengo = new dae::PengoComponent(go.get());
-	pengo->AddObserver(tc->GetComponent<dae::LivesDisplayComponent>());
-	pengo->AddObserver(score->GetComponent<dae::ScoreDisplayComponent>());
-	go->AddComponent(pengo);
-	go->SetPosition(50, 150);
-	pengo->Start();
-
-
-	scene->Add(go);
+	CreatePlayer(font, scene, go);
 
 	
 	dae::InputManager::GetInstance().AddPlayer(false);
@@ -99,7 +60,6 @@ void load()
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_UP, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Up), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_RIGHT, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Right), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADLeft, SDL_SCANCODE_LEFT, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Left), 0, dae::InputManager::EInputState::Pressed);
-
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_SPACE, std::make_shared<dae::PushCommand>(go), 0, dae::InputManager::EInputState::Pressed);
 
 
@@ -146,6 +106,56 @@ void load()
 	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
 
 	
+}
+
+void CreateInfo(std::shared_ptr<dae::Font>& font, std::shared_ptr<dae::Scene>& scene, glm::ivec2& pos2, glm::ivec2& pos)
+{
+	auto How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (Controller)", font));
+	How->SetPosition(0, 0);
+	scene->Add(How);
+
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "DIE: X ", font));
+	How->SetPosition(pos2.x, pos.y);
+	scene->Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "Points: B ", font));
+	How->SetPosition(pos.x, pos.y);
+	scene->Add(How);
+}
+
+void CreatePlayer(std::shared_ptr<dae::Font>& font, std::shared_ptr<dae::Scene>& scene, std::shared_ptr<dae::GameObject>& go)
+{
+	auto tc = std::make_shared<dae::GameObject>();
+	tc->AddComponent(new dae::TextComponent(tc.get(), "Lives:", font));
+	tc->AddComponent(new dae::LivesDisplayComponent(tc.get()));
+	tc->SetPosition(10, 350);
+	scene->Add(tc);
+
+	auto score = std::make_shared<dae::GameObject>();
+	score->AddComponent(new dae::TextComponent(score.get(), "Score:", font));
+	score->AddComponent(new dae::ScoreDisplayComponent(score.get()));
+	score->SetPosition(10, 370);
+	scene->Add(score);
+
+
+
+	SDL_Rect src{ 0,0,16,16 };
+	SDL_Rect dest{ 0,0,20,20 };
+
+	go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Pengo.png", 2, 1, src), dest, 0.8f));
+	go->AddComponent(new dae::RigidBody(go.get()));
+	go->AddComponent(new dae::CollisionComponent(go.get(), dest));
+	auto pengo = new dae::PengoComponent(go.get());
+	pengo->AddObserver(tc->GetComponent<dae::LivesDisplayComponent>());
+	pengo->AddObserver(score->GetComponent<dae::ScoreDisplayComponent>());
+	go->AddComponent(pengo);
+	go->SetPosition(50, 150);
+	pengo->Start();
+
+
+	scene->Add(go);
 }
 
 int main(int, char* []) {
