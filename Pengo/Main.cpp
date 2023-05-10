@@ -35,26 +35,63 @@ void load()
 	auto scene = std::make_shared<dae::Scene>("Level01");
 	dae::SceneManager::GetInstance().AddScene(scene);
 
-	auto button = std::make_shared<dae::GameObject>();
-	button->AddComponent(new dae::RenderComponent(button.get(), "../Data/Button.png"));
-	button->AddComponent(new dae::MenuButtonComponent(button.get(), button->GetComponent<dae::RenderComponent>(), "Level01"));
-	button->SetPosition(150, 150);
-	Start->Add(button);
+	scene = std::make_shared<dae::Scene>("Level02");
+	dae::SceneManager::GetInstance().AddScene(scene);
 
-	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", scene);
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	glm::ivec2 pos{ 0,50 };
-	glm::ivec2 pos2{ 0,25 };
+	scene = std::make_shared<dae::Scene>("Level03");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("COOP01");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("COOP02");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("COOP03");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("VERSUS01");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("VERSUS02");
+	dae::SceneManager::GetInstance().AddScene(scene);
+
+	scene = std::make_shared<dae::Scene>("VERSUS03");
+	dae::SceneManager::GetInstance().AddScene(scene);
 
 
-	CreateInfo(font, scene, pos2, pos);
-
-
-	auto go = std::make_shared<dae::GameObject>();
-
-	CreatePlayer(font, scene, go);
 
 	
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
+
+	
+
+	std::string buttonText{ "Single Player" };
+	glm::ivec2 position{ 150,80 };
+	CreateButton(buttonText, font2, position, Start);
+
+	buttonText = "COOP";
+	position = { 150,10 };
+	CreateButton(buttonText, font2, position, Start);
+
+	buttonText = "VERSUS";
+	position = { 150,300 };
+	CreateButton(buttonText, font2, position, Start);
+
+	
+	glm::ivec2 pos{ 0,50 };
+	glm::ivec2 pos2{ 0,35 };
+
+
+	auto l1 = dae::SceneManager::GetInstance().GetScene("Level01");
+	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", l1);
+	CreateInfo(font, l1, pos2, pos);
+
+	auto go = std::make_shared<dae::GameObject>();
+	CreatePlayer(font, l1, go);
+
+
 	dae::InputManager::GetInstance().AddPlayer(false);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_DOWN, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Down), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_UP, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Up), 0, dae::InputManager::EInputState::Pressed);
@@ -105,7 +142,17 @@ void load()
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
 	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
 
-	
+
+}
+
+void CreateButton(std::string& buttonText, std::shared_ptr<dae::Font>& font2, glm::ivec2& position, std::shared_ptr<dae::Scene>& Start)
+{
+	auto button = std::make_shared<dae::GameObject>();
+	button->AddComponent(new dae::RenderComponent(button.get(), "../Data/Button.png"));
+	button->AddComponent(new dae::MenuButtonComponent(button.get(), button->GetComponent<dae::RenderComponent>(), "Level01"));
+	button->AddComponent(new dae::TextComponent(button.get(), buttonText, font2));
+	button->SetPosition(position.x, position.y);
+	Start->Add(button);
 }
 
 void CreateInfo(std::shared_ptr<dae::Font>& font, std::shared_ptr<dae::Scene>& scene, glm::ivec2& pos2, glm::ivec2& pos)
@@ -117,7 +164,7 @@ void CreateInfo(std::shared_ptr<dae::Font>& font, std::shared_ptr<dae::Scene>& s
 
 	How = std::make_shared<dae::GameObject>();
 	How->AddComponent(new dae::TextComponent(How.get(), "DIE: X ", font));
-	How->SetPosition(pos2.x, pos.y);
+	How->SetPosition(pos2.x, pos2.y);
 	scene->Add(How);
 	How = std::make_shared<dae::GameObject>();
 	How->AddComponent(new dae::TextComponent(How.get(), "Points: B ", font));

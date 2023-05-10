@@ -16,6 +16,7 @@ namespace dae
 		std::shared_ptr<dae::Scene> GetCurrentScene() const;
 
 		void SetActiveScene(const std::string& name);
+		std::shared_ptr<dae::Scene> GetScene(const std::string& name);
 		void RemoveMarkedForDeleteItems();
 
 		void Update();

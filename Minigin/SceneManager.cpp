@@ -48,6 +48,22 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 	}
 }
 
+std::shared_ptr<dae::Scene> dae::SceneManager::GetScene(const std::string& name)
+{
+	for (auto& scene : m_scenes)
+	{
+		if (scene->GetName() == name)
+		{
+		
+			return scene;
+		}
+	}
+
+	return nullptr;
+}
+
+
+
 void dae::SceneManager::RemoveMarkedForDeleteItems()
 {
 	m_ActiveScene->DeleteObjects();
