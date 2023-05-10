@@ -8,7 +8,7 @@
 #include "GameObject.h"
 #include "CollisionComponent.h"
 #include "ServiceLocator.h"
-#include "SoundSystem.h"
+
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },

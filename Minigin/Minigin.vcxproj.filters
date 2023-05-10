@@ -150,9 +150,6 @@
     <ClInclude Include="ISoundSystem.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="SoundSystem.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="ServiceLocator.h">
       <Filter>Sound</Filter>
     </ClInclude>
@@ -270,9 +267,6 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="ISoundSystem.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundSystem.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">

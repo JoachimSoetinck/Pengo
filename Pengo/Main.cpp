@@ -20,7 +20,6 @@
 #include "PengoComponent.h"
 #include "CustomCommands.h"
 #include "ServiceLocator.h"	
-#include <SoundSystem.h>
 #include <SDLSoundSystem.h>
 #include "RenderComponent.h"
 #include "MenuButtonComponent.h"
