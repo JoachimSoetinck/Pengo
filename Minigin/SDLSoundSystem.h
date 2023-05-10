@@ -1,7 +1,5 @@
 #pragma once
 #include "ISoundSystem.h"
-#include "Sound.h"
-
 #include <queue>
 #include <memory>
 #include <thread>
