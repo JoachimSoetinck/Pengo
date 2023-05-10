@@ -20,7 +20,7 @@ dae::PushCommand::PushCommand(std::shared_ptr<GameObject> obj) : m_pObject{ obj 
 
 void dae::PushCommand::Execute()
 {
-	dae::ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sound/Jump.wav");
+	dae::ServiceLocator::GetSoundSystem()->PlaySound(0);
 	if (m_pObject->GetComponent<dae::PengoComponent>())
 		m_pObject->GetComponent<dae::PengoComponent>()->Push();
 }

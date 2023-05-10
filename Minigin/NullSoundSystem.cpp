@@ -8,13 +8,10 @@ void dae::NullSoundSystem::Update()
 {
 }
 
-void dae::NullSoundSystem::PlaySound(const std::string&)
+void dae::NullSoundSystem::PlaySound(int)
 {
 }
 
-void dae::NullSoundSystem::PlayMusic(const std::string&)
-{
-}
 
 void dae::NullSoundSystem::PauseSound()
 {

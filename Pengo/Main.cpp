@@ -93,6 +93,7 @@ void load()
 
 	scene->Add(go);
 
+	
 	dae::InputManager::GetInstance().AddPlayer(false);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_DOWN, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Down), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_UP, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Up), 0, dae::InputManager::EInputState::Pressed);
@@ -142,6 +143,7 @@ void load()
 	}
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
 
 	
 }
