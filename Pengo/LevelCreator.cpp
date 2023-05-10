@@ -16,6 +16,7 @@
 #include "CollisionComponent.h"
 #include "GridComponent.h"
 #include "GameInfo.h"
+#include "SDL_mixer.h"
 
 
 bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, std::shared_ptr<dae::Scene> scene)
@@ -61,5 +62,6 @@ bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, std::shared_pt
 	dae::GameInfo::GetInstance().SetColumns(c.GetInt());
 	dae::GameInfo::GetInstance().SetRows(r.GetInt());
 
-	return false;
+
+	return true;
 }

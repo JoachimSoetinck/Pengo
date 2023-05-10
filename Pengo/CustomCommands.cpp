@@ -1,4 +1,5 @@
 #include "CustomCommands.h"
+#include <ServiceLocator.h>
 
 
 dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::PengoState movingDirection) : m_pObject{ obj }, m_PlayerState{ movingDirection }
@@ -19,6 +20,7 @@ dae::PushCommand::PushCommand(std::shared_ptr<GameObject> obj) : m_pObject{ obj 
 
 void dae::PushCommand::Execute()
 {
+	dae::ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sound/Jump.wav");
 	if (m_pObject->GetComponent<dae::PengoComponent>())
 		m_pObject->GetComponent<dae::PengoComponent>()->Push();
 }

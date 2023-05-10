@@ -7,6 +7,8 @@
 #include "GameInfo.h"
 #include "GameObject.h"
 #include "CollisionComponent.h"
+#include "ServiceLocator.h"
+#include "SoundSystem.h"
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -29,7 +31,7 @@ dae::PengoComponent::~PengoComponent()
 
 void dae::PengoComponent::Push()
 {
-
+	//dae::ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sound/Jump.wav");
 	//center of player
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };

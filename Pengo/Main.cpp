@@ -19,13 +19,31 @@
 #include "InputManager.h"
 #include "PengoComponent.h"
 #include "CustomCommands.h"
+#include "ServiceLocator.h"	
+#include <SoundSystem.h>
+#include <SDLSoundSystem.h>
+#include "RenderComponent.h"
+#include "MenuButtonComponent.h"
 
 
 
 void load()
 {
-	auto scene = std::make_shared<dae::Scene>("StartScene");
+	auto Start = std::make_shared<dae::Scene>("StartScene");
+	dae::SceneManager::GetInstance().AddScene(Start);
+
+	auto scene = std::make_shared<dae::Scene>("Level01");
 	dae::SceneManager::GetInstance().AddScene(scene);
+
+	auto button = std::make_shared<dae::GameObject>();
+	button->AddComponent(new dae::RenderComponent(button.get(), "../Data/Button.png"));
+	button->AddComponent(new dae::MenuButtonComponent(button.get(), button->GetComponent<dae::RenderComponent>(), "Level01"));
+	button->SetPosition(150, 150);
+	Start->Add(button);
+
+
+
+	
 
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", scene);
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
@@ -123,6 +141,10 @@ void load()
 	{
 		s->Initialize();
 	}
+
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
+
+	
 }
 
 int main(int, char* []) {

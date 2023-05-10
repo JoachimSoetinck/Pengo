@@ -11,6 +11,7 @@
 #include "ResourceManager.h"
 #include <thread>
 #include "Timer.h"
+#include "ServiceLocator.h"
 
 
 SDL_Window* g_window{};
@@ -47,10 +48,14 @@ dae::Minigin::Minigin(const std::string& dataPath)
 {
 	PrintSDLVersion();
 
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	//https://stackoverflow.com/questions/44186167/sdl-2-on-windows-works-incorrectly-with-audio-device 
+	//_putenv("SDL_AUDIODRIVER=DirectSound");
+
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
+
 
 	g_window = SDL_CreateWindow(
 		"Programming 4 assignment",

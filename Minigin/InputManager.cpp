@@ -24,10 +24,9 @@ dae::InputManager::~InputManager()
 
 bool dae::InputManager::ProcessInput()
 {
-
+	bool mouseClicked = false;
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
-		SDL_GetMouseState(&m_MousePos.x, &m_MousePos.y);
 
 		if (e.type == SDL_QUIT) {
 			return false;
@@ -66,8 +65,14 @@ bool dae::InputManager::ProcessInput()
 
 		if (e.type == SDL_MOUSEBUTTONDOWN && m_isPressed == false)
 		{
-			if (e.button.button == SDL_BUTTON_LEFT)
-				m_isPressed = true;
+			POINT mousePos{ static_cast<LONG>(e.button.x), static_cast<LONG>(e.button.y) };
+			switch (e.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+				mouseClicked = true;
+				m_MousePosition = mousePos;
+				break;
+			}
 		}
 
 		if (e.type == SDL_MOUSEBUTTONUP)
@@ -77,6 +82,7 @@ bool dae::InputManager::ProcessInput()
 		}
 	}
 
+	m_MouseUp = mouseClicked;
 	Update();
 
 	for (const auto& controller : m_ConsoleCommands)
@@ -163,6 +169,16 @@ void dae::InputManager::AddCommand(XboxController::Button Controllerbutton, SDL_
 
 void dae::InputManager::RemoveCommand(XboxController::Button, std::shared_ptr<Command>, int, EInputState)
 {
+}
+
+bool dae::InputManager::GetMouseUp() const
+{
+	return m_MouseUp;
+}
+
+POINT dae::InputManager::GetMousePosition() const
+{
+	return m_MousePosition;
 }
 
 

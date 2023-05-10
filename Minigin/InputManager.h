@@ -58,8 +58,11 @@ namespace dae
 		bool IsUpThisFrame(XboxController::Button button, int playerNr) const;
 		void AddCommand(XboxController::Button button,  SDL_Scancode keyboardButton,std::shared_ptr<Command> command, int playerNr, EInputState state = EInputState::Down);
 		void RemoveCommand(XboxController::Button button, std::shared_ptr<Command> command, int playerNr, EInputState state = EInputState::Down);
-		glm::ivec2 GetMousePos()const { return m_MousePos; };
+		POINT GetMousePos()const { return m_MousePosition; };
 		bool IsMousePress() const { return m_isPressed; };
+
+		bool GetMouseUp() const;
+		POINT GetMousePosition() const;
 	private:
 		
 		
@@ -73,7 +76,8 @@ namespace dae
 
 		SDL_Event m_Event{};
 
-		glm::ivec2 m_MousePos{};
+		POINT m_MousePosition = POINT();
+		bool m_MouseUp = false;
 
 		bool m_isPressed{ false };
 
