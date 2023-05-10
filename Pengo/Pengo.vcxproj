@@ -161,6 +161,7 @@
     <ClInclude Include="Helpers.h" />
     <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="MenuButtonComponent.h" />
     <ClInclude Include="PengoComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
