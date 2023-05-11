@@ -31,7 +31,8 @@ namespace dae {
 		float GetRotation() const { return m_Rotation; }
 
 		void ResetSprite();
-		void SetSprite(Sprite sprite) { m_Sprite = sprite; };
+		void SetSprite(Sprite sprite) { m_Sprite = sprite; m_curTimer = 0; m_currentCol = 1; m_currentRow = 1; };
+		void SetTimer(float t) { m_AnimationTime = t; };
 
 		Sprite GetSprite()const { return m_Sprite; }
 		SDL_Rect GetDestRect() const { return m_DstRect; }

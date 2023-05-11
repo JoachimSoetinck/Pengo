@@ -209,6 +209,7 @@
   <ItemGroup>
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="BaseController.h" />
+    <ClInclude Include="BaseState.h" />
     <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteCompenent.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
@@ -253,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="BaseController.cpp" />
+    <ClCompile Include="BaseState.cpp" />
     <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -306,6 +309,7 @@
     <ClCompile Include="SDLSoundSystem.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="SpriteCompenent.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />

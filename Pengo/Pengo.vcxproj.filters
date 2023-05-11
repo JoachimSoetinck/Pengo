@@ -16,6 +16,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{df783ba1-90f6-4319-8948-468f2d0a9df4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{ebf16f8f-711c-4c1d-bdab-82c3fad6c262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WallManagers.h">
@@ -54,6 +57,9 @@
     <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WallStates.h">
+      <Filter>States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -91,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="MenuButtonComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WallStates.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

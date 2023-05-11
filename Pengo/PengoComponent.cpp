@@ -9,7 +9,6 @@
 #include "CollisionComponent.h"
 #include "ServiceLocator.h"
 
-
 dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
 m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h }
@@ -31,8 +30,6 @@ dae::PengoComponent::~PengoComponent()
 
 void dae::PengoComponent::Push()
 {
-	//dae::ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sound/Jump.wav");
-	//center of player
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
@@ -81,9 +78,7 @@ void dae::PengoComponent::Push()
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
 		&& wAfter && (wAfter->GetType() == dae::WallComponent::WallType::MoveableWall || wAfter->GetType() == dae::WallComponent::WallType::Border))
 	{
-		w->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
-		w->GetGameObject()->GetComponent<CollisionComponent>()->Disable();
-		w->GetGameObject()->GetComponent<WallComponent>()->SetWallType(WallComponent::WallType::Ground);
+		w->BreakWall();
 	}
 
 

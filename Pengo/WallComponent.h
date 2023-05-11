@@ -5,6 +5,8 @@
 namespace dae {
 	class GameObject;
 	class SpriteComponent;
+	class StateMachine;
+	class BaseState;
 
 	struct HitInfo;
 	
@@ -21,7 +23,7 @@ namespace dae {
 
 		WallComponent(dae::GameObject* go,  int nr, WallType wallType=WallType::MoveableWall);
 
-		~WallComponent() override = default;
+		~WallComponent() override;
 
 		WallComponent(const WallComponent& other) = delete;
 		WallComponent(WallComponent&& other) noexcept = delete;
@@ -48,10 +50,15 @@ namespace dae {
 
 		void SetWallType(WallType type) { m_WallType = type; };
 
+		
+		void BreakWall();
+
 	private:
 		WallType m_WallType;
 		SpriteComponent* m_SpriteComp;
 		int m_Nr;
+
+		StateMachine* m_stateMachine;
 
 		glm::ivec2 m_Center{};
 

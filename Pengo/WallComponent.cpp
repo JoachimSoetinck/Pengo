@@ -6,16 +6,27 @@
 #include "CollisionComponent.h"
 #include "Helpers.h"
 #include "GameInfo.h"
+#include "WallStates.h"
+#include "StateMachine.h"
+#include "BaseState.h"
 
 
 dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType) : BaseComponent(go),
-m_WallType{ wallType }, m_SpriteComp{ nullptr }, m_Nr{ nr }
+m_WallType{ wallType }, m_SpriteComp{ nullptr }, m_Nr{ nr },
+m_stateMachine{ new StateMachine(new WallState()) }
 {
 
 }
 
+dae::WallComponent::~WallComponent()
+{
+	delete m_stateMachine;
+	m_stateMachine = nullptr;
+}
+
 void dae::WallComponent::Initialize()
 {
+	m_stateMachine->Initialize(m_pGameObject);
 	SDL_Rect src = { 0,0,30,30 };
 	dae::WallManager::GetInstance().AddComponent(this);
 
@@ -32,16 +43,12 @@ void dae::WallComponent::Initialize()
 		{
 		case WallType::Border:
 		{
-			src = { 0,0,16,24 };
-			m_SpriteComp->SetSprite(Sprite("Wall.png", 1, 1, src));
+			m_stateMachine->SetState(m_pGameObject, new BorderState());
 			break;
 		}
 		case WallType::MoveableWall:
 		{
-			src = { 0,0,30,30 };
-			m_SpriteComp->SetSprite(Sprite("Blocks.png", 1, 1, src));
-
-			break;
+			m_stateMachine->SetState(m_pGameObject, new WallState());
 		}
 
 		case WallType::EnemySpawn:
@@ -50,8 +57,7 @@ void dae::WallComponent::Initialize()
 		}
 		case WallType::Ground:
 		{
-
-			m_SpriteComp->SetVisibility(false);
+			m_stateMachine->SetState(m_pGameObject, new GroundState());
 			break;
 		}
 		default:
@@ -68,6 +74,7 @@ void dae::WallComponent::Initialize()
 void dae::WallComponent::Update()
 {
 	m_Center = m_pGameObject->GetLocalPosition();
+	m_stateMachine->Update(m_pGameObject);
 }
 
 void dae::WallComponent::Render() const
@@ -103,9 +110,6 @@ void dae::WallComponent::HandleMovement()
 			break;
 		}
 	}
-
-
-
 }
 
 
@@ -161,10 +165,14 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	WallManager::GetInstance().RemoveComponent(w);
 
 	m_pGameObject->SetPosition(previousWallPos.x, previousWallPos.y);
-	auto p = m_pGameObject->GetComponent<WallComponent>()->GetType();
 	DisableMovement();
 	
+}
+
+void dae::WallComponent::BreakWall()
+{
+	m_stateMachine->SetState(m_pGameObject, new BreakingState());
+}
+
 
 	
-
-}

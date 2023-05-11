@@ -34,6 +34,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{63662a13-fdb9-4285-be35-7a0f15e5de7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{752523a3-ab6a-48f5-92e9-f30b061b1d92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -162,6 +165,12 @@
     <ClInclude Include="ButtonComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseState.h">
+      <Filter>State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -277,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="ButtonComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>State</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

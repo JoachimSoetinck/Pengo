@@ -167,6 +167,7 @@
     <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="WallComponent.h" />
     <ClInclude Include="WallManagers.h" />
+    <ClInclude Include="WallStates.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomCommands.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="WallComponent.cpp" />
     <ClCompile Include="WallManagers.cpp" />
+    <ClCompile Include="WallStates.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
