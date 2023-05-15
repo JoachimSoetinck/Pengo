@@ -15,7 +15,7 @@ dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType
 m_WallType{ wallType }, m_SpriteComp{ nullptr }, m_Nr{ nr },
 m_stateMachine{ new StateMachine(new WallState()) }
 {
-
+	m_Center = m_pGameObject->GetLocalPosition();
 }
 
 dae::WallComponent::~WallComponent()

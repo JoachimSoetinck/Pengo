@@ -96,8 +96,11 @@ void dae::PengoComponent::Initialize()
 {
 	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
 
+
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 	m_currentBlock = m_StartBlock;
+
+
 }
 
 void dae::PengoComponent::Update()
@@ -118,6 +121,8 @@ void dae::PengoComponent::FixedUpdate()
 void dae::PengoComponent::Start()
 {
 	m_PlayerSubject->Notify(Event::PlayerStart, this->GetGameObject());
+
+
 }
 
 void dae::PengoComponent::Die()
