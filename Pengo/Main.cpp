@@ -25,6 +25,7 @@
 #include "MenuButtonComponent.h"
 #include "Main.h"
 #include "SinglePlayerScene.h"
+#include "CoopScene.h"
 
 
 
@@ -36,29 +37,29 @@ void load()
 	auto scene = std::make_shared<dae::SinglePlayerScene>("Level01");
 	dae::SceneManager::GetInstance().AddScene(scene);
 
-	/*scene = std::make_shared<dae::Scene>("Level02");
+	//scene = std::make_shared<dae::Scene>("Level02");
+	//dae::SceneManager::GetInstance().AddScene(scene);
+
+	//scene = std::make_shared<dae::Scene>("Level03");
+	//dae::SceneManager::GetInstance().AddScene(scene);
+
+	auto coopscene = std::make_shared<dae::CoopScene>("COOP01");
 	dae::SceneManager::GetInstance().AddScene(scene);
 
-	scene = std::make_shared<dae::Scene>("Level03");
-	dae::SceneManager::GetInstance().AddScene(scene);
+	//scene = std::make_shared<dae::Scene>("COOP02");
+	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	scene = std::make_shared<dae::Scene>("COOP01");
-	dae::SceneManager::GetInstance().AddScene(scene);
+	//scene = std::make_shared<dae::Scene>("COOP03");
+	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	scene = std::make_shared<dae::Scene>("COOP02");
-	dae::SceneManager::GetInstance().AddScene(scene);
+	//scene = std::make_shared<dae::Scene>("VERSUS01");
+	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	scene = std::make_shared<dae::Scene>("COOP03");
-	dae::SceneManager::GetInstance().AddScene(scene);
+	//scene = std::make_shared<dae::Scene>("VERSUS02");
+	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	scene = std::make_shared<dae::Scene>("VERSUS01");
-	dae::SceneManager::GetInstance().AddScene(scene);
-
-	scene = std::make_shared<dae::Scene>("VERSUS02");
-	dae::SceneManager::GetInstance().AddScene(scene);
-
-	scene = std::make_shared<dae::Scene>("VERSUS03");
-	dae::SceneManager::GetInstance().AddScene(scene);*/
+	//scene = std::make_shared<dae::Scene>("VERSUS03");
+	//dae::SceneManager::GetInstance().AddScene(scene);
 
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
@@ -68,23 +69,15 @@ void load()
 
 	std::string buttonText{ "Single Player" };
 	glm::ivec2 position{ 150,80 };
-	CreateButton(buttonText, font2, position, Start);
+	CreateButton(buttonText, font2, position, Start, "Level01");
 
-	buttonText = "COOP";
-	position = { 150,170 };
-	CreateButton(buttonText, font2, position, Start);
+	//buttonText = "COOP";
+	//position = { 150,200 };
+	//CreateButton(buttonText, font2, position, Start, "COOP01");
 
-	buttonText = "VERSUS";
-	position = { 150,300 };
-	CreateButton(buttonText, font2, position, Start);
-
-	
-	glm::ivec2 pos{ 0,50 };
-	glm::ivec2 pos2{ 0,35 };
-
-
-
-	//CreateInfo(font, l1, pos2, pos);
+	//buttonText = "VERSUS";
+	//position = { 150,300 };
+	//CreateButton(buttonText, font2, position, Start,"Level01");
 
 
 	for (auto& s : dae::SceneManager::GetInstance().GetScenes())
@@ -98,11 +91,11 @@ void load()
 
 }
 
-void CreateButton(std::string& buttonText, std::shared_ptr<dae::Font>& font2, glm::ivec2& position, std::shared_ptr<dae::Scene>& Start)
+void CreateButton(std::string& buttonText, std::shared_ptr<dae::Font>& font2, glm::ivec2& position, std::shared_ptr<dae::Scene>& Start,const std::string level)
 {
 	auto button = std::make_shared<dae::GameObject>();
 	button->AddComponent(new dae::RenderComponent(button.get(), "../Data/Button.png"));
-	button->AddComponent(new dae::MenuButtonComponent(button.get(), button->GetComponent<dae::RenderComponent>(), "Level01"));
+	button->AddComponent(new dae::MenuButtonComponent(button.get(), button->GetComponent<dae::RenderComponent>(), level));
 	button->AddComponent(new dae::TextComponent(button.get(), buttonText, font2));
 	button->SetPosition(position.x, position.y);
 	Start->Add(button);

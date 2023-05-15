@@ -155,6 +155,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CoopScene.h" />
     <ClInclude Include="CustomCommands.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GridComponent.h" />
@@ -166,11 +167,13 @@
     <ClInclude Include="PengoComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="SinglePlayerScene.h" />
+    <ClInclude Include="VersusScene.h" />
     <ClInclude Include="WallComponent.h" />
     <ClInclude Include="WallManagers.h" />
     <ClInclude Include="WallStates.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CoopScene.cpp" />
     <ClCompile Include="CustomCommands.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GridComponent.cpp" />
@@ -182,6 +185,7 @@
     <ClCompile Include="PengoComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="SinglePlayerScene.cpp" />
+    <ClCompile Include="VersusScene.cpp" />
     <ClCompile Include="WallComponent.cpp" />
     <ClCompile Include="WallManagers.cpp" />
     <ClCompile Include="WallStates.cpp" />
