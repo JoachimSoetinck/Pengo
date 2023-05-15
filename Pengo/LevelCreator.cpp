@@ -19,7 +19,7 @@
 #include "SDL_mixer.h"
 
 
-bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, std::shared_ptr<dae::Scene> scene)
+bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, Scene* scene)
 {
 	std::wstring fileName = filePath;
 	rapidjson::Document jsonFile;

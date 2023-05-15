@@ -19,6 +19,9 @@
     <Filter Include="States">
       <UniqueIdentifier>{ebf16f8f-711c-4c1d-bdab-82c3fad6c262}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{31c3edcd-1e46-4251-bfbc-cfcef3f27875}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WallManagers.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="WallStates.h">
       <Filter>States</Filter>
     </ClInclude>
+    <ClInclude Include="SinglePlayerScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="WallStates.cpp">
       <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="SinglePlayerScene.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
