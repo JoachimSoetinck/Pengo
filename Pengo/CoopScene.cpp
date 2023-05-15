@@ -20,6 +20,7 @@ void dae::CoopScene::Initialize()
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
 
 	CreatePlayer(font);
+	CreateCoopPlayer(font);
 
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
@@ -79,14 +80,14 @@ void dae::CoopScene::CreateCoopPlayer(std::shared_ptr<dae::Font>& font)
 	score->SetPosition(10, 370);
 	Add(score);
 
-	SDL_Rect src{ 0,0,16,16 };
+	SDL_Rect src{ 0,64,16,16 };
 	SDL_Rect dest{ 0,0,20,20 };
 
 	auto go = std::make_shared<dae::GameObject>();
 	go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Pengo.png", 2, 1, src), dest, 0.8f));
 	go->AddComponent(new dae::RigidBody(go.get()));
 	go->AddComponent(new dae::CollisionComponent(go.get(), dest));
-	auto pengo = new dae::PengoComponent(go.get());
+	auto pengo = new dae::PengoComponent(go.get(), 40);
 	pengo->AddObserver(tc->GetComponent<dae::LivesDisplayComponent>());
 	pengo->AddObserver(score->GetComponent<dae::ScoreDisplayComponent>());
 	go->AddComponent(pengo);

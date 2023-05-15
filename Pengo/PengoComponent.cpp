@@ -9,9 +9,10 @@
 #include "CollisionComponent.h"
 #include "ServiceLocator.h"
 
-dae::PengoComponent::PengoComponent(GameObject* gameObject) : BaseComponent(gameObject),
+dae::PengoComponent::PengoComponent(GameObject* gameObject, int startblock) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
-m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h }
+m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h },
+m_StartBlock{ startblock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
 
@@ -142,28 +143,30 @@ void dae::PengoComponent::Move(PengoState state)
 	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
 	SetState(state);
 	SDL_Rect src{ 0,0,16,16 };
+
+	int startHeight = m_pGameObject->GetComponent<SpriteComponent>()->GetSprite().SrcRect.y;
 	switch (state)
 	{
 	case dae::PengoComponent::PengoState::Left:
-		src = { 32,0,16,16 };
+		src = { 32,startHeight,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 
 	case dae::PengoComponent::PengoState::Right:
-		src = { 96,0,16,16 };
+		src = { 96,startHeight,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	case dae::PengoComponent::PengoState::Up:
-		src = { 64,0,16,16 };
+		src = { 64,startHeight,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 
 		break;
 	case dae::PengoComponent::PengoState::Down:
 	{
-		src = { 0,0,16,16 };
+		src = { 0,startHeight,16,16 };
 		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;

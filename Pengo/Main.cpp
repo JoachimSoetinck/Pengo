@@ -44,7 +44,7 @@ void load()
 	//dae::SceneManager::GetInstance().AddScene(scene);
 
 	auto coopscene = std::make_shared<dae::CoopScene>("COOP01");
-	dae::SceneManager::GetInstance().AddScene(scene);
+	dae::SceneManager::GetInstance().AddScene(coopscene);
 
 	//scene = std::make_shared<dae::Scene>("COOP02");
 	//dae::SceneManager::GetInstance().AddScene(scene);
@@ -65,25 +65,24 @@ void load()
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
 
-	
+
 
 	std::string buttonText{ "Single Player" };
 	glm::ivec2 position{ 150,80 };
 	CreateButton(buttonText, font2, position, Start, "Level01");
 
-	//buttonText = "COOP";
-	//position = { 150,200 };
-	//CreateButton(buttonText, font2, position, Start, "COOP01");
+	buttonText = "COOP";
+	position = { 150,200 };
+	CreateButton(buttonText, font2, position, Start, "COOP01");
 
 	//buttonText = "VERSUS";
 	//position = { 150,300 };
 	//CreateButton(buttonText, font2, position, Start,"Level01");
 
 
-	for (auto& s : dae::SceneManager::GetInstance().GetScenes())
-	{
-		s->Initialize();
-	}
+
+	Start->Initialize();
+
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
 	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
@@ -91,7 +90,7 @@ void load()
 
 }
 
-void CreateButton(std::string& buttonText, std::shared_ptr<dae::Font>& font2, glm::ivec2& position, std::shared_ptr<dae::Scene>& Start,const std::string level)
+void CreateButton(std::string& buttonText, std::shared_ptr<dae::Font>& font2, glm::ivec2& position, std::shared_ptr<dae::Scene>& Start, const std::string level)
 {
 	auto button = std::make_shared<dae::GameObject>();
 	button->AddComponent(new dae::RenderComponent(button.get(), "../Data/Button.png"));

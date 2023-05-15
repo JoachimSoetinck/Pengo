@@ -13,7 +13,7 @@ namespace dae
 			Left, Right, Up, Down, Pushing, Idle
 		};
 
-		PengoComponent(GameObject* gameObject);
+		PengoComponent(GameObject* gameObject, int startBlock = 0);
 		~PengoComponent() override ;
 		PengoComponent(const PengoComponent& other) = delete;
 		PengoComponent(PengoComponent&& other) noexcept = delete;
