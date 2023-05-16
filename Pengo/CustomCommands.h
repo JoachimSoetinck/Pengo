@@ -1,5 +1,6 @@
 #pragma once
 #include "PengoComponent.h"
+#include "SnoBeeCompontent.h"
 #include "Command.h"
 
 
@@ -8,11 +9,13 @@ namespace dae {
 	{
 	public:
 		MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::PengoState movingDirection);
+		MoveCommand(std::shared_ptr<GameObject> obj, SnoBeeCompontent::SnobeeState movingDirection);
 		void Execute() override;
 
 	private:
 		std::shared_ptr<GameObject> m_pObject;
 		PengoComponent::PengoState m_PlayerState;
+		SnoBeeCompontent::SnobeeState m_SnowbeeState;
 	};
 
 	class PushCommand : public Command

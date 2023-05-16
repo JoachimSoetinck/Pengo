@@ -26,6 +26,7 @@
 #include "Main.h"
 #include "SinglePlayerScene.h"
 #include "CoopScene.h"
+#include "VersusScene.h"
 
 
 
@@ -52,8 +53,8 @@ void load()
 	//scene = std::make_shared<dae::Scene>("COOP03");
 	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	//scene = std::make_shared<dae::Scene>("VERSUS01");
-	//dae::SceneManager::GetInstance().AddScene(scene);
+	auto vScene = std::make_shared<dae::VersusScene>("VERSUS01");
+	dae::SceneManager::GetInstance().AddScene(vScene);
 
 	//scene = std::make_shared<dae::Scene>("VERSUS02");
 	//dae::SceneManager::GetInstance().AddScene(scene);
@@ -75,9 +76,9 @@ void load()
 	position = { 150,200 };
 	CreateButton(buttonText, font2, position, Start, "COOP01");
 
-	//buttonText = "VERSUS";
-	//position = { 150,300 };
-	//CreateButton(buttonText, font2, position, Start,"Level01");
+	buttonText = "VERSUS";
+	position = { 150,320 };
+	CreateButton(buttonText, font2, position, Start,"VERSUS01");
 
 
 

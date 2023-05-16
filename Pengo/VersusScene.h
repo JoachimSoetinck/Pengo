@@ -7,7 +7,7 @@ namespace dae
 	class VersusScene final : public Scene
 	{
 	public:
-		VersusScene(const std::string& name, int level);
+		VersusScene(const std::string& name);
 		~VersusScene();
 
 		void Initialize() override;

@@ -1,10 +1,11 @@
 #pragma once
 #include "BaseComponent.h"
-#include "RigidBody.h"
+
 #include "Subject.h"
 
 namespace dae
 {
+	class RigidBody;
 	class SnoBeeCompontent final : public dae::BaseComponent
 	{
 	public:

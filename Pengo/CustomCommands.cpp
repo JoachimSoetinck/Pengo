@@ -6,10 +6,16 @@ dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::P
 {
 }
 
+dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, SnoBeeCompontent::SnobeeState movingDirection): m_pObject { obj }, m_SnowbeeState{ movingDirection }
+{
+}
+
 void dae::MoveCommand::Execute()
 {
 	if (m_pObject->GetComponent<dae::PengoComponent>())
 		m_pObject->GetComponent<dae::PengoComponent>()->Move(m_PlayerState);
+	else
+		m_pObject->GetComponent<dae::SnoBeeCompontent>()->Move(m_SnowbeeState);
 }
 
 
