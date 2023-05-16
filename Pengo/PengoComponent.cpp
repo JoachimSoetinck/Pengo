@@ -16,7 +16,8 @@ m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,
 m_StartBlock{ startblock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
-
+	
+	
 }
 
 dae::PengoComponent::~PengoComponent()
@@ -35,6 +36,7 @@ void dae::PengoComponent::Push()
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
+	
 	switch (m_currentState)
 	{
 	case dae::PengoComponent::PengoState::Left:
@@ -63,8 +65,11 @@ void dae::PengoComponent::Push()
 		break;
 	}
 
+
 	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
 	auto wAfter = dae::WallManager::GetInstance().FindWall(pushblockNext);
+
+
 	if (w && w->GetType() == WallComponent::WallType::MoveableWall && wAfter && wAfter->GetType() == dae::WallComponent::WallType::Ground)
 	{
 		auto go = std::make_shared<dae::GameObject>();
@@ -76,7 +81,7 @@ void dae::PengoComponent::Push()
 
 		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go);
 
-		go->Initalize(); 
+		go->Initalize();
 		w->EnableMovement(direction);
 		
 	}
@@ -91,6 +96,8 @@ void dae::PengoComponent::Push()
 
 
 
+
+
 void dae::PengoComponent::AddObserver(Observer* obj)
 {
 	m_PlayerSubject->AddObserver(obj);
@@ -101,6 +108,8 @@ void dae::PengoComponent::Initialize()
 
 	Sleep(1000);
 	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
+
+
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 	m_currentBlock = m_StartBlock; 
 

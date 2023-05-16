@@ -34,6 +34,8 @@ namespace dae
 		void GivePoints(int score);
 		void Push();
 
+	
+
 		void SetState(PengoState state);
 
 		void Move(PengoState state);
