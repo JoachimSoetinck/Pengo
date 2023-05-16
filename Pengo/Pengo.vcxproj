@@ -167,6 +167,7 @@
     <ClInclude Include="PengoComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="SinglePlayerScene.h" />
+    <ClInclude Include="SnoBeeCompontent.h" />
     <ClInclude Include="VersusScene.h" />
     <ClInclude Include="WallComponent.h" />
     <ClInclude Include="WallManagers.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="PengoComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="SinglePlayerScene.cpp" />
+    <ClCompile Include="SnoBeeCompontent.cpp" />
     <ClCompile Include="VersusScene.cpp" />
     <ClCompile Include="WallComponent.cpp" />
     <ClCompile Include="WallManagers.cpp" />

@@ -43,19 +43,25 @@ bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, Scene* scene)
 	const rapidjson::Value& r = jsonFile["BlockColums"];
 	const rapidjson::Value& c = jsonFile["BlockRows"];
 	const rapidjson::Value& positionBlocks = jsonFile["BlockSpawns"];
+	const rapidjson::Value& enemySpawn_j = jsonFile["EnemySpawn"];
 	
 	auto places = positionBlocks.IsArray();
 	std::vector<int> positions;
+
+	std::vector<int> enemyspawns;
 
 	
 	for (rapidjson::SizeType i = 0; i < positionBlocks.Size(); i++) // Uses SizeType instead of size_t
 		 positions.push_back(positionBlocks[i].GetInt());
 
+	for (rapidjson::SizeType i = 0; i < enemySpawn_j.Size(); i++) // Uses SizeType instead of size_t
+		enemyspawns.push_back(enemySpawn_j[i].GetInt());
+
 	
 	SDL_Rect src = { 0,0,30,30 };
 	SDL_Rect rect{ 0,0,24,24 };
 	auto go = std::make_shared<dae::GameObject>();
-	go->AddComponent(new GridComponent(go.get(), r.GetInt(), c.GetInt(),positions));
+	go->AddComponent(new GridComponent(go.get(), r.GetInt(), c.GetInt(),positions, enemyspawns));
 	go->SetPosition(0, 0);
 	scene->Add(go);
 

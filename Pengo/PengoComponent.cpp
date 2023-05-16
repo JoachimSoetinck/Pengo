@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "CollisionComponent.h"
 #include "ServiceLocator.h"
+#include <stdlib.h> 
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject, int startblock) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -72,12 +73,15 @@ void dae::PengoComponent::Push()
 		go->AddComponent(new dae::WallComponent(go.get(), dae::WallManager::GetInstance().GetGroundPieces().size(), dae::WallComponent::WallType::Ground));
 		go->AddComponent(new dae::CollisionComponent(go.get(), dae::GameInfo::GetInstance().GetCollisionSize()));
 		go->SetPosition(pushblock.x, pushblock.y);
+
 		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go);
-		go->Initalize();
+
+		go->Initalize(); 
 		w->EnableMovement(direction);
+		
 	}
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
-		&& wAfter && (wAfter->GetType() == dae::WallComponent::WallType::MoveableWall || wAfter->GetType() == dae::WallComponent::WallType::Border))
+		&& wAfter &&  wAfter->GetType() != dae::WallComponent::WallType::Ground)
 	{
 		w->BreakWall();
 	}
@@ -94,11 +98,11 @@ void dae::PengoComponent::AddObserver(Observer* obj)
 
 void dae::PengoComponent::Initialize()
 {
+
+	Sleep(1000);
 	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
-
-
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
-	m_currentBlock = m_StartBlock;
+	m_currentBlock = m_StartBlock; 
 
 
 }
@@ -182,7 +186,8 @@ void dae::PengoComponent::Move(PengoState state)
 
 
 	auto w = dae::WallManager::GetInstance().FindWall(newPos);
-	if (w && w->GetType() == WallComponent::WallType::Ground)
+
+ 	if (w && w->GetType() == WallComponent::WallType::Ground)
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 
 

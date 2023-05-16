@@ -46,5 +46,15 @@ namespace dae
 	private:
 	};
 
+	class EnemySpawnStartState : public BaseState
+	{
+	public:
+		EnemySpawnStartState() = default;
+		BaseState* Update(GameObject* object) override;
+		void Enter(GameObject* object) override;
+		void Exit(GameObject* object) override;
+	private:
+	};
+
 
 }

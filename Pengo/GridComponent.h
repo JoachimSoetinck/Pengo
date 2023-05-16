@@ -6,7 +6,7 @@ class GameObject;
 class GridComponent final : public dae::BaseComponent
 {
 public:
-	GridComponent(dae::GameObject* go, int columns, int rows, std::vector<int> specialBlocks ,glm::ivec2 startPos = {150,150}, SDL_Rect dest = {0,0,25,25});
+	GridComponent(dae::GameObject* go, int columns, int rows, std::vector<int> specialBlocks , std::vector<int> EnemySpawners, glm::ivec2 startPos = {150,150}, SDL_Rect dest = {0,0,25,25});
 
 	~GridComponent() override = default;
 
@@ -25,6 +25,7 @@ private:
 	SDL_Rect m_BlockSize;
 	glm::ivec2 m_startPos;
 	std::vector<int> m_Wallpositions;
+	std::vector<int> m_EnemySpawners;
 
 
 };

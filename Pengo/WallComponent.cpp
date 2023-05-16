@@ -13,7 +13,7 @@
 
 dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType) : BaseComponent(go),
 m_WallType{ wallType }, m_SpriteComp{ nullptr }, m_Nr{ nr },
-m_stateMachine{ new StateMachine(new WallState()) }
+m_stateMachine{ new StateMachine(new WallState()) }, m_IsSpawner{ false }
 {
 	m_Center = m_pGameObject->GetLocalPosition();
 }
@@ -27,12 +27,8 @@ dae::WallComponent::~WallComponent()
 void dae::WallComponent::Initialize()
 {
 	m_stateMachine->Initialize(m_pGameObject);
-	SDL_Rect src = { 0,0,30,30 };
-	dae::WallManager::GetInstance().AddComponent(this);
 
-	auto  collision = m_pGameObject->GetComponent<CollisionComponent>();
-	if (m_WallType == WallType::Ground)
-		collision->Disable();
+	dae::WallManager::GetInstance().AddComponent(this);
 
 
 	if (m_pGameObject->GetComponent<SpriteComponent>())
@@ -49,10 +45,12 @@ void dae::WallComponent::Initialize()
 		case WallType::MoveableWall:
 		{
 			m_stateMachine->SetState(m_pGameObject, new WallState());
+			break;
 		}
 
 		case WallType::EnemySpawn:
 		{
+			m_stateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
 			break;
 		}
 		case WallType::Ground:
@@ -60,6 +58,8 @@ void dae::WallComponent::Initialize()
 			m_stateMachine->SetState(m_pGameObject, new GroundState());
 			break;
 		}
+
+
 		default:
 			break;
 		}
@@ -106,6 +106,8 @@ void dae::WallComponent::HandleMovement()
 		case dae::MovementDirection::Down:
 			m_pGameObject->GetComponent<RigidBody>()->Move({ 0,1 });
 			break;
+		case dae::MovementDirection::None:
+			m_pGameObject->GetComponent<RigidBody>()->Move({ 0,0 });
 		default:
 			break;
 		}
@@ -140,6 +142,10 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	if (!m_IsMoving)
 		return;
 
+	
+	m_SpriteComp->SetVisibility(false);
+	m_pGameObject->GetComponent<CollisionComponent>()->Disable();
+
 	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
 
 	dae::GameInfo::GetInstance().GetPlayerSize().w;
@@ -162,11 +168,31 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	}
 
 	auto w = WallManager::GetInstance().FindWall(previousWallPos);
-	WallManager::GetInstance().RemoveComponent(w);
 
-	m_pGameObject->SetPosition(previousWallPos.x, previousWallPos.y);
-	DisableMovement();
-	
+	if (w)
+	{
+		
+		
+		w->m_stateMachine->SetState(w->m_pGameObject, new WallState());
+		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
+		w->m_WallType = WallType::MoveableWall;
+		
+
+		
+		
+		
+	}
+
+
+
+
+}
+
+void dae::WallComponent::MakeSpawner()
+{
+	m_IsSpawner = true;
+	m_WallType = WallType::EnemySpawn;
+	m_stateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
 }
 
 void dae::WallComponent::BreakWall()
@@ -175,4 +201,4 @@ void dae::WallComponent::BreakWall()
 }
 
 
-	
+

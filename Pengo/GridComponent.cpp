@@ -11,12 +11,13 @@
 #include "GameInfo.h"
 
 
-GridComponent::GridComponent(dae::GameObject* go, int columns, int rows,std::vector<int> walls ,glm::ivec2 startpos, SDL_Rect dest): BaseComponent(go),
+GridComponent::GridComponent(dae::GameObject* go, int columns, int rows,std::vector<int> walls , std::vector<int> enemySpawners ,glm::ivec2 startpos, SDL_Rect dest): BaseComponent(go),
 m_rows{ rows },
 m_colums{ columns },
 m_startPos{startpos},
 m_BlockSize{dest},
-m_Wallpositions{walls}
+m_Wallpositions{walls},
+m_EnemySpawners{enemySpawners}
 {
 }
 
@@ -35,16 +36,26 @@ void GridComponent::Initialize()
 			auto go = std::make_shared<dae::GameObject>();
 			go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Blocks.png", 1, 1, src), m_BlockSize));
 			go->AddComponent(new dae::RigidBody(go.get(), {200,200}));
-			//go->AddComponent(new dae::TextComponent(go.get(), std::to_string(nr), font));
+			dae::WallComponent* wallcomponent;
 			if (std::find(m_Wallpositions.begin(), m_Wallpositions.end(), nr) != m_Wallpositions.end())
 			{
-				go->AddComponent(new dae::WallComponent(go.get(), nr));
+				wallcomponent =   new dae::WallComponent(go.get(), nr);
 			}
+
 			else
-				go->AddComponent(new dae::WallComponent(go.get(),nr, dae::WallComponent::WallType::Ground));
+				wallcomponent = new dae::WallComponent(go.get(), nr, dae::WallComponent::WallType::Ground);
 			
+
+			if (std::find(m_EnemySpawners.begin(), m_EnemySpawners.end(), nr) != m_EnemySpawners.end())
+			{
+				wallcomponent->MakeSpawner();
+			}
+				
+
+			go->AddComponent(wallcomponent);
 			go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
 			go->SetPosition(m_startPos.x + i * m_BlockSize.w, 75 + j * m_BlockSize.w);
+
 			m_pGameObject->AddChild(go);
 			nr++;
 		}

@@ -45,15 +45,16 @@ namespace dae {
 		bool IsPointInWall(glm::ivec2 p);
 		bool IsMoving() const { return m_IsMoving; };
 		void EnableMovement(MovementDirection direction);
-		void DisableMovement() { m_IsMoving = false; };
+		void DisableMovement() { m_IsMoving = false;  };
 		void OnHit(HitInfo* hit);
 
 		void SetWallType(WallType type) { m_WallType = type; };
-
+		void MakeSpawner();
 		
 		void BreakWall();
 
 	private:
+		bool m_IsSpawner;
 		WallType m_WallType;
 		SpriteComponent* m_SpriteComp;
 		int m_Nr;

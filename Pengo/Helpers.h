@@ -5,7 +5,7 @@ namespace dae
 {
 	enum class MovementDirection
 	{
-		Left, Right, Up, Down
+		Left, Right, Up, Down, None
 	};
 }
 

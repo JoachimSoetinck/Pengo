@@ -72,6 +72,9 @@
     <ClInclude Include="VersusScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="SnoBeeCompontent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -121,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="VersusScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SnoBeeCompontent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
