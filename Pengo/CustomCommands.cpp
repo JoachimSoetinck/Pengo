@@ -6,7 +6,7 @@ dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::P
 {
 }
 
-dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, SnoBeeCompontent::SnobeeState movingDirection): m_pObject { obj }, m_SnowbeeState{ movingDirection }
+dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, SnoBeeCompontent::SnobeeState movingDirection) : m_pObject{ obj }, m_SnowbeeState{ movingDirection }
 {
 }
 
@@ -29,6 +29,9 @@ void dae::PushCommand::Execute()
 	dae::ServiceLocator::GetSoundSystem()->PlaySound(0);
 	if (m_pObject->GetComponent<dae::PengoComponent>())
 		m_pObject->GetComponent<dae::PengoComponent>()->Push();
+	else if(m_pObject->GetComponent<dae::SnoBeeCompontent>())
+		m_pObject->GetComponent<dae::SnoBeeCompontent>()->Push(); 
+
 }
 
 dae::DieCommand::DieCommand(std::shared_ptr<GameObject> obj) : m_pObject{ obj }

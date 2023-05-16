@@ -114,7 +114,7 @@ void dae::VersusScene::CreateVersusPlayer(std::shared_ptr<Font>& font)
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_W, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Up), 1, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_D, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Right), 1, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADLeft, SDL_SCANCODE_A, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Left), 1, dae::InputManager::EInputState::Pressed);
-	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_SPACE, std::make_shared<dae::PushCommand>(go), 1, dae::InputManager::EInputState::Pressed);
+	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_N, std::make_shared<dae::PushCommand>(go), 1, dae::InputManager::EInputState::Pressed);
 
 
 

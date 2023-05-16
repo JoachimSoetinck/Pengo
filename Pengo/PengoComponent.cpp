@@ -17,7 +17,7 @@ m_StartBlock{ startblock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
 	
-	
+
 }
 
 dae::PengoComponent::~PengoComponent()
@@ -36,7 +36,7 @@ void dae::PengoComponent::Push()
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
-	
+
 	switch (m_currentState)
 	{
 	case dae::PengoComponent::PengoState::Left:
@@ -83,10 +83,10 @@ void dae::PengoComponent::Push()
 
 		go->Initalize();
 		w->EnableMovement(direction);
-		
+
 	}
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
-		&& wAfter &&  wAfter->GetType() != dae::WallComponent::WallType::Ground)
+		&& wAfter && wAfter->GetType() != dae::WallComponent::WallType::Ground)
 	{
 		w->BreakWall();
 	}
@@ -111,13 +111,14 @@ void dae::PengoComponent::Initialize()
 
 
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
-	m_currentBlock = m_StartBlock; 
+	m_currentBlock = startblock;
 
 
 }
 
 void dae::PengoComponent::Update()
-{
+{	
+	m_pGameObject->SetPosition(m_currentBlock->GetCenter().x, m_currentBlock->GetCenter().y);
 
 }
 
@@ -196,8 +197,11 @@ void dae::PengoComponent::Move(PengoState state)
 
 	auto w = dae::WallManager::GetInstance().FindWall(newPos);
 
- 	if (w && w->GetType() == WallComponent::WallType::Ground)
-		m_pGameObject->SetPosition(newPos.x, newPos.y);
+	if (w && w->GetType() == WallComponent::WallType::Ground)
+	{
+		m_currentBlock = w;
+	}
+	m_pGameObject->SetPosition(newPos.x, newPos.y);
 
 
 

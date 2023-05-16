@@ -4,6 +4,7 @@
 #include "WallComponent.h"
 #include "RigidBody.h"
 #include "GameInfo.h"
+#include "CollisionComponent.h"
 
 dae::SnoBeeCompontent::SnoBeeCompontent(GameObject* gameObject, int startBlock) :BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -54,14 +55,50 @@ void dae::SnoBeeCompontent::Start()
 
 void dae::SnoBeeCompontent::Die()
 {
+
 }
 
 void dae::SnoBeeCompontent::Push()
 {
+	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
+
+
+	switch (m_currentState)
+	{
+	case dae::SnoBeeCompontent::SnobeeState::Left:
+	{
+		pushblock.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;
+		break;
+	}
+	case dae::SnoBeeCompontent::SnobeeState::Right:
+		pushblock.x += dae::GameInfo::GetInstance().GetPlayerSize().w;
+		break;
+	case dae::SnoBeeCompontent::SnobeeState::Up:
+	pushblock.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;
+	break;
+	case dae::SnoBeeCompontent::SnobeeState::Down:
+	{
+		pushblock.y += dae::GameInfo::GetInstance().GetPlayerSize().w;
+		break;
+	}
+	default:
+		break;
+	}
+
+
+	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
+
+
+
+	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
+	{
+		w->BreakWall();
+	}
 }
 
 void dae::SnoBeeCompontent::SetState(SnobeeState state)
 {
+	m_currentState = state;
 }
 
 void dae::SnoBeeCompontent::Move(SnobeeState state)

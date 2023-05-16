@@ -5,6 +5,7 @@
 
 namespace dae
 {
+	class WallComponent;
 	class PengoComponent final : public dae::BaseComponent
 	{
 	public:
@@ -44,6 +45,7 @@ namespace dae
 	private:
 		PengoState m_currentState;
 		glm::ivec2 m_direction{ 0,0 };
+
 	
 		dae::RigidBody* m_RigidBody;
 
@@ -53,9 +55,9 @@ namespace dae
 		std::unique_ptr<Subject> m_PlayerSubject;
 
 		int m_StartBlock = 0;
-		int m_currentBlock{};
+		WallComponent* m_currentBlock;
 	
-		
+	
 		
 		bool m_isMoving;
 		glm::ivec2 m_playerSize{};
