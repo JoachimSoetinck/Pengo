@@ -8,7 +8,8 @@ namespace dae
 	{
 		PlayerDied,
 		PlayerStart,
-		GivePoints
+		GivePoints,
+		DestroySpawner
 	};
 
 	class Observer

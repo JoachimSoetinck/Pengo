@@ -54,6 +54,8 @@ namespace dae
 		void Enter(GameObject* object) override;
 		void Exit(GameObject* object) override;
 	private:
+		float ElapsedSec{ 0.0f };
+		float TimeVisible{ 10.0f };
 	};
 
 

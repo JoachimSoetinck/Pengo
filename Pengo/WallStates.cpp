@@ -19,6 +19,7 @@ void dae::WallState::Enter(GameObject* object)
 	object->GetComponent<dae::SpriteComponent>()->SetSprite(Sprite("Blocks.png", 1, 1, src));
 	object->GetComponent<dae::SpriteComponent>()->SetVisibility(true);
 	object->GetComponent<CollisionComponent>()->Enable();
+	
 
 
 }
@@ -90,6 +91,14 @@ void dae::GroundState::Exit(GameObject* object)
 
 dae::BaseState* dae::EnemySpawnStartState::Update(GameObject* object)
 {
+	ElapsedSec += dae::Time::GetInstance().GetDeltaTime();
+
+	if (ElapsedSec >= TimeVisible)
+	{
+		ElapsedSec = 0.0f;
+		return new WallState();
+	}
+
 	return nullptr;
 }
 
@@ -100,9 +109,11 @@ void dae::EnemySpawnStartState::Enter(GameObject* object)
 	object->GetComponent<dae::SpriteComponent>()->SetTimer(0.55f);
 	if (object->GetComponent<WallComponent>())
 		object->GetComponent<WallComponent>()->SetWallType(dae::WallComponent::WallType::EnemySpawn);
+
+	
 }
 
 void dae::EnemySpawnStartState::Exit(GameObject* object)
 {
-
+	object->GetComponent<WallComponent>()->SetWallType(dae::WallComponent::WallType::MoveableWall);
 }

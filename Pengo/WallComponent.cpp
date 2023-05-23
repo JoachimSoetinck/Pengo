@@ -174,7 +174,10 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	if (w)
 	{
 
-		
+		if (m_IsSpawner)
+		{
+			w->m_IsSpawner = m_IsSpawner;
+		}
 		w->m_stateMachine->SetState(w->m_pGameObject, new WallState());
 		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
 		w->m_WallType = WallType::MoveableWall;

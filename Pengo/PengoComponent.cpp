@@ -88,7 +88,15 @@ void dae::PengoComponent::Push()
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
 		&& wAfter && wAfter->GetType() != dae::WallComponent::WallType::Ground)
 	{
+		
+
 		w->BreakWall();
+		if (w->IsSpawner())
+		{
+			m_PlayerSubject->Notify(Event::DestroySpawner, m_pGameObject);
+			
+		}
+		
 	}
 
 
@@ -149,7 +157,7 @@ void dae::PengoComponent::Die()
 void dae::PengoComponent::GivePoints(int score)
 {
 	m_score += score;
-	m_PlayerSubject->Notify(Event::GivePoints, this->GetGameObject());
+	
 }
 
 void dae::PengoComponent::SetState(PengoState state)
@@ -199,6 +207,7 @@ void dae::PengoComponent::Move(PengoState state)
 
 	if (w && w->GetType() == WallComponent::WallType::Ground)
 	{
+
 		m_currentBlock = w;
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 	}

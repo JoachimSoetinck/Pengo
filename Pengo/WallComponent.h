@@ -53,6 +53,8 @@ namespace dae {
 		
 		void BreakWall();
 
+		bool IsSpawner()const { return m_IsSpawner; };
+
 	private:
 		bool m_IsSpawner;
 		WallType m_WallType;

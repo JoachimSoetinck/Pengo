@@ -33,9 +33,17 @@ void dae::ScoreDisplayComponent::OnNotify(Event event, GameObject* go)
 		pTextComponent->SetText(m_text);
 		break;
 	case dae::Event::GivePoints:
+		go->GetComponent<dae::PengoComponent>()->GivePoints(100);
 		m_text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
 		pTextComponent->SetText(m_text);
 		break;
+	case dae::Event::DestroySpawner:
+	{
+		go->GetComponent<dae::PengoComponent>()->GivePoints(50);
+		m_text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
+		pTextComponent->SetText(m_text);
+		break;
+	}
 	default:
 		break;
 	}

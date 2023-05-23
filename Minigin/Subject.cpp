@@ -4,7 +4,7 @@
 
 dae::Subject::~Subject()
 {
-	
+
 }
 
 void dae::Subject::AddObserver(Observer* observer)
