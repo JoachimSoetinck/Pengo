@@ -43,6 +43,9 @@ void dae::SDLSoundSystem::Update()
 		auto event = m_eventQueue.front();
 		m_eventQueue.pop();
 
+		// Release the lock on playing sound
+		lock.unlock();
+
 		//handling correct soundType
 		switch (event.type) {
 		case SoundType::Sound:
@@ -55,6 +58,8 @@ void dae::SDLSoundSystem::Update()
 		default:
 			break;
 		}
+
+		lock.lock();
 	}
 
 }
