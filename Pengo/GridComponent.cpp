@@ -12,9 +12,9 @@
 
 
 GridComponent::GridComponent(dae::GameObject* go, int columns, int rows,std::vector<int> walls , std::vector<int> enemySpawners ,glm::ivec2 startpos, SDL_Rect dest): BaseComponent(go),
-m_rows{ rows },
-m_colums{ columns },
-m_startPos{startpos},
+m_Rows{ rows },
+m_Colums{ columns },
+m_StartPos{startpos},
 m_BlockSize{dest},
 m_Wallpositions{walls},
 m_EnemySpawners{enemySpawners}
@@ -29,9 +29,9 @@ void GridComponent::Initialize()
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
 	int nr = 0;
-	for (int i = 0; i < m_colums; ++i)
+	for (int i = 0; i < m_Colums; ++i)
 	{
-		for (int j = 0; j < m_rows; ++j)
+		for (int j = 0; j < m_Rows; ++j)
 		{
 			auto go = std::make_shared<dae::GameObject>();
 			go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Blocks.png", 1, 1, src), m_BlockSize));
@@ -54,7 +54,7 @@ void GridComponent::Initialize()
 
 			go->AddComponent(wallcomponent);
 			go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
-			go->SetPosition(m_startPos.x + i * m_BlockSize.w, 75 + j * m_BlockSize.w);
+			go->SetPosition(m_StartPos.x + i * m_BlockSize.w, 75 + j * m_BlockSize.w);
 
 			m_pGameObject->AddChild(go);
 			nr++;
@@ -64,39 +64,39 @@ void GridComponent::Initialize()
 	src = { 0,0,16,24 };
 
 	int offset = 25;
-	for (int i = -1; i <= m_colums; ++i)
+	for (int i = -1; i <= m_Colums; ++i)
 	{
 		auto go = std::make_shared<dae::GameObject>();
 		go = std::make_shared<dae::GameObject>();
 		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), m_BlockSize, 0.8f));
 		go->AddComponent(new dae::WallComponent(go.get(), nr, dae::WallComponent::WallType::Border));
 		go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
-		go->SetPosition(m_startPos.x + i * m_BlockSize.w, 50);
+		go->SetPosition(m_StartPos.x + i * m_BlockSize.w, 50);
 		m_pGameObject->AddChild(go);
 
 		go = std::make_shared<dae::GameObject>();
 		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), m_BlockSize, 0.8f));
 		go->AddComponent(new dae::WallComponent(go.get(), nr, dae::WallComponent::WallType::Border));
 		go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
-		go->SetPosition(m_startPos.x + i * m_BlockSize.w, 50 + (m_rows + 1) * m_BlockSize.w);
+		go->SetPosition(m_StartPos.x + i * m_BlockSize.w, 50 + (m_Rows + 1) * m_BlockSize.w);
 		m_pGameObject->AddChild(go);
 	}
 
-	for (int i = 0; i <= m_colums+1; ++i)
+	for (int i = 0; i <= m_Colums+1; ++i)
 	{
 		auto go = std::make_shared<dae::GameObject>();
 		go = std::make_shared<dae::GameObject>();
 		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
 		go->AddComponent(new dae::WallComponent(go.get(), nr, dae::WallComponent::WallType::Border));
 		go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
-		go->SetPosition((m_startPos.x - offset), 75 + m_BlockSize.w * i);
+		go->SetPosition((m_StartPos.x - offset), 75 + m_BlockSize.w * i);
 		m_pGameObject->AddChild(go);
 
 		go = std::make_shared<dae::GameObject>();
 		go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Wall.png", 1, 1, src), { 0,0,25,25 }, 0.8f));
 		go->AddComponent(new dae::WallComponent(go.get(), nr, dae::WallComponent::WallType::Border)); 
 		go->AddComponent(new dae::CollisionComponent(go.get(), collisionSize));
-		go->SetPosition((m_startPos.x-offset)  + (m_colums + 1) * m_BlockSize.w, 75 + m_BlockSize.w * i);
+		go->SetPosition((m_StartPos.x-offset)  + (m_Colums + 1) * m_BlockSize.w, 75 + m_BlockSize.w * i);
 		m_pGameObject->AddChild(go);
 	}
 }

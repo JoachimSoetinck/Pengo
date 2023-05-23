@@ -13,20 +13,20 @@
 
 dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType) : BaseComponent(go),
 m_WallType{ wallType }, m_SpriteComp{ nullptr }, m_Nr{ nr },
-m_stateMachine{ new StateMachine(new WallState()) }, m_IsSpawner{ false }
+m_StateMachine{ new StateMachine(new WallState()) }, m_IsSpawner{ false }
 {
 	m_Center = m_pGameObject->GetLocalPosition();
 }
 
 dae::WallComponent::~WallComponent()
 {
-	delete m_stateMachine;
-	m_stateMachine = nullptr;
+	delete m_StateMachine;
+	m_StateMachine = nullptr;
 }
 
 void dae::WallComponent::Initialize()
 {
-	m_stateMachine->Initialize(m_pGameObject);
+	m_StateMachine->Initialize(m_pGameObject);
 
 	dae::WallManager::GetInstance().AddComponent(this);
 
@@ -39,23 +39,23 @@ void dae::WallComponent::Initialize()
 		{
 		case WallType::Border:
 		{
-			m_stateMachine->SetState(m_pGameObject, new BorderState());
+			m_StateMachine->SetState(m_pGameObject, new BorderState());
 			break;
 		}
 		case WallType::MoveableWall:
 		{
-			m_stateMachine->SetState(m_pGameObject, new WallState());
+			m_StateMachine->SetState(m_pGameObject, new WallState());
 			break;
 		}
 
 		case WallType::EnemySpawn:
 		{
-			m_stateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
+			m_StateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
 			break;
 		}
 		case WallType::Ground:
 		{
-			m_stateMachine->SetState(m_pGameObject, new GroundState());
+			m_StateMachine->SetState(m_pGameObject, new GroundState());
 			break;
 		}
 
@@ -74,7 +74,7 @@ void dae::WallComponent::Initialize()
 void dae::WallComponent::Update()
 {
 	m_Center = m_pGameObject->GetLocalPosition();
-	m_stateMachine->Update(m_pGameObject);
+	m_StateMachine->Update(m_pGameObject);
 }
 
 void dae::WallComponent::Render() const
@@ -92,7 +92,7 @@ void dae::WallComponent::HandleMovement()
 
 	if (m_IsMoving && m_pGameObject->GetComponent<RigidBody>())
 	{
-		switch (m_pushDirection)
+		switch (m_PushDirection)
 		{
 		case dae::MovementDirection::Left:
 			m_pGameObject->GetComponent<RigidBody>()->Move({ -1,0 });
@@ -134,7 +134,7 @@ bool dae::WallComponent::IsPointInWall(glm::ivec2 p)
 void dae::WallComponent::EnableMovement(MovementDirection directio)
 {
 	m_IsMoving = true;
-	m_pushDirection = directio;
+	m_PushDirection = directio;
 }
 
 void dae::WallComponent::OnHit(HitInfo* hit)
@@ -151,7 +151,7 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
 
 	dae::GameInfo::GetInstance().GetPlayerSize().w;
-	switch (m_pushDirection)
+	switch (m_PushDirection)
 	{
 	case dae::MovementDirection::Left:
 		previousWallPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
@@ -178,7 +178,7 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 		{
 			w->m_IsSpawner = m_IsSpawner;
 		}
-		w->m_stateMachine->SetState(w->m_pGameObject, new WallState());
+		w->m_StateMachine->SetState(w->m_pGameObject, new WallState());
 		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
 		w->m_WallType = WallType::MoveableWall;
 
@@ -197,12 +197,12 @@ void dae::WallComponent::MakeSpawner()
 {
 	m_IsSpawner = true;
 	m_WallType = WallType::EnemySpawn;
-	m_stateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
+	m_StateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
 }
 
 void dae::WallComponent::BreakWall()
 {
-	m_stateMachine->SetState(m_pGameObject, new BreakingState());
+	m_StateMachine->SetState(m_pGameObject, new BreakingState());
 }
 
 

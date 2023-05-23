@@ -21,9 +21,9 @@ public:
 	void FixedUpdate() override;
 
 private:
-	int m_rows, m_colums;
+	int m_Rows, m_Colums;
 	SDL_Rect m_BlockSize;
-	glm::ivec2 m_startPos;
+	glm::ivec2 m_StartPos;
 	std::vector<int> m_Wallpositions;
 	std::vector<int> m_EnemySpawners;
 

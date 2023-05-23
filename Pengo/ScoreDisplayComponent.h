@@ -26,8 +26,8 @@ namespace dae {
 		void OnNotify(Event event, GameObject* go) override;
 
 	private:
-		TextComponent* pTextComponent;
-		std::string m_text;
+		TextComponent* m_TextComponent;
+		std::string m_Text;
 	};
 
 }

@@ -8,7 +8,7 @@
 
 dae::SnoBeeCompontent::SnoBeeCompontent(GameObject* gameObject, int startBlock) :BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
-m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h },
+m_PlayerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h },
 m_StartBlock{ startBlock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
@@ -34,7 +34,7 @@ void dae::SnoBeeCompontent::Initialize()
 	if (startblock)
 		m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 
-	m_currentBlock = m_StartBlock;
+	m_CurrentBlock = m_StartBlock;
 }
 
 void dae::SnoBeeCompontent::Update()
@@ -62,7 +62,7 @@ void dae::SnoBeeCompontent::Push()
 {
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 
-	switch (m_currentState)
+	switch (m_CurrentState)
 	{
 	case dae::SnoBeeCompontent::SnobeeState::Left:
 	{
@@ -97,7 +97,7 @@ void dae::SnoBeeCompontent::Push()
 
 void dae::SnoBeeCompontent::SetState(SnobeeState state)
 {
-	m_currentState = state;
+	m_CurrentState = state;
 }
 
 void dae::SnoBeeCompontent::Move(SnobeeState state)

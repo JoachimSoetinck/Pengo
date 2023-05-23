@@ -4,7 +4,7 @@
 
 
 using namespace dae;
-dae::BaseComponent::BaseComponent()
+dae::BaseComponent::BaseComponent():m_position{glm::ivec2(0,0)}
 {
 
 }

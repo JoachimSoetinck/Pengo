@@ -28,8 +28,8 @@ namespace dae
 		void Render() const override;
 		void FixedUpdate() override;
 
-		int GetLives() const { return m_nrOfLives; };
-		int GetScore() const { return m_score; };
+		int GetLives() const { return m_NrOfLives; };
+		int GetScore() const { return m_Score; };
 		
 		void Start();
 		void Die();
@@ -43,23 +43,23 @@ namespace dae
 
 
 	private:
-		SnobeeState m_currentState;
-		glm::ivec2 m_direction{ 0,0 };
+		SnobeeState m_CurrentState;
+		glm::ivec2 m_Direction{ 0,0 };
 
 		dae::RigidBody* m_RigidBody;
 
-		int m_nrOfLives{ 3 };
-		int m_score{ 0 };
+		int m_NrOfLives{ 3 };
+		int m_Score{ 0 };
 
 		std::unique_ptr<Subject> m_PlayerSubject;
 
 		int m_StartBlock = 120;
-		int m_currentBlock{};
+		int m_CurrentBlock{};
 
 
 
-		bool m_isMoving;
-		glm::ivec2 m_playerSize{};
+		bool m_IsMoving;
+		glm::ivec2 m_PlayerSize{};
 
 
 	};

@@ -61,11 +61,11 @@ namespace dae {
 		SpriteComponent* m_SpriteComp;
 		int m_Nr;
 
-		StateMachine* m_stateMachine;
+		StateMachine* m_StateMachine;
 
 		glm::ivec2 m_Center{};
 
-		MovementDirection m_pushDirection{};
+		MovementDirection m_PushDirection{};
 		bool m_IsMoving{ false };
 
 		

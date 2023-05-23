@@ -3,8 +3,8 @@
 #include "PengoComponent.h"
 
 dae::ScoreDisplayComponent::ScoreDisplayComponent(dae::GameObject* go) : BaseComponent(go),
-pTextComponent{ m_pGameObject->GetComponent<dae::TextComponent>() },
-m_text{ "" }
+m_TextComponent{ m_pGameObject->GetComponent<dae::TextComponent>() },
+m_Text{ "" }
 {
 }
 
@@ -29,19 +29,19 @@ void dae::ScoreDisplayComponent::OnNotify(Event event, GameObject* go)
 	switch (event)
 	{
 	case dae::Event::PlayerStart:
-		m_text = "Score: 0";
-		pTextComponent->SetText(m_text);
+		m_Text = "Score: 0";
+		m_TextComponent->SetText(m_Text);
 		break;
 	case dae::Event::GivePoints:
 		go->GetComponent<dae::PengoComponent>()->GivePoints(100);
-		m_text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
-		pTextComponent->SetText(m_text);
+		m_Text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
+		m_TextComponent->SetText(m_Text);
 		break;
 	case dae::Event::DestroySpawner:
 	{
 		go->GetComponent<dae::PengoComponent>()->GivePoints(50);
-		m_text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
-		pTextComponent->SetText(m_text);
+		m_Text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
+		m_TextComponent->SetText(m_Text);
 		break;
 	}
 	default:

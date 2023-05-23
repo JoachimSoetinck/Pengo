@@ -12,7 +12,7 @@
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject, int startblock) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
-m_playerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h },
+m_PlayerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().h },
 m_StartBlock{ startblock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
@@ -37,7 +37,7 @@ void dae::PengoComponent::Push()
 	glm::ivec2 pushblockNext = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 	MovementDirection direction{};
 
-	switch (m_currentState)
+	switch (m_CurrentState)
 	{
 	case dae::PengoComponent::PengoState::Left:
 		pushblock.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;
@@ -119,14 +119,14 @@ void dae::PengoComponent::Initialize()
 	
 
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
-	m_currentBlock = startblock;
+	m_CurrentBlock = startblock;
 
 
 }
 
 void dae::PengoComponent::Update()
 {	
-	m_pGameObject->SetPosition(m_currentBlock->GetCenter().x, m_currentBlock->GetCenter().y);
+	m_pGameObject->SetPosition(m_CurrentBlock->GetCenter().x, m_CurrentBlock->GetCenter().y);
 
 }
 
@@ -149,20 +149,20 @@ void dae::PengoComponent::Start()
 
 void dae::PengoComponent::Die()
 {
-	if (m_nrOfLives > 0)
-		--m_nrOfLives;
+	if (m_NrOfLives > 0)
+		--m_NrOfLives;
 	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
 }
 
 void dae::PengoComponent::GivePoints(int score)
 {
-	m_score += score;
+	m_Score += score;
 	
 }
 
 void dae::PengoComponent::SetState(PengoState state)
 {
-	m_currentState = state;
+	m_CurrentState = state;
 }
 
 void dae::PengoComponent::Move(PengoState state)
@@ -208,7 +208,7 @@ void dae::PengoComponent::Move(PengoState state)
 	if (w && w->GetType() == WallComponent::WallType::Ground)
 	{
 
-		m_currentBlock = w;
+		m_CurrentBlock = w;
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 	}
 	

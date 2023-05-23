@@ -3,8 +3,8 @@
 #include "PengoComponent.h"
 
 dae::LivesDisplayComponent::LivesDisplayComponent(dae::GameObject* go) : BaseComponent(go),
-pTextComponent{ m_pGameObject->GetComponent<dae::TextComponent>() },
-m_text{ "" }
+m_TextComponent{ m_pGameObject->GetComponent<dae::TextComponent>() },
+m_Text{ "" }
 {
 }
 
@@ -33,13 +33,13 @@ void dae::LivesDisplayComponent::OnNotify(Event event, GameObject* go)
 	switch (event)
 	{
 	case dae::Event::PlayerStart:
-		m_text = "Lives: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetLives());;
-		pTextComponent->SetText(m_text);
+		m_Text = "Lives: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetLives());;
+		m_TextComponent->SetText(m_Text);
 		break;
 		break;
 	case dae::Event::PlayerDied:
-		m_text = "Lives: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetLives());
-		pTextComponent->SetText(m_text);
+		m_Text = "Lives: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetLives());
+		m_TextComponent->SetText(m_Text);
 		break;
 	case dae::Event::DestroySpawner:
 		
