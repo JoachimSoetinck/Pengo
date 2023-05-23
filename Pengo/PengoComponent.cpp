@@ -108,7 +108,7 @@ void dae::PengoComponent::Initialize()
 
 	Sleep(1000);
 	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
-
+	
 
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 	m_currentBlock = startblock;
@@ -200,8 +200,9 @@ void dae::PengoComponent::Move(PengoState state)
 	if (w && w->GetType() == WallComponent::WallType::Ground)
 	{
 		m_currentBlock = w;
+		m_pGameObject->SetPosition(newPos.x, newPos.y);
 	}
-	m_pGameObject->SetPosition(newPos.x, newPos.y);
+	
 
 
 

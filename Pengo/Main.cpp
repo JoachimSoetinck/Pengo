@@ -53,8 +53,8 @@ void load()
 	//scene = std::make_shared<dae::Scene>("COOP03");
 	//dae::SceneManager::GetInstance().AddScene(scene);
 
-	auto vScene = std::make_shared<dae::VersusScene>("VERSUS01");
-	dae::SceneManager::GetInstance().AddScene(vScene);
+	//auto vScene = std::make_shared<dae::VersusScene>("VERSUS01");
+	//dae::SceneManager::GetInstance().AddScene(vScene);
 
 	//scene = std::make_shared<dae::Scene>("VERSUS02");
 	//dae::SceneManager::GetInstance().AddScene(scene);

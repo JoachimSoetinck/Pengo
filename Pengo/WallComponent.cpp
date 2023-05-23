@@ -143,6 +143,8 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 		return;
 
 	
+
+
 	m_SpriteComp->SetVisibility(false);
 	m_pGameObject->GetComponent<CollisionComponent>()->Disable();
 
@@ -171,16 +173,16 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 
 	if (w)
 	{
-		
+
 		
 		w->m_stateMachine->SetState(w->m_pGameObject, new WallState());
 		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
 		w->m_WallType = WallType::MoveableWall;
-		
 
-		
-		
-		
+
+
+
+
 	}
 
 

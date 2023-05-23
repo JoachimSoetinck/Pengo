@@ -62,7 +62,6 @@ void dae::SnoBeeCompontent::Push()
 {
 	glm::ivec2 pushblock = { m_pGameObject->GetLocalPosition().x , m_pGameObject->GetLocalPosition().y };
 
-
 	switch (m_currentState)
 	{
 	case dae::SnoBeeCompontent::SnobeeState::Left:
