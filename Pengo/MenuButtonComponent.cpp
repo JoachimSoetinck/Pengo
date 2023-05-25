@@ -15,6 +15,7 @@ dae::MenuButtonComponent::~MenuButtonComponent()
 void dae::MenuButtonComponent::ProcessClicked()
 {
 	auto s = SceneManager::GetInstance().GetScene(m_SceneName);
+	
 	s->Initialize();
 	SceneManager::GetInstance().SetActiveScene(m_SceneName);
 	

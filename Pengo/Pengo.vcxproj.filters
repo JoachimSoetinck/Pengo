@@ -22,11 +22,11 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{31c3edcd-1e46-4251-bfbc-cfcef3f27875}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{50fceb48-a6bc-448f-8d3c-b2bfd6e035fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WallManagers.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LevelCreator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,12 +75,15 @@
     <ClInclude Include="SnoBeeCompontent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="WallManagers.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WallManagers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelCreator.cpp">
@@ -127,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="SnoBeeCompontent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="WallManagers.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

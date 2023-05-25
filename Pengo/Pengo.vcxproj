@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="CoopScene.h" />
     <ClInclude Include="CustomCommands.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="Helpers.h" />
@@ -176,6 +177,7 @@
   <ItemGroup>
     <ClCompile Include="CoopScene.cpp" />
     <ClCompile Include="CustomCommands.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="Helpers.cpp" />

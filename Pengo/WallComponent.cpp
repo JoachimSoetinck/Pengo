@@ -176,15 +176,13 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 
 		if (m_IsSpawner)
 		{
-			w->m_IsSpawner = m_IsSpawner;
+			w->CreateSpawner(true);
 		}
 		w->m_StateMachine->SetState(w->m_pGameObject, new WallState());
 		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
 		w->m_WallType = WallType::MoveableWall;
 
-
-
-
+		CreateSpawner(false);
 
 	}
 
@@ -193,16 +191,38 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 
 }
 
+void dae::WallComponent::SetWallType(WallType type)
+{
+	m_WallType = type;
+
+}
+
 void dae::WallComponent::MakeSpawner()
 {
-	m_IsSpawner = true;
-	m_WallType = WallType::EnemySpawn;
-	m_StateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
+
+		m_IsSpawner = true;
+		m_WallType = WallType::EnemySpawn;
+		m_StateMachine->SetState(m_pGameObject, new EnemySpawnStartState());
+		dae::WallManager::GetInstance().AddSpawner(this); 
 }
 
 void dae::WallComponent::BreakWall()
 {
 	m_StateMachine->SetState(m_pGameObject, new BreakingState());
+}
+
+void dae::WallComponent::CreateSpawner(bool s)
+{
+	if (s == true) 
+	{
+		m_IsSpawner = s;
+		dae::WallManager::GetInstance().AddSpawner(this);
+	}
+	else
+	{
+		m_IsSpawner = s;
+		dae::WallManager::GetInstance().RemoveSpawner(this);
+	}
 }
 
 

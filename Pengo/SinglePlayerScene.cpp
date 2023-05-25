@@ -8,27 +8,93 @@
 #include "PengoComponent.h"
 #include "InputManager.h"
 #include "CustomCommands.h"
+#include "WallComponent.h"
+#include "GridComponent.h"
+#include "EnemyManager.h"
+#include "WallManagers.h"
+#include "Timer.h"
 
 
 
-dae::SinglePlayerScene::SinglePlayerScene(const std::string& name): Scene(name)
+
+dae::SinglePlayerScene::SinglePlayerScene(const std::string& name) : Scene(name)
 {
+
 }
 
 void dae::SinglePlayerScene::Initialize()
 {
 
 
+
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
-	
+
 	CreatePlayer(font);
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
 	CreateInfo(font, pos2, pos);
 
 	Scene::Initialize();
+
+
+}
+
+void dae::SinglePlayerScene::Update()
+{
+
+
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() < 5 && dae::WallManager::GetInstance().GetSpawners().size() != 0)
+	{
+		m_Elapsed += dae::Time::GetInstance().GetDeltaTime();
+
+		if (m_Elapsed >= m_SpawnTimer)
+		{
+			auto spawner = dae::WallManager::GetInstance().GetSpawners().front();
+			if (spawner->GetType() == WallComponent::WallType::MoveableWall)
+			{
+				spawner->CreateSpawner(false);
+				spawner->SetWallType(dae::WallComponent::WallType::Ground);
+				if (spawner->GetGameObject() && spawner->GetGameObject()->GetComponent<SpriteComponent>())
+				{
+					
+					spawner->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
+				}
+
+				SDL_Rect src{ 0,160,16,16 };
+				SDL_Rect dest{ 0,0,20,20 };
+
+				auto go = std::make_shared<dae::GameObject>();
+				go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Pengo.png", 2, 1, src), dest, 0.8f));
+				go->AddComponent(new dae::RigidBody(go.get()));
+				go->AddComponent(new dae::CollisionComponent(go.get(), dest));
+				auto snowbee = new dae::SnoBeeCompontent(go.get(), spawner->GetNr());
+				go->AddComponent(snowbee);
+				go->SetPosition(spawner->GetCenter().x, spawner->GetCenter().y);
+				snowbee->Start();
+
+				this->Add(go);
+
+				m_Elapsed = 0;
+
+			}
+
+
+		}
+
+
+
+
+
+
+
+
+
+
+	}
+
+	Scene::Update();
 }
 
 

@@ -48,12 +48,14 @@ namespace dae {
 		void DisableMovement() { m_IsMoving = false;  };
 		void OnHit(HitInfo* hit);
 
-		void SetWallType(WallType type) { m_WallType = type; };
+		void SetWallType(WallType type);
 		void MakeSpawner();
 		
 		void BreakWall();
 
 		bool IsSpawner()const { return m_IsSpawner; };
+
+		void CreateSpawner(bool s);
 
 	private:
 		bool m_IsSpawner;

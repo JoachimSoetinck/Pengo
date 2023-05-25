@@ -96,6 +96,8 @@ void dae::VersusScene::CreateVersusPlayer(std::shared_ptr<Font>& font)
 
 	SDL_Rect src{ 0,160,16,16 };
 	SDL_Rect dest{ 0,0,20,20 };
+	 
+
 
 	auto go = std::make_shared<dae::GameObject>();
 	go->AddComponent(new dae::SpriteComponent(go.get(), Sprite("Pengo.png", 2, 1, src), dest, 0.8f));

@@ -18,13 +18,18 @@ namespace dae
 		WallComponent* FindWall(int nr);
 		WallComponent* FindWall(glm::ivec2 pos);
 
+		void AddSpawner(WallComponent* spawner);
+		void RemoveSpawner(WallComponent* spawner);
+
 		const std::vector<WallComponent*>& GetGroundPieces() const;
+		const std::vector<WallComponent*>& GetSpawners() const;
 		bool IsPointInWall(glm::ivec2 p);
 
 		WallComponent* FindCollisionWithWall(WallComponent* wall);
 
 	private:
 		std::vector<WallComponent*> m_GroundPieces;
+		std::vector<WallComponent*> m_Spawners;
 	};
 
 }

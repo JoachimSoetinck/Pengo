@@ -14,7 +14,7 @@ namespace dae
 
 		void Add(const std::shared_ptr<GameObject>& object);
 		
-		void Update();
+		virtual void Update();
 		void FixedUpdate();
 		void Render() const;
 		virtual void Initialize();
@@ -29,11 +29,15 @@ namespace dae
 
 		void DeleteObjects();
 
+
+
 	protected:
 		std::string m_Name;
 		std::vector <std::shared_ptr<GameObject>> m_Objects{};
 
 		static unsigned int m_IdCounter;
+
+	
 	};
 
 }

@@ -129,7 +129,7 @@ void dae::GameObject::RemoveChild(dae::GameObject* go)
 
 void dae::GameObject::AddChild(std::shared_ptr<dae::GameObject> go, bool keepTransform)
 {
-	m_pChildren.emplace_back(go);
+	m_pChildren.emplace_back(go); 
 	go->SetParent(this, keepTransform);
 }
 

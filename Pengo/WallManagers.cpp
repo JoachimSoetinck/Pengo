@@ -12,16 +12,16 @@ dae::WallManager::WallManager() :
 void dae::WallManager::AddComponent(WallComponent* wall)
 {
 	auto it = std::find(m_GroundPieces.begin(), m_GroundPieces.end(), wall);
-	{
-		m_GroundPieces.push_back(wall);
-	}
+
+	m_GroundPieces.push_back(wall);
+
 }
 
 void dae::WallManager::RemoveComponent(WallComponent* wall)
 {
 	auto it = std::find(m_GroundPieces.begin(), m_GroundPieces.end(), wall);
 
-	//if collision is there, remove it
+
 	if (it != m_GroundPieces.end())
 	{
 		m_GroundPieces.erase(it);
@@ -54,9 +54,43 @@ dae::WallComponent* dae::WallManager::FindWall(glm::ivec2 pos)
 	return nullptr;
 }
 
+void dae::WallManager::AddSpawner(WallComponent* spawner)
+{
+
+
+	if (std::find(m_Spawners.begin(), m_Spawners.end(), spawner) != m_Spawners.end())
+
+	{
+		return;
+	}
+
+	else
+	{
+		if (spawner->IsSpawner() )
+			m_Spawners.push_back(spawner);
+	}
+}
+
+void dae::WallManager::RemoveSpawner(WallComponent* spawner)
+{
+	auto it = std::find(m_Spawners.begin(), m_Spawners.end(), spawner);
+
+
+	if (it != m_Spawners.end())
+	{
+		m_Spawners.erase(it);
+	}
+}
+
 const std::vector<dae::WallComponent*>& dae::WallManager::GetGroundPieces() const
 {
 	return m_GroundPieces;
+}
+
+const std::vector<dae::WallComponent*>& dae::WallManager::GetSpawners() const
+{
+	// TODO: insert return statement here
+	return m_Spawners;
 }
 
 bool dae::WallManager::IsPointInWall(glm::ivec2 p)
@@ -77,7 +111,7 @@ dae::WallComponent* dae::WallManager::FindCollisionWithWall(WallComponent* wall)
 {
 	for (auto comp : m_GroundPieces)
 	{
-		if (comp->GetType() == dae::WallComponent::WallType::MoveableWall && comp->IsMoving()&& comp != wall)
+		if (comp->GetType() == dae::WallComponent::WallType::MoveableWall && comp->IsMoving() && comp != wall)
 		{
 
 			SDL_Rect r1 = { wall->GetGameObject()->GetLocalPosition().x,

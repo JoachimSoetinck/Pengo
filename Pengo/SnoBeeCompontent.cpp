@@ -5,6 +5,7 @@
 #include "RigidBody.h"
 #include "GameInfo.h"
 #include "CollisionComponent.h"
+#include "EnemyManager.h"
 
 dae::SnoBeeCompontent::SnoBeeCompontent(GameObject* gameObject, int startBlock) :BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -12,10 +13,13 @@ m_PlayerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,
 m_StartBlock{ startBlock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
+	EnemyManager::GetInstance().AddComponent(this);
+
 }
 
 dae::SnoBeeCompontent::~SnoBeeCompontent()
 {
+	EnemyManager::GetInstance().RemoveComponent(this);
 }
 
 void dae::SnoBeeCompontent::AddObserver(Observer* obj)
