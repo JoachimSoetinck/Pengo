@@ -94,6 +94,7 @@ void load()
 
 	auto score = std::make_shared<dae::GameObject>();
 	score->AddComponent(new dae::HighScoreComponent(score.get(), "../Data/highscores.txt"));
+	score->SetPosition(0, 0);
 	scores->Add(score);
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>()); 

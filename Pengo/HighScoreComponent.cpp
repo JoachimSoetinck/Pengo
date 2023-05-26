@@ -1,16 +1,37 @@
 #include "HighScoreComponent.h"
 #include <fstream>
 #include <algorithm>
+#include "GameObject.h"
+#include "TextComponent.h"
+#include "ResourceManager.h"
 
 dae::HighScoreComponent::HighScoreComponent(dae::GameObject* go, const std::string file) :BaseComponent(go), m_File{ file }
 {
 	//Adding Scores to list
 	ReadFile();
+	
+
 }
 
 void dae::HighScoreComponent::Initialize()
 {
+	int i = 1;
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
+	for (auto score : m_Scores)
+	{
+		
+
+		auto obj = std::make_shared<GameObject>();
+		std::string text = std::to_string(i) + ". " + std::to_string(score);
+		obj->AddComponent(new TextComponent(obj.get(), text, font));
+		obj->SetPosition(0, 0 + 25 * i);
+		m_pGameObject->AddChild(obj);
+		++i;
+
+		if (i >= 10)
+			break;
+	}
 }
 
 void dae::HighScoreComponent::Update()
@@ -32,7 +53,7 @@ void dae::HighScoreComponent::AddNewScore(int score)
 	std::sort(m_Scores.rbegin(), m_Scores.rend());
 
 
-	std::ofstream outputFile("highscores.txt");
+	std::ofstream outputFile(m_File);
 	if (outputFile.is_open()) {
 		for (const int& score : m_Scores) {
 			outputFile << score << "\n";
