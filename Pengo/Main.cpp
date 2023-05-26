@@ -27,13 +27,20 @@
 #include "SinglePlayerScene.h"
 #include "CoopScene.h"
 #include "VersusScene.h"
+#include "HighScoreComponent.h"
 
 
 
 void load()
 {
+	auto scores = std::make_shared<dae::Scene>("HighScores");
+	dae::SceneManager::GetInstance().AddScene(scores);
+
+
 	auto Start = std::make_shared<dae::Scene>("StartScene");
 	dae::SceneManager::GetInstance().AddScene(Start);
+
+	
 
 	auto scene = std::make_shared<dae::SinglePlayerScene>("Level01");
 	dae::SceneManager::GetInstance().AddScene(scene);
@@ -81,13 +88,18 @@ void load()
 	CreateButton(buttonText, font2, position, Start,"VERSUS01");
 
 
-
+	
 	Start->Initialize();
 
 
-	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>());
+	auto score = std::make_shared<dae::GameObject>();
+	score->AddComponent(new dae::HighScoreComponent(score.get(), "../Data/highscores.txt"));
+	scores->Add(score);
+
+	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>()); 
 	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
 
+	scores->Initialize();
 
 }
 

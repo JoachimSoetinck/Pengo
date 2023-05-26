@@ -161,6 +161,7 @@
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="HighScoreComponent.h" />
     <ClInclude Include="LevelCreator.h" />
     <ClInclude Include="LivesDisplayComponent.h" />
     <ClInclude Include="Main.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="GameInfo.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="HighScoreComponent.cpp" />
     <ClCompile Include="LevelCreator.cpp" />
     <ClCompile Include="LivesDisplayComponent.cpp" />
     <ClCompile Include="Main.cpp" />

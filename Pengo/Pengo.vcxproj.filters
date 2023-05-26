@@ -81,6 +81,9 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="HighScoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="WallManagers.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoreComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
