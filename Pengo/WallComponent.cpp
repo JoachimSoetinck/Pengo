@@ -2,13 +2,15 @@
 #include "GameObject.h"
 #include "SpriteCompenent.h"
 #include "WallManagers.h"
-#include "RigidBody.h"
 #include "CollisionComponent.h"
 #include "Helpers.h"
 #include "GameInfo.h"
 #include "WallStates.h"
 #include "StateMachine.h"
 #include "BaseState.h"
+#include "PengoComponent.h"
+#include "SnoBeeCompontent.h"
+
 
 
 dae::WallComponent::WallComponent(dae::GameObject* go, int nr, WallType wallType) : BaseComponent(go),
@@ -131,10 +133,12 @@ bool dae::WallComponent::IsPointInWall(glm::ivec2 p)
 
 }
 
-void dae::WallComponent::EnableMovement(MovementDirection directio)
+void dae::WallComponent::EnableMovement(MovementDirection directio, PengoComponent* pusher)
 {
 	m_IsMoving = true;
 	m_PushDirection = directio;
+	m_Pusher = pusher;
+
 }
 
 void dae::WallComponent::OnHit(HitInfo* hit)
@@ -142,52 +146,54 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	if (!m_IsMoving)
 		return;
 
-	
-
-
-	m_SpriteComp->SetVisibility(false);
-	m_pGameObject->GetComponent<CollisionComponent>()->Disable();
-
-	glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
-
-	dae::GameInfo::GetInstance().GetPlayerSize().w;
-	switch (m_PushDirection)
+	if (hit->gameObject->GetComponent<WallComponent>())
 	{
-	case dae::MovementDirection::Left:
-		previousWallPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
-		break;
-	case dae::MovementDirection::Right:
-		previousWallPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
-		break;
-	case dae::MovementDirection::Up:
-		previousWallPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
-		break;
-	case dae::MovementDirection::Down:
-		previousWallPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
-		break;
-	default:
-		break;
-	}
+		m_SpriteComp->SetVisibility(false);
+		m_pGameObject->GetComponent<CollisionComponent>()->Disable();
 
-	auto w = WallManager::GetInstance().FindWall(previousWallPos);
+		glm::ivec2 previousWallPos = { hit->gameObject->GetLocalPosition().x, hit->gameObject->GetLocalPosition().y };
 
-	if (w)
-	{
-
-		if (m_IsSpawner)
+		dae::GameInfo::GetInstance().GetPlayerSize().w;
+		switch (m_PushDirection)
 		{
-			w->CreateSpawner(true);
+		case dae::MovementDirection::Left:
+			previousWallPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
+			break;
+		case dae::MovementDirection::Right:
+			previousWallPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
+			break;
+		case dae::MovementDirection::Up:
+			previousWallPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
+			break;
+		case dae::MovementDirection::Down:
+			previousWallPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
+			break;
+		default:
+			break;
 		}
-		w->m_StateMachine->SetState(w->m_pGameObject, new WallState());
-		w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
-		w->m_WallType = WallType::MoveableWall;
 
-		CreateSpawner(false);
+		auto w = WallManager::GetInstance().FindWall(previousWallPos);
 
+		if (w)
+		{
+
+			if (m_IsSpawner)
+			{
+				w->CreateSpawner(true);
+			}
+			w->m_StateMachine->SetState(w->m_pGameObject, new WallState());
+			w->m_pGameObject->GetComponent<CollisionComponent>()->Enable();
+			w->m_WallType = WallType::MoveableWall;
+
+			CreateSpawner(false);
+		}
 	}
 
-
-
+	if (hit->gameObject->GetComponent<SnoBeeCompontent>() && m_Pusher != nullptr)
+	{
+		m_Pusher->GivePoints(100);
+		hit->gameObject->Delete();
+	}
 
 }
 

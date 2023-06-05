@@ -86,7 +86,8 @@ void dae::PengoComponent::Push()
 		dae::GameInfo::GetInstance().GetGridObj()->AddChild(go);
 
 		go->Initalize();
-		w->EnableMovement(direction);
+		w->EnableMovement(direction, this);
+	
 
 	}
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
@@ -179,6 +180,7 @@ void dae::PengoComponent::Die()
 void dae::PengoComponent::GivePoints(int score)
 {
 	m_Score += score;
+	m_PlayerSubject->Notify(Event::GivePoints, this->GetGameObject());
 
 }
 

@@ -3,8 +3,10 @@
 #include "Helpers.h"
 
 namespace dae {
+	class PengoComponent;
 	class GameObject;
 	class SpriteComponent;
+	
 	class StateMachine;
 	class BaseState;
 
@@ -44,7 +46,7 @@ namespace dae {
 
 		bool IsPointInWall(glm::ivec2 p);
 		bool IsMoving() const { return m_IsMoving; };
-		void EnableMovement(MovementDirection direction);
+		void EnableMovement(MovementDirection direction,  PengoComponent* pusher);
 		void DisableMovement() { m_IsMoving = false;  };
 		void OnHit(HitInfo* hit);
 
@@ -69,6 +71,8 @@ namespace dae {
 
 		MovementDirection m_PushDirection{};
 		bool m_IsMoving{ false };
+
+		PengoComponent* m_Pusher{ nullptr };
 
 		
 		

@@ -45,7 +45,7 @@ void dae::SinglePlayerScene::Update()
 {
 
 
-	if (dae::EnemyManager::GetInstance().GetEnemies().size() < 5 && dae::WallManager::GetInstance().GetSpawners().size() != 0)
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() < m_NrOfEnemiesInLevel && dae::WallManager::GetInstance().GetSpawners().size() != 0)
 	{
 		m_Elapsed += dae::Time::GetInstance().GetDeltaTime();
 

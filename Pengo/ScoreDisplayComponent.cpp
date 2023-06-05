@@ -33,7 +33,7 @@ void dae::ScoreDisplayComponent::OnNotify(Event event, GameObject* go)
 		m_TextComponent->SetText(m_Text);
 		break;
 	case dae::Event::GivePoints:
-		go->GetComponent<dae::PengoComponent>()->GivePoints(100);
+		//go->GetComponent<dae::PengoComponent>()->GivePoints(100);
 		m_Text = "Score: " + std::to_string(go->GetComponent<dae::PengoComponent>()->GetScore());
 		m_TextComponent->SetText(m_Text);
 		break;
