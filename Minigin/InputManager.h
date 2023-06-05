@@ -63,6 +63,8 @@ namespace dae
 
 		bool GetMouseUp() const;
 		POINT GetMousePosition() const;
+
+		void ClearControlls();
 	private:
 		
 		

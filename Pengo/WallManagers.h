@@ -27,6 +27,8 @@ namespace dae
 
 		WallComponent* FindCollisionWithWall(WallComponent* wall);
 
+		void ClearWalls() { m_GroundPieces.clear(); };
+
 	private:
 		std::vector<WallComponent*> m_GroundPieces;
 		std::vector<WallComponent*> m_Spawners;

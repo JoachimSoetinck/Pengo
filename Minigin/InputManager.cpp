@@ -181,5 +181,15 @@ POINT dae::InputManager::GetMousePosition() const
 	return m_MousePosition;
 }
 
+void dae::InputManager::ClearControlls()
+{
+	for (auto c : m_ConsoleCommands)
+	{
+		delete c;
+		c = nullptr;
+	}
+	m_ConsoleCommands.clear();
+}
+
 
 

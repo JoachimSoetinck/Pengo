@@ -6,6 +6,7 @@
 #include "CollisionComponent.h"
 #include "Timer.h"
 #include "WallComponent.h"
+#include "WallManagers.h"
 
 
 dae::BaseState* dae::WallState::Update(GameObject* object)
@@ -19,6 +20,7 @@ void dae::WallState::Enter(GameObject* object)
 	object->GetComponent<dae::SpriteComponent>()->SetSprite(Sprite("Blocks.png", 1, 1, src));
 	object->GetComponent<dae::SpriteComponent>()->SetVisibility(true);
 	object->GetComponent<CollisionComponent>()->Enable();
+	
 	
 
 
@@ -65,6 +67,14 @@ void dae::BreakingState::Enter(GameObject* object)
 	object->GetComponent<dae::SpriteComponent>()->SetTimer(0.15f);
 	object->GetComponent<CollisionComponent>()->Enable();
 	object->GetComponent<WallComponent>()->SetWallType(dae::WallComponent::WallType::MoveableWall);
+	
+
+	if (object->GetComponent<WallComponent>()->IsSpawner())
+	{
+		object->GetComponent<WallComponent>()->CreateSpawner(false);
+		dae::WallManager::GetInstance().RemoveSpawner(object->GetComponent<WallComponent>());
+	}
+	
 }
 
 void dae::BreakingState::Exit(GameObject* object)

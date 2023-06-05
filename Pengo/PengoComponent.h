@@ -61,6 +61,7 @@ namespace dae
 	
 		
 		bool m_IsMoving;
+		bool m_IsSpawned{ false };
 		glm::ivec2 m_PlayerSize{};
 
 	

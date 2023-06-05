@@ -87,7 +87,7 @@ void dae::PengoComponent::Push()
 
 		go->Initalize();
 		w->EnableMovement(direction, this);
-	
+
 
 	}
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
@@ -133,6 +133,13 @@ void dae::PengoComponent::Initialize()
 
 void dae::PengoComponent::Update()
 {
+	if (m_IsSpawned == false) {
+		auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
+		m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
+		m_CurrentBlock = startblock;
+		m_IsSpawned = true;
+	}
+
 	m_pGameObject->SetPosition(m_CurrentBlock->GetCenter().x, m_CurrentBlock->GetCenter().y);
 
 }

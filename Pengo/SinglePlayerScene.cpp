@@ -17,17 +17,15 @@
 
 
 
-dae::SinglePlayerScene::SinglePlayerScene(const std::string& name) : Scene(name)
+dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::string& nextLevel) : Scene(name), m_NextLevel{ nextLevel }
 {
-
 }
 
 void dae::SinglePlayerScene::Initialize()
 {
 
-
-
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	dae::WallManager::GetInstance().ClearWalls();
 
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
 
@@ -87,6 +85,16 @@ void dae::SinglePlayerScene::Update()
 
 
 		}
+	}
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
+	{
+		
+		dae::InputManager::GetInstance().ClearControlls(); 
+		ClearLevel();
+		auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
+		Sleep(100);
+		s->Initialize();
+		dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
 	}
 
 	Scene::Update();
