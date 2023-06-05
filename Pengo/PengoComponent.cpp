@@ -9,6 +9,10 @@
 #include "CollisionComponent.h"
 #include "ServiceLocator.h"
 #include <stdlib.h> 
+#include "SnoBeeCompontent.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "HighScoreComponent.h"
 
 dae::PengoComponent::PengoComponent(GameObject* gameObject, int startblock) : BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -16,7 +20,7 @@ m_PlayerSize{ GetGameObject()->GetComponent<SpriteComponent>()->GetDestRect().w,
 m_StartBlock{ startblock }
 {
 	m_PlayerSubject = std::make_unique<Subject>();
-	
+
 
 }
 
@@ -88,21 +92,19 @@ void dae::PengoComponent::Push()
 	else if (w && w->GetType() == WallComponent::WallType::MoveableWall
 		&& wAfter && wAfter->GetType() != dae::WallComponent::WallType::Ground)
 	{
-		
+
 
 		w->BreakWall();
 		if (w->IsSpawner())
 		{
 			m_PlayerSubject->Notify(Event::DestroySpawner, m_pGameObject);
-			
+
 		}
-		
+
 	}
 
 
 }
-
-
 
 
 
@@ -116,16 +118,20 @@ void dae::PengoComponent::Initialize()
 
 	Sleep(1000);
 	auto startblock = dae::WallManager::GetInstance().FindWall(m_StartBlock);
-	
+
 
 	m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 	m_CurrentBlock = startblock;
 
 
+	CollisionComponent::CollisionCallback callback = [&](HitInfo* hit) { this->OnHit(hit); };
+	GetGameObject()->GetComponent<CollisionComponent>()->SetCollisionCallback(callback);
+
+
 }
 
 void dae::PengoComponent::Update()
-{	
+{
 	m_pGameObject->SetPosition(m_CurrentBlock->GetCenter().x, m_CurrentBlock->GetCenter().y);
 
 }
@@ -151,13 +157,29 @@ void dae::PengoComponent::Die()
 {
 	if (m_NrOfLives > 0)
 		--m_NrOfLives;
+
+	m_CurrentBlock = WallManager::GetInstance().FindWall(0);
+
+	if (m_NrOfLives == 0)
+	{
+		auto scene = dae::SceneManager::GetInstance().GetScene("HighScores");
+		for (auto o : scene->GetObjects())
+		{
+			if (o->GetComponent<dae::HighScoreComponent>())
+			{
+				o->GetComponent<dae::HighScoreComponent>()->AddNewScore(this->GetScore());
+				break;
+			}
+		}
+		dae::SceneManager::GetInstance().SetActiveScene("HighScores");
+	}
 	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
 }
 
 void dae::PengoComponent::GivePoints(int score)
 {
 	m_Score += score;
-	
+
 }
 
 void dae::PengoComponent::SetState(PengoState state)
@@ -211,8 +233,18 @@ void dae::PengoComponent::Move(PengoState state)
 		m_CurrentBlock = w;
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 	}
-	
 
 
 
+
+}
+
+void dae::PengoComponent::OnHit(HitInfo* hit)
+{
+	auto other = hit->gameObject;
+
+	if (other->GetComponent<SnoBeeCompontent>())
+	{
+		this->Die();
+	}
 }

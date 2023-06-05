@@ -2,6 +2,7 @@
 #include "BaseComponent.h"
 #include "RigidBody.h"
 #include "Subject.h"
+#include "CollisionComponent.h"
 
 namespace dae
 {
@@ -35,7 +36,7 @@ namespace dae
 		void GivePoints(int score);
 		void Push();
 
-	
+		void OnHit(HitInfo* hit);
 
 		void SetState(PengoState state);
 

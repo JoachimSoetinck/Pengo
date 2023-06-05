@@ -7,7 +7,7 @@ dae::CollisionComponent::CollisionComponent(dae::GameObject* go, const SDL_Rect&
 m_Rect{0,0,rect.w, rect.h}, m_Info{new HitInfo()}
 {
 	
-
+	CollisionManager::GetInstance().AddComponent(this);
 }
 
 dae::CollisionComponent::~CollisionComponent()
@@ -20,7 +20,7 @@ dae::CollisionComponent::~CollisionComponent()
 
 void dae::CollisionComponent::Initialize()
 {
-	CollisionManager::GetInstance().AddComponent(this);
+	
 }
 
 void dae::CollisionComponent::Update()
@@ -83,12 +83,12 @@ bool dae::CollisionComponent::HandleCollision(CollisionComponent* other)
 	if (m_IsEnabled == false)
 		return false;
 
-	if ((m_Rect.x + m_Rect.w) < other->m_Rect.x || (other->m_Rect.x + other->m_Rect.w) < m_Rect.x)
+	if ((m_Rect.x + m_Rect.w) <= other->m_Rect.x || (other->m_Rect.x + other->m_Rect.w) <= m_Rect.x)
 	{
 		return false;
 	}
 
-	if (m_Rect.y > (other->m_Rect.y + other->m_Rect.h) || other->m_Rect.y > (m_Rect.y + m_Rect.h))
+	if (m_Rect.y >= (other->m_Rect.y + other->m_Rect.h) || other->m_Rect.y >= (m_Rect.y + m_Rect.h))
 	{
 		return false;
 	}

@@ -61,6 +61,11 @@ void dae::SinglePlayerScene::Update()
 					
 					spawner->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
 				}
+				if (spawner->GetGameObject() && spawner->GetGameObject()->GetComponent<dae::CollisionComponent>())
+				{
+
+					spawner->GetGameObject()->GetComponent<CollisionComponent>()->Disable();
+				}
 
 				SDL_Rect src{ 0,160,16,16 };
 				SDL_Rect dest{ 0,0,20,20 };
@@ -82,16 +87,6 @@ void dae::SinglePlayerScene::Update()
 
 
 		}
-
-
-
-
-
-
-
-
-
-
 	}
 
 	Scene::Update();

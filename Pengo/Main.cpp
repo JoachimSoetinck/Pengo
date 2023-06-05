@@ -33,14 +33,14 @@
 
 void load()
 {
-	auto scores = std::make_shared<dae::Scene>("HighScores");
-	dae::SceneManager::GetInstance().AddScene(scores);
+	
 
 
 	auto Start = std::make_shared<dae::Scene>("StartScene");
 	dae::SceneManager::GetInstance().AddScene(Start);
 
-	
+	auto scores = std::make_shared<dae::Scene>("HighScores");
+	dae::SceneManager::GetInstance().AddScene(scores);
 
 	auto scene = std::make_shared<dae::SinglePlayerScene>("Level01");
 	dae::SceneManager::GetInstance().AddScene(scene);
