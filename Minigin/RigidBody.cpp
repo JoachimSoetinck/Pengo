@@ -28,7 +28,7 @@ void dae::RigidBody::Render() const
 
 void dae::RigidBody::Move(const glm::vec2& direction)
 {
-	int blockSize = 25;
+	
 	if(direction != glm::vec2{0,0})
 	{
 		m_Velocity.x = direction.x * dae::Time::GetInstance().GetDeltaTime() * m_MovementSpeed.x;

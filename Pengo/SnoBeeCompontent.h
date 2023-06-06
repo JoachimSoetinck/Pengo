@@ -6,12 +6,14 @@
 namespace dae
 {
 	class RigidBody;
+	struct HitInfo;
 	class SnoBeeCompontent final : public dae::BaseComponent
 	{
 	public:
+		
 		enum class SnobeeState
 		{
-			Left, Right, Up, Down, Pushing, Idle
+			Left =0, Right =1, Up=2, Down=3, Pushing, Idle
 		};
 
 		SnoBeeCompontent(GameObject* gameObject, int startBlock = 100);
@@ -30,6 +32,7 @@ namespace dae
 
 		int GetLives() const { return m_NrOfLives; };
 		int GetScore() const { return m_Score; };
+		SnobeeState GetState() const { return m_CurrentState; };
 		
 		void Start();
 		void Die();
@@ -40,6 +43,8 @@ namespace dae
 		void SetState(SnobeeState state);
 
 		void Move(SnobeeState state);
+
+		void OnHit(HitInfo* hit);
 
 
 	private:

@@ -6,7 +6,7 @@ namespace dae
 	class RigidBody : public BaseComponent
 	{
 	public:
-		RigidBody(dae::GameObject* object, const glm::vec2& speed = { 50,50 });
+		RigidBody(dae::GameObject* object, const glm::vec2& speed = { 25,25 });
 		~RigidBody() override = default;
 
 		RigidBody(const RigidBody& other) = delete;

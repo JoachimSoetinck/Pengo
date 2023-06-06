@@ -4,6 +4,8 @@
 namespace dae
 {
 	class RigidBody;
+	class SnoBeeCompontent;
+
 	class SimpleAIComponent final : public dae::BaseComponent
 	{
 	public:
@@ -24,7 +26,8 @@ namespace dae
 	
 
 	private:
-
+		SnoBeeCompontent* m_Snobee;
+		RigidBody* m_RigidBody;
 	};
 }
 

@@ -6,6 +6,7 @@
 #include "GameInfo.h"
 #include "CollisionComponent.h"
 #include "EnemyManager.h"
+#include "SimpleAIComponent.h"
 
 dae::SnoBeeCompontent::SnoBeeCompontent(GameObject* gameObject, int startBlock) :BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -15,6 +16,12 @@ m_StartBlock{ startBlock }
 	m_PlayerSubject = std::make_unique<Subject>();
 	EnemyManager::GetInstance().AddComponent(this);
 
+
+	if (m_pGameObject->GetComponent<CollisionComponent>())
+	{
+		CollisionComponent::CollisionCallback callback = [&](HitInfo* hit) { this->OnHit(hit); };
+		GetGameObject()->GetComponent<CollisionComponent>()->SetCollisionCallback(callback);
+	}
 }
 
 dae::SnoBeeCompontent::~SnoBeeCompontent()
@@ -39,6 +46,10 @@ void dae::SnoBeeCompontent::Initialize()
 		m_pGameObject->SetPosition(startblock->GetCenter().x, startblock->GetCenter().y);
 
 	m_CurrentBlock = m_StartBlock;
+
+
+
+
 }
 
 void dae::SnoBeeCompontent::Update()
@@ -77,8 +88,8 @@ void dae::SnoBeeCompontent::Push()
 		pushblock.x += dae::GameInfo::GetInstance().GetPlayerSize().w;
 		break;
 	case dae::SnoBeeCompontent::SnobeeState::Up:
-	pushblock.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;
-	break;
+		pushblock.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;
+		break;
 	case dae::SnoBeeCompontent::SnobeeState::Down:
 	{
 		pushblock.y += dae::GameInfo::GetInstance().GetPlayerSize().w;
@@ -107,6 +118,7 @@ void dae::SnoBeeCompontent::SetState(SnobeeState state)
 void dae::SnoBeeCompontent::Move(SnobeeState state)
 {
 	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
+
 	SetState(state);
 	SDL_Rect src{ 0,0,16,16 };
 
@@ -148,4 +160,37 @@ void dae::SnoBeeCompontent::Move(SnobeeState state)
 		m_pGameObject->SetPosition(newPos.x, newPos.y);
 
 
+}
+
+void dae::SnoBeeCompontent::OnHit(HitInfo* hit)
+{
+	if (m_pGameObject->GetComponent<SimpleAIComponent>() && hit->gameObject->GetComponent<WallComponent>())
+	{
+		std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+		auto currentPos = m_pGameObject->GetLocalPosition();
+		int offset = 2;
+
+		switch (m_CurrentState)
+		{
+		case dae::SnoBeeCompontent::SnobeeState::Left:
+			m_pGameObject->SetPosition(currentPos.x + offset, currentPos.y);
+			break;
+		case dae::SnoBeeCompontent::SnobeeState::Right:
+			m_pGameObject->SetPosition(currentPos.x - offset, currentPos.y);
+			break;
+		case dae::SnoBeeCompontent::SnobeeState::Up:
+			m_pGameObject->SetPosition(currentPos.x, currentPos.y - offset);
+			break;
+		case dae::SnoBeeCompontent::SnobeeState::Down:
+			m_pGameObject->SetPosition(currentPos.x, currentPos.y + offset);
+			break;
+		default:
+			break;
+		}
+
+		int randomNumber = std::rand() % 4;
+
+		m_CurrentState = (SnobeeState)randomNumber;
+	}
 }

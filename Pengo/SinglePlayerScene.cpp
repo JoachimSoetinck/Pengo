@@ -14,6 +14,7 @@
 #include "WallManagers.h"
 #include "Timer.h"
 #include "HighScoreComponent.h"
+#include "SimpleAIComponent.h"
 
 
 
@@ -78,8 +79,9 @@ void dae::SinglePlayerScene::Update()
 				go->SetPosition(spawner->GetCenter().x, spawner->GetCenter().y);
 				snowbee->Start();
 
+				go->AddComponent(new dae::SimpleAIComponent(go.get()));
 				this->Add(go);
-
+				
 				m_Elapsed = 0;
 
 			}
