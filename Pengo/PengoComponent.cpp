@@ -176,6 +176,7 @@ void dae::PengoComponent::Die()
 			if (o->GetComponent<dae::HighScoreComponent>())
 			{
 				o->GetComponent<dae::HighScoreComponent>()->AddNewScore(this->GetScore());
+				o->GetComponent<dae::HighScoreComponent>()->CreateHighscores();
 				break;
 			}
 		}

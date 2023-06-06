@@ -22,6 +22,7 @@ namespace dae {
 		void FixedUpdate() override;
 
 		void AddNewScore(int score);
+		void CreateHighscores();
 
 	private:
 		std::string m_File;

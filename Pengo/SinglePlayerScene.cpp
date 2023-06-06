@@ -102,28 +102,31 @@ void dae::SinglePlayerScene::GoToNextLevel()
 	
 	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
 	Sleep(100);
+	
 	s->Initialize();
 
 	for (auto o : s->GetObjects())
 	{
 		if (o->GetComponent<PengoComponent>())
 		{
+			
 			o->GetComponent<PengoComponent>()->Start();
 			o->GetComponent<PengoComponent>()->GivePoints(m_Player1->GetScore());
-			break;
+			
 
 		}
 
-		if (o->GetComponent<HighScoreComponent>())
+		else if (o->GetComponent<HighScoreComponent>())
 		{
 			o->GetComponent<HighScoreComponent>()->AddNewScore(m_Player1->GetScore());
-			s->Initialize();
-			break;
+			o->GetComponent<HighScoreComponent>()->CreateHighscores();
 		}
 	}
 	ClearLevel();
 	dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
 }
+
+
 
 
 void dae::SinglePlayerScene::CreatePlayer(std::shared_ptr<dae::Font>& font)

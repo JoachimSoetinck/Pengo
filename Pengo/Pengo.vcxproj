@@ -168,6 +168,7 @@
     <ClInclude Include="MenuButtonComponent.h" />
     <ClInclude Include="PengoComponent.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
+    <ClInclude Include="SimpleAIComponent.h" />
     <ClInclude Include="SinglePlayerScene.h" />
     <ClInclude Include="SnoBeeCompontent.h" />
     <ClInclude Include="VersusScene.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="MenuButtonComponent.cpp" />
     <ClCompile Include="PengoComponent.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
+    <ClCompile Include="SimpleAIComponent.cpp" />
     <ClCompile Include="SinglePlayerScene.cpp" />
     <ClCompile Include="SnoBeeCompontent.cpp" />
     <ClCompile Include="VersusScene.cpp" />

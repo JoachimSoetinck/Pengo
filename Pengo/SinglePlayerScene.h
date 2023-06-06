@@ -24,14 +24,14 @@ namespace dae
 		SinglePlayerScene& operator=(const SinglePlayerScene& other) = delete;
 		SinglePlayerScene& operator=(SinglePlayerScene&& other) = delete;
 
-
+		
 
 
 	private:
 		void CreatePlayer(std::shared_ptr<dae::Font>& font);
 		void CreateInfo(std::shared_ptr<dae::Font>& font, glm::ivec2& pos2, glm::ivec2& pos);
 
-		void ClearLevel() { m_Objects.clear(); }
+		
 
 		float m_Elapsed{ 0.0f }, m_SpawnTimer{ 3.0f };
 		int m_NrOfEnemiesInLevel{ 3 };
