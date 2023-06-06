@@ -13,11 +13,12 @@
 #include "EnemyManager.h"
 #include "WallManagers.h"
 #include "Timer.h"
+#include "HighScoreComponent.h"
 
 
 
 
-dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::string& nextLevel) : Scene(name), m_NextLevel{ nextLevel }
+dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::string& nextLevel) : Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}
 {
 }
 
@@ -89,15 +90,39 @@ void dae::SinglePlayerScene::Update()
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
 	{
 		
-		dae::InputManager::GetInstance().ClearControlls(); 
-		ClearLevel();
-		auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
-		Sleep(100);
-		s->Initialize();
-		dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
+		GoToNextLevel();
 	}
 
 	Scene::Update();
+}
+
+void dae::SinglePlayerScene::GoToNextLevel()
+{
+	dae::InputManager::GetInstance().ClearControlls();
+	
+	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
+	Sleep(100);
+	s->Initialize();
+
+	for (auto o : s->GetObjects())
+	{
+		if (o->GetComponent<PengoComponent>())
+		{
+			o->GetComponent<PengoComponent>()->Start();
+			o->GetComponent<PengoComponent>()->GivePoints(m_Player1->GetScore());
+			break;
+
+		}
+
+		if (o->GetComponent<HighScoreComponent>())
+		{
+			o->GetComponent<HighScoreComponent>()->AddNewScore(m_Player1->GetScore());
+			s->Initialize();
+			break;
+		}
+	}
+	ClearLevel();
+	dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
 }
 
 
@@ -128,7 +153,7 @@ void dae::SinglePlayerScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
 	go->AddComponent(pengo);
 	go->SetPosition(50, 150);
 	pengo->Start();
-
+	m_Player1 = pengo;
 
 	dae::InputManager::GetInstance().AddPlayer(false);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_DOWN, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Down), 0, dae::InputManager::EInputState::Pressed);

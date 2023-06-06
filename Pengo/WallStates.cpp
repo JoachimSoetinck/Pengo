@@ -71,7 +71,7 @@ void dae::BreakingState::Enter(GameObject* object)
 
 	if (object->GetComponent<WallComponent>()->IsSpawner())
 	{
-		object->GetComponent<WallComponent>()->CreateSpawner(false);
+		
 		dae::WallManager::GetInstance().RemoveSpawner(object->GetComponent<WallComponent>());
 	}
 	

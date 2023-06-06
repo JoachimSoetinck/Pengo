@@ -7,6 +7,7 @@ namespace dae
 	class Font;
 	class SnoBeeCompontent;
 	class WallComponent;
+	class PengoComponent;
 
 	class SinglePlayerScene : public Scene
 	{
@@ -15,6 +16,8 @@ namespace dae
 
 		void Initialize() override;
 		void Update() override;
+
+		void GoToNextLevel();
 
 		SinglePlayerScene(const SinglePlayerScene& other) = delete;
 		SinglePlayerScene(SinglePlayerScene&& other) = delete;
@@ -32,6 +35,8 @@ namespace dae
 
 		float m_Elapsed{ 0.0f }, m_SpawnTimer{ 3.0f };
 		int m_NrOfEnemiesInLevel{ 3 };
+
+		PengoComponent* m_Player1;
 
 		std::string m_NextLevel{};
 	
