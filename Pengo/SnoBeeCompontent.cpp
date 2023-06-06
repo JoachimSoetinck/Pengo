@@ -99,10 +99,12 @@ void dae::SnoBeeCompontent::Push()
 		break;
 	}
 
+	WallComponent* w;
 
-	auto w = dae::WallManager::GetInstance().FindWall(pushblock);
-
-
+	if (m_pGameObject->GetComponent<SimpleAIComponent>())
+		w = dae::WallManager::GetInstance().FindWallAI(pushblock);
+	else
+		w = dae::WallManager::GetInstance().FindWall(pushblock);
 
 	if (w && w->GetType() == WallComponent::WallType::MoveableWall)
 	{
@@ -113,6 +115,34 @@ void dae::SnoBeeCompontent::Push()
 void dae::SnoBeeCompontent::SetState(SnobeeState state)
 {
 	m_CurrentState = state;
+	SDL_Rect src{ 0,0,16,16 };
+	int startHeight = m_pGameObject->GetComponent<SpriteComponent>()->GetSprite().SrcRect.y;
+
+	switch (state)
+	{
+	case dae::SnoBeeCompontent::SnobeeState::Left:
+		src = { 32,startHeight,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+		break;
+
+	case dae::SnoBeeCompontent::SnobeeState::Right:
+		src = { 96,startHeight,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+		break;
+	case dae::SnoBeeCompontent::SnobeeState::Up:
+		src = { 64,startHeight,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+
+		break;
+	case dae::SnoBeeCompontent::SnobeeState::Down:
+	{
+		src = { 0,startHeight,16,16 };
+		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void dae::SnoBeeCompontent::Move(SnobeeState state)
@@ -120,32 +150,24 @@ void dae::SnoBeeCompontent::Move(SnobeeState state)
 	glm::ivec2 newPos = { m_pGameObject->GetLocalPosition().x, m_pGameObject->GetLocalPosition().y };
 
 	SetState(state);
-	SDL_Rect src{ 0,0,16,16 };
 
-	int startHeight = m_pGameObject->GetComponent<SpriteComponent>()->GetSprite().SrcRect.y;
 	switch (state)
 	{
 	case dae::SnoBeeCompontent::SnobeeState::Left:
-		src = { 32,startHeight,16,16 };
-		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.x -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 
 	case dae::SnoBeeCompontent::SnobeeState::Right:
-		src = { 96,startHeight,16,16 };
-		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+
 		newPos.x += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	case dae::SnoBeeCompontent::SnobeeState::Up:
-		src = { 64,startHeight,16,16 };
-		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
+
 		newPos.y -= dae::GameInfo::GetInstance().GetPlayerSize().w;;
 
 		break;
 	case dae::SnoBeeCompontent::SnobeeState::Down:
 	{
-		src = { 0,startHeight,16,16 };
-		m_pGameObject->GetComponent<SpriteComponent>()->SetSprite(Sprite("Pengo.png", 2, 1, src));
 		newPos.y += dae::GameInfo::GetInstance().GetPlayerSize().w;;
 		break;
 	}
@@ -190,6 +212,12 @@ void dae::SnoBeeCompontent::OnHit(HitInfo* hit)
 		}
 
 		int randomNumber = std::rand() % 4;
+		int pushnumber = std::rand() % 3;
+		if (pushnumber == 1 && hit->gameObject->GetComponent<WallComponent>()->GetType() == dae::WallComponent::WallType::MoveableWall)
+		{
+			hit->gameObject->GetComponent<WallComponent>()->BreakWall();
+		}
+
 
 		m_CurrentState = (SnobeeState)randomNumber;
 	}

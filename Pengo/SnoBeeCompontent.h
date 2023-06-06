@@ -10,10 +10,10 @@ namespace dae
 	class SnoBeeCompontent final : public dae::BaseComponent
 	{
 	public:
-		
+
 		enum class SnobeeState
 		{
-			Left =0, Right =1, Up=2, Down=3, Pushing, Idle
+			Left = 0, Right = 1, Up = 2, Down = 3, Pushing = 4, Idle
 		};
 
 		SnoBeeCompontent(GameObject* gameObject, int startBlock = 100);
@@ -33,7 +33,7 @@ namespace dae
 		int GetLives() const { return m_NrOfLives; };
 		int GetScore() const { return m_Score; };
 		SnobeeState GetState() const { return m_CurrentState; };
-		
+
 		void Start();
 		void Die();
 		void Push();

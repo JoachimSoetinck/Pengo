@@ -3,7 +3,7 @@
 #include "SnoBeeCompontent.h"
 #include "RigidBody.h"
 
-dae::SimpleAIComponent::SimpleAIComponent(GameObject* gameObject) : BaseComponent(gameObject), m_Snobee{nullptr},m_RigidBody{nullptr}
+dae::SimpleAIComponent::SimpleAIComponent(GameObject* gameObject) : BaseComponent(gameObject), m_Snobee{ nullptr }, m_RigidBody{ nullptr }
 {
 	if (m_pGameObject->GetComponent<RigidBody>())
 		m_RigidBody = m_pGameObject->GetComponent<RigidBody>();
@@ -43,13 +43,6 @@ void dae::SimpleAIComponent::Update()
 		m_RigidBody->Move({ 1,0 });
 		break;
 
-	case dae::SnoBeeCompontent::SnobeeState::Pushing:
-		m_RigidBody->Move({ 0,0 });
-		break;
-	case dae::SnoBeeCompontent::SnobeeState::Idle:
-
-		m_Snobee->SetState(SnoBeeCompontent::SnobeeState::Left);
-			break;
 	default:
 		break;
 	}

@@ -17,6 +17,7 @@ namespace dae
 		
 		WallComponent* FindWall(int nr);
 		WallComponent* FindWall(glm::ivec2 pos);
+		WallComponent* FindWallAI(glm::ivec2 pos);
 
 		void AddSpawner(WallComponent* spawner);
 		void RemoveSpawner(WallComponent* spawner);

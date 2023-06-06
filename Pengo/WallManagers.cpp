@@ -54,6 +54,19 @@ dae::WallComponent* dae::WallManager::FindWall(glm::ivec2 pos)
 	return nullptr;
 }
 
+dae::WallComponent* dae::WallManager::FindWallAI(glm::ivec2 pos)
+{
+	for (auto comp : m_GroundPieces)
+	{
+		if (comp->IsPointInWall(pos))
+		{
+			return comp;
+		}
+	}
+
+	return nullptr;
+}
+
 void dae::WallManager::AddSpawner(WallComponent* spawner)
 {
 
