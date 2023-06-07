@@ -213,6 +213,7 @@ void dae::SnoBeeCompontent::OnHit(HitInfo* hit)
 
 		int randomNumber = std::rand() % 4;
 		int pushnumber = std::rand() % 3;
+
 		if (pushnumber == 1 && hit->gameObject->GetComponent<WallComponent>()->GetType() == dae::WallComponent::WallType::MoveableWall)
 		{
 			hit->gameObject->GetComponent<WallComponent>()->BreakWall();

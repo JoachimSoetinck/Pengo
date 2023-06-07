@@ -33,7 +33,7 @@ namespace dae
 
 		
 
-		float m_Elapsed{ 0.0f }, m_SpawnTimer{ 3.0f };
+		float m_Elapsed{ 0.0f }, m_SpawnTimer{ 2.0f };
 		int m_NrOfEnemiesInLevel{ 3 };
 
 		PengoComponent* m_Player1;
