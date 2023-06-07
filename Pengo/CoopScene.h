@@ -13,6 +13,8 @@ namespace dae
 		void Initialize() override;
 		void Update() override;
 
+		void HandleDeath();
+
 		void HandleEnemies();
 		void GoToNextLevel();
 

@@ -15,7 +15,7 @@
 #include "WallManagers.h"
 #include "HighScoreComponent.h"
 
-dae::CoopScene::CoopScene(const std::string& name, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }
+dae::CoopScene::CoopScene(const std::string& name, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}, m_Player2{nullptr}
 {
 }
 
@@ -41,6 +41,8 @@ void dae::CoopScene::Update()
 {
 	HandleEnemies();
 
+	HandleDeath();
+
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
 	{
 
@@ -48,6 +50,42 @@ void dae::CoopScene::Update()
 	}
 
 	Scene::Update();
+}
+
+void dae::CoopScene::HandleDeath()
+{
+	
+	if (m_Player1 != NULL && m_Player1 != NULL && m_Player1->GetLives() == 0 && m_Player2->GetLives() == 0 && m_Player1 != NULL)
+	{
+		auto s = dae::SceneManager::GetInstance().GetScene("HighScores");
+
+		if (s != nullptr) {
+			s->Initialize();
+
+			for (auto o : s->GetObjects())
+			{
+
+				if (o->GetComponent<HighScoreComponent>())
+				{
+					o->GetComponent<HighScoreComponent>()->AddNewScore(m_Player1->GetScore());
+					o->GetComponent<HighScoreComponent>()->CreateHighscores();
+					break;
+				}
+			}
+
+			ClearLevel();
+			
+			dae::SceneManager::GetInstance().SetActiveScene("HighScores");
+		}
+	}
+	else if (m_Player1->GetLives() != 0 && m_Player2->GetLives() == 0)
+	{
+		m_Player2->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
+	}
+	else if(m_Player1->GetLives() == 0 && m_Player2->GetLives() != 0)
+	{
+		m_Player1->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
+	}
 }
 
 void dae::CoopScene::HandleEnemies()
@@ -92,7 +130,6 @@ void dae::CoopScene::HandleEnemies()
 				m_Elapsed = 0;
 
 			}
-
 
 		}
 	}
@@ -184,7 +221,7 @@ void dae::CoopScene::GoToNextLevel()
 	dae::InputManager::GetInstance().ClearControlls();
 
 	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
-	Sleep(100);
+	
 
 	s->Initialize();
 
