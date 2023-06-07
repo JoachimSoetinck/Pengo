@@ -64,7 +64,7 @@ void dae::HighScoreComponent::CreateHighscores()
 		m_pGameObject->AddChild(obj);
 		++i;
 
-		if (i >= 10)
+		if (i > 15)
 			break;
 	}
 }

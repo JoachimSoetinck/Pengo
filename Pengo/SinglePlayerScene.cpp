@@ -45,6 +45,42 @@ void dae::SinglePlayerScene::Update()
 {
 
 
+	HandleEnemies();
+	HandleDeath();
+	HandleWinningState();
+
+	Scene::Update();
+}
+
+void dae::SinglePlayerScene::HandleWinningState()
+{
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
+	{
+
+		GoToNextLevel();
+	}
+}
+
+void dae::SinglePlayerScene::HandleDeath()
+{
+	if (m_Player1->GetLives() == 0)
+	{
+		auto scene = dae::SceneManager::GetInstance().GetScene("HighScores");
+		for (auto o : scene->GetObjects())
+		{
+			if (o->GetComponent<dae::HighScoreComponent>())
+			{
+				o->GetComponent<dae::HighScoreComponent>()->AddNewScore(m_Player1->GetScore());
+				o->GetComponent<dae::HighScoreComponent>()->CreateHighscores();
+
+			}
+		}
+		dae::SceneManager::GetInstance().SetActiveScene("HighScores");
+	}
+}
+
+void dae::SinglePlayerScene::HandleEnemies()
+{
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() < m_NrOfEnemiesInLevel && dae::WallManager::GetInstance().GetSpawners().size() != 0)
 	{
 		m_Elapsed += dae::Time::GetInstance().GetDeltaTime();
@@ -58,7 +94,7 @@ void dae::SinglePlayerScene::Update()
 				spawner->SetWallType(dae::WallComponent::WallType::Ground);
 				if (spawner->GetGameObject() && spawner->GetGameObject()->GetComponent<SpriteComponent>())
 				{
-					
+
 					spawner->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
 				}
 				if (spawner->GetGameObject() && spawner->GetGameObject()->GetComponent<dae::CollisionComponent>())
@@ -81,21 +117,13 @@ void dae::SinglePlayerScene::Update()
 
 				go->AddComponent(new dae::SimpleAIComponent(go.get()));
 				this->Add(go);
-				
+
 				m_Elapsed = 0;
 
 			}
 
-
 		}
 	}
-	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
-	{
-		
-		GoToNextLevel();
-	}
-
-	Scene::Update();
 }
 
 void dae::SinglePlayerScene::GoToNextLevel()

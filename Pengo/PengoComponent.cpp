@@ -168,20 +168,7 @@ void dae::PengoComponent::Die()
 
 	m_CurrentBlock = WallManager::GetInstance().FindWall(0);
 
-	if (m_NrOfLives == 0)
-	{
-		auto scene = dae::SceneManager::GetInstance().GetScene("HighScores");
-		for (auto o : scene->GetObjects())
-		{
-			if (o->GetComponent<dae::HighScoreComponent>())
-			{
-				o->GetComponent<dae::HighScoreComponent>()->AddNewScore(this->GetScore());
-				o->GetComponent<dae::HighScoreComponent>()->CreateHighscores();
-				break;
-			}
-		}
-		dae::SceneManager::GetInstance().SetActiveScene("HighScores");
-	}
+
 	m_PlayerSubject->Notify(Event::PlayerDied, this->GetGameObject());
 }
 

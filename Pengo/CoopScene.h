@@ -8,11 +8,13 @@ namespace dae
 	class CoopScene : public Scene
 	{
 	public:
-		CoopScene(const std::string& name);
+		CoopScene(const std::string& name, const std::string& nextLevel);
 
 		void Initialize() override;
 		void Update() override;
 
+		void HandleEnemies();
+		void GoToNextLevel();
 
 		CoopScene(const CoopScene& other) = delete;
 		CoopScene(CoopScene&& other) = delete;
@@ -29,5 +31,8 @@ namespace dae
 
 		PengoComponent* m_Player1;
 		PengoComponent* m_Player2;
+
+		std::string m_NextLevel{};
+
 	};
 }

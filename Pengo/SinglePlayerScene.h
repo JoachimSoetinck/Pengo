@@ -17,6 +17,12 @@ namespace dae
 		void Initialize() override;
 		void Update() override;
 
+		void HandleWinningState();
+
+		void HandleDeath();
+
+		void HandleEnemies();
+
 		void GoToNextLevel();
 
 		SinglePlayerScene(const SinglePlayerScene& other) = delete;

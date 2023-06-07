@@ -41,7 +41,8 @@ namespace dae
 		void SetState(PengoState state);
 
 		void Move(PengoState state);
-	
+		int GetPlayerNr() const { return m_PlayerNr; };
+		void SetPlayerNr(const int nr) { m_PlayerNr = nr; };
 
 	private:
 		PengoState m_CurrentState;
@@ -52,10 +53,10 @@ namespace dae
 
 		int m_NrOfLives{ 3 };
 		int m_Score{ 0 };
+		int m_StartBlock = 0;
+		int m_PlayerNr{0};
 
 		std::unique_ptr<Subject> m_PlayerSubject;
-
-		int m_StartBlock = 0;
 		WallComponent* m_CurrentBlock;
 	
 	

@@ -13,8 +13,9 @@
 #include "WallComponent.h"
 #include "SimpleAIComponent.h"
 #include "WallManagers.h"
+#include "HighScoreComponent.h"
 
-dae::CoopScene::CoopScene(const std::string& name) :Scene(name)
+dae::CoopScene::CoopScene(const std::string& name, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }
 {
 }
 
@@ -24,18 +25,32 @@ void dae::CoopScene::Initialize()
 
 	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
 
-	
+
 	CreatePlayer(font);
 	CreateCoopPlayer(font);
 
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
+	
 	CreateInfo(font, pos2, pos);
 
 	Scene::Initialize();
 }
 
 void dae::CoopScene::Update()
+{
+	HandleEnemies();
+
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
+	{
+
+		GoToNextLevel();
+	}
+
+	Scene::Update();
+}
+
+void dae::CoopScene::HandleEnemies()
 {
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() < m_NrOfEnemiesInLevel && dae::WallManager::GetInstance().GetSpawners().size() != 0)
 	{
@@ -81,14 +96,6 @@ void dae::CoopScene::Update()
 
 		}
 	}
-	
-	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
-	{
-
-		//GoToNextLevel();
-	}
-
-	Scene::Update();
 }
 
 void dae::CoopScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
@@ -118,7 +125,8 @@ void dae::CoopScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
 	go->AddComponent(pengo);
 	go->SetPosition(50, 150);
 	pengo->Start();
-
+	pengo->SetPlayerNr(1);
+	m_Player1 = pengo;
 	dae::InputManager::GetInstance().AddPlayer(false);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_DOWN, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Down), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_UP, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Up), 0, dae::InputManager::EInputState::Pressed);
@@ -155,6 +163,8 @@ void dae::CoopScene::CreateCoopPlayer(std::shared_ptr<dae::Font>& font)
 	go->AddComponent(pengo);
 	go->SetPosition(50, 150);
 	pengo->Start();
+	pengo->SetPlayerNr(2);
+	m_Player2 = pengo;
 
 	dae::InputManager::GetInstance().AddPlayer(false);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_S, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Down), 1, dae::InputManager::EInputState::Pressed);
@@ -167,4 +177,37 @@ void dae::CoopScene::CreateCoopPlayer(std::shared_ptr<dae::Font>& font)
 
 void dae::CoopScene::CreateInfo(std::shared_ptr<dae::Font>& font, glm::ivec2& pos2, glm::ivec2& pos)
 {
+}
+
+void dae::CoopScene::GoToNextLevel()
+{
+	dae::InputManager::GetInstance().ClearControlls();
+
+	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
+	Sleep(100);
+
+	s->Initialize();
+
+	for (auto o : s->GetObjects())
+	{
+		if (o->GetComponent<PengoComponent>())
+		{
+			o->GetComponent<PengoComponent>()->Start();
+			if (o->GetComponent<PengoComponent>()->GetPlayerNr() == 1)
+				o->GetComponent<PengoComponent>()->GivePoints(m_Player1->GetScore());
+			else
+				o->GetComponent<PengoComponent>()->GivePoints(m_Player2->GetScore());
+
+
+		}
+
+		else if (o->GetComponent<HighScoreComponent>())
+		{
+			o->GetComponent<HighScoreComponent>()->AddNewScore(m_Player1->GetScore());
+			o->GetComponent<HighScoreComponent>()->CreateHighscores();
+		}
+	}
+
+	ClearLevel();
+	dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
 }
