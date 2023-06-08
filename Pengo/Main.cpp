@@ -60,14 +60,14 @@ void load()
 	coopscene = std::make_shared<dae::CoopScene>("COOP03", "HighScores");
 	dae::SceneManager::GetInstance().AddScene(coopscene);
 
-	auto vScene = std::make_shared<dae::VersusScene>("VERSUS01");
+	auto vScene = std::make_shared<dae::VersusScene>("VERSUS01", "VERSUS02");
 	dae::SceneManager::GetInstance().AddScene(vScene);
 
-	//scene = std::make_shared<dae::Scene>("VERSUS02");
-	//dae::SceneManager::GetInstance().AddScene(scene);
+	vScene = std::make_shared<dae::VersusScene>("VERSUS02", "VERSUS03");
+	dae::SceneManager::GetInstance().AddScene(scene);
 
-	//scene = std::make_shared<dae::Scene>("VERSUS03");
-	//dae::SceneManager::GetInstance().AddScene(scene);
+	vScene = std::make_shared<dae::VersusScene>("VERSUS03", "HighScores");
+	dae::SceneManager::GetInstance().AddScene(scene);
 
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);

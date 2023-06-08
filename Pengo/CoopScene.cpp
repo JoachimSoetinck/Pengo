@@ -55,7 +55,7 @@ void dae::CoopScene::Update()
 void dae::CoopScene::HandleDeath()
 {
 	
-	if (m_Player1 != NULL && m_Player1 != NULL && m_Player1->GetLives() == 0 && m_Player2->GetLives() == 0 && m_Player1 != NULL)
+	if (m_Player1 != NULL && m_Player2 != NULL && m_Player1->GetLives() == 0 && m_Player2->GetLives() == 0 )
 	{
 		auto s = dae::SceneManager::GetInstance().GetScene("HighScores");
 
@@ -78,11 +78,11 @@ void dae::CoopScene::HandleDeath()
 			dae::SceneManager::GetInstance().SetActiveScene("HighScores");
 		}
 	}
-	else if (m_Player1->GetLives() != 0 && m_Player2->GetLives() == 0)
+	else if (m_Player1 != NULL && m_Player2 != NULL && m_Player1->GetLives() != 0 && m_Player2->GetLives() == 0)
 	{
 		m_Player2->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
 	}
-	else if(m_Player1->GetLives() == 0 && m_Player2->GetLives() != 0)
+	else if(m_Player1 != NULL && m_Player2 != NULL && m_Player1->GetLives() == 0 && m_Player2->GetLives() != 0)
 	{
 		m_Player1->GetGameObject()->GetComponent<SpriteComponent>()->SetVisibility(false);
 	}

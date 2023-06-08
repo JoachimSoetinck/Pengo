@@ -193,7 +193,6 @@ void dae::WallComponent::OnHit(HitInfo* hit)
 	if (hit->gameObject->GetComponent<SnoBeeCompontent>() && m_Pusher != nullptr)
 	{
 		m_Pusher->GivePoints(100);
-		//dae::EnemyManager::GetInstance().RemoveComponent();
 		hit->gameObject->Delete();
 		
 	}
