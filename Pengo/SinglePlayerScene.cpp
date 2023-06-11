@@ -15,6 +15,7 @@
 #include "Timer.h"
 #include "HighScoreComponent.h"
 #include "SimpleAIComponent.h"
+#include <ServiceLocator.h>
 
 
 
@@ -61,7 +62,7 @@ void dae::SinglePlayerScene::HandleWinningState()
 {
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
 	{
-
+		dae::ServiceLocator::GetSoundSystem()->PlaySound(3);
 		GoToNextLevel();
 	}
 }
@@ -122,7 +123,7 @@ void dae::SinglePlayerScene::HandleEnemies()
 
 				go->AddComponent(new dae::SimpleAIComponent(go.get()));
 				this->Add(go);
-
+				dae::ServiceLocator::GetSoundSystem()->PlaySound(2);
 				m_Elapsed = 0;
 
 			}

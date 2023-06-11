@@ -7,6 +7,7 @@
 #include "CollisionComponent.h"
 #include "EnemyManager.h"
 #include "SimpleAIComponent.h"
+#include <ServiceLocator.h>
 
 dae::SnoBeeCompontent::SnoBeeCompontent(GameObject* gameObject, int startBlock) :BaseComponent(gameObject),
 m_RigidBody{ GetGameObject()->GetComponent<RigidBody>() },
@@ -217,6 +218,7 @@ void dae::SnoBeeCompontent::OnHit(HitInfo* hit)
 		if (pushnumber == 1 && hit->gameObject->GetComponent<WallComponent>()->GetType() == dae::WallComponent::WallType::MoveableWall)
 		{
 			hit->gameObject->GetComponent<WallComponent>()->BreakWall();
+			dae::ServiceLocator::GetSoundSystem()->PlaySound(4);
 		}
 
 

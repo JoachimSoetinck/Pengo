@@ -14,6 +14,7 @@
 #include "WallComponent.h"
 #include "EnemyManager.h"
 #include "HighScoreComponent.h"
+#include <ServiceLocator.h>
 
 
 
@@ -57,7 +58,7 @@ void dae::VersusScene::Update()
 	
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
 	{
-
+		dae::ServiceLocator::GetSoundSystem()->PlaySound(3);
 		GoToNextLevel();
 	}
 }
@@ -97,6 +98,7 @@ void dae::VersusScene::HandleVersusPlayer(bool p)
 				snowbee->Start();
 
 				this->Add(go);
+				dae::ServiceLocator::GetSoundSystem()->PlaySound(2);
 				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_S, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Down), 1, dae::InputManager::EInputState::Pressed);
 				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_W, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Up), 1, dae::InputManager::EInputState::Pressed);
 				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_D, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Right), 1, dae::InputManager::EInputState::Pressed);

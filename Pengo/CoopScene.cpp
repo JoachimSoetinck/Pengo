@@ -14,6 +14,7 @@
 #include "SimpleAIComponent.h"
 #include "WallManagers.h"
 #include "HighScoreComponent.h"
+#include <ServiceLocator.h>
 
 dae::CoopScene::CoopScene(const std::string& name, int levelToload, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}, m_Player2{nullptr}, m_Level{levelToload}
 {
@@ -49,7 +50,7 @@ void dae::CoopScene::Update()
 
 	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
 	{
-
+		dae::ServiceLocator::GetSoundSystem()->PlaySound(3);
 		GoToNextLevel();
 	}
 
@@ -130,7 +131,7 @@ void dae::CoopScene::HandleEnemies()
 
 				go->AddComponent(new dae::SimpleAIComponent(go.get()));
 				this->Add(go);
-
+				dae::ServiceLocator::GetSoundSystem()->PlaySound(2);
 				m_Elapsed = 0;
 
 			}

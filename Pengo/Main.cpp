@@ -98,7 +98,11 @@ void load()
 	scores->Add(score);
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>()); 
-	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Jump.wav");
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/PushBlokc.mp3");
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Destroyed.mp3");
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/SnobeeSpawning.mp3");
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/ActClear.mp3");
+	dae::ServiceLocator::GetSoundSystem()->AddSound("../Data/Sound/Death.mp3");
 
 	scores->Initialize();
 

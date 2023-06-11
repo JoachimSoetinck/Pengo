@@ -87,6 +87,7 @@ void dae::PengoComponent::Push()
 
 		go->Initalize();
 		w->EnableMovement(direction, this);
+		dae::ServiceLocator::GetSoundSystem()->PlaySound(0);
 
 
 	}
@@ -94,7 +95,7 @@ void dae::PengoComponent::Push()
 		&& wAfter && wAfter->GetType() != dae::WallComponent::WallType::Ground)
 	{
 
-
+		dae::ServiceLocator::GetSoundSystem()->PlaySound(4);
 		w->BreakWall();
 		if (w->IsSpawner())
 		{
@@ -166,6 +167,7 @@ void dae::PengoComponent::Die()
 	if (m_NrOfLives > 0)
 		--m_NrOfLives;
 
+	dae::ServiceLocator::GetSoundSystem()->PlaySound(1);
 	m_CurrentBlock = WallManager::GetInstance().FindWall(0);
 
 
