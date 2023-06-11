@@ -22,10 +22,11 @@ dae::CoopScene::CoopScene(const std::string& name, int levelToload, const std::s
 void dae::CoopScene::Initialize()
 {
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 14);
 
 	std::wstring myString = L"data";
 	std::wstring extension = L".json";
-	std::wstring level = L"../Data/Levels/Level" + m_Level + extension;
+	std::wstring level = L"../Data/Levels/Level" + std::to_wstring(m_Level) + extension;
 	bool r = dae::LevelCreator::CreateLevel(level, this);
 
 
@@ -35,7 +36,7 @@ void dae::CoopScene::Initialize()
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
 	
-	CreateInfo(font, pos2, pos);
+	CreateInfo(font2, pos2, pos);
 
 	Scene::Initialize();
 }
@@ -217,6 +218,40 @@ void dae::CoopScene::CreateCoopPlayer(std::shared_ptr<dae::Font>& font)
 
 void dae::CoopScene::CreateInfo(std::shared_ptr<dae::Font>& font, glm::ivec2& pos2, glm::ivec2& pos)
 {
+	auto How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (Controller)", font));
+	How->SetPosition(0, 0);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "MOVE: DPAD arrows/ Arrow keys ", font));
+	How->SetPosition(pos2.x, pos2.y - 15);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "PUSH: X/Space ", font));
+	How->SetPosition(pos2.x, pos2.y);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "NextLevel: F1 ", font));
+	How->SetPosition(pos.x, pos.y);
+	Add(How);
+
+
+    How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (COOP)", font));
+	How->SetPosition(300, 0);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "MOVE: DPAD arrows/ WASD ", font));
+	How->SetPosition(300, pos2.y - 15);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "PUSH: X/N ", font));
+	How->SetPosition(300, pos2.y);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "NextLevel: F1 ", font));
+	How->SetPosition(pos.x, pos.y);
+	Add(How); 
 }
 
 void dae::CoopScene::GoToNextLevel()

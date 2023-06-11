@@ -12,6 +12,8 @@
 #include "Font.h"
 #include "WallManagers.h"
 #include "WallComponent.h"
+#include "EnemyManager.h"
+#include "HighScoreComponent.h"
 
 
 
@@ -27,10 +29,11 @@ void dae::VersusScene::Initialize()
 {
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 14);
 
 	std::wstring myString = L"data";
 	std::wstring extension = L".json";
-	std::wstring level = L"../Data/Levels/Level" + m_Level + extension;
+	std::wstring level = L"../Data/Levels/Level" + std::to_wstring(m_Level) + extension;
 	bool r = dae::LevelCreator::CreateLevel(level, this);
 
 
@@ -39,7 +42,7 @@ void dae::VersusScene::Initialize()
 
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
-	CreateInfo(font, pos2, pos);
+	CreateInfo(font2, pos2, pos);
 
 	Scene::Initialize();
 }
@@ -50,6 +53,17 @@ void dae::VersusScene::Update()
 
 	auto  p = FindVersusPlayer();
 
+	HandleVersusPlayer(p);
+	
+	if (dae::EnemyManager::GetInstance().GetEnemies().size() == 0 && dae::WallManager::GetInstance().GetSpawners().size() == 0)
+	{
+
+		GoToNextLevel();
+	}
+}
+
+void dae::VersusScene::HandleVersusPlayer(bool p)
+{
 	if (p == false)
 	{
 		if (dae::WallManager::GetInstance().GetSpawners().size() != 0)
@@ -83,11 +97,11 @@ void dae::VersusScene::Update()
 				snowbee->Start();
 
 				this->Add(go);
-				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_S, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Down), 1, dae::InputManager::EInputState::Pressed); 
+				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADDown, SDL_SCANCODE_S, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Down), 1, dae::InputManager::EInputState::Pressed);
 				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADUp, SDL_SCANCODE_W, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Up), 1, dae::InputManager::EInputState::Pressed);
-				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_D, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Right), 1, dae::InputManager::EInputState::Pressed); 
-				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADLeft, SDL_SCANCODE_A, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Left), 1, dae::InputManager::EInputState::Pressed); 
-				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_N, std::make_shared<dae::PushCommand>(go), 1, dae::InputManager::EInputState::Pressed); 
+				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_D, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Right), 1, dae::InputManager::EInputState::Pressed);
+				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADLeft, SDL_SCANCODE_A, std::make_shared<dae::MoveCommand>(go, dae::SnoBeeCompontent::SnobeeState::Left), 1, dae::InputManager::EInputState::Pressed);
+				dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_N, std::make_shared<dae::PushCommand>(go), 1, dae::InputManager::EInputState::Pressed);
 			}
 		}
 	}
@@ -101,6 +115,32 @@ bool dae::VersusScene::FindVersusPlayer()
 			return true;
 	}
 	return false;
+}
+
+void dae::VersusScene::GoToNextLevel()
+{
+	dae::InputManager::GetInstance().ClearControlls();
+
+	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
+	Sleep(100);
+
+	s->Initialize();
+
+	for (auto o : s->GetObjects())
+	{
+		if (o->GetComponent<PengoComponent>())
+		{
+			o->GetComponent<PengoComponent>()->Start();
+		}
+
+		else if (o->GetComponent<HighScoreComponent>())
+		{
+			o->GetComponent<HighScoreComponent>()->CreateHighscores();
+		}
+	}
+	ClearLevel();
+	dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
+
 }
 
 void dae::VersusScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
@@ -129,7 +169,7 @@ void dae::VersusScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
 	pengo->AddObserver(score->GetComponent<dae::ScoreDisplayComponent>());
 	go->AddComponent(pengo);
 	go->SetPosition(0, 0);
-
+	pengo->Start();
 
 
 
@@ -177,5 +217,38 @@ void dae::VersusScene::CreateVersusPlayer(std::shared_ptr<Font>& font)
 
 void dae::VersusScene::CreateInfo(std::shared_ptr<dae::Font>& font, glm::ivec2& pos2, glm::ivec2& pos)
 {
+	auto How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (Controller/Keyboard)", font));
+	How->SetPosition(0, 0);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "MOVE: DPAD arrows/ Arrow keys ", font));
+	How->SetPosition(pos2.x, pos2.y - 15);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "PUSH: X/Space ", font));
+	How->SetPosition(pos2.x, pos2.y);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "NextLevel: F1 ", font));
+	How->SetPosition(pos.x, pos.y);
+	Add(How);
 
+
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (VERSUS)", font));
+	How->SetPosition(300, 0);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "MOVE: DPAD arrows/ WASD ", font));
+	How->SetPosition(300, pos2.y - 15);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "PUSH: X/N ", font));
+	How->SetPosition(300, pos2.y);
+	Add(How);
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "NextLevel: F1 ", font));
+	How->SetPosition(pos.x, pos.y);
+	Add(How);
 }

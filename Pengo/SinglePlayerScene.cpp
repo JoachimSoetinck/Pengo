@@ -30,6 +30,7 @@ void dae::SinglePlayerScene::Initialize()
 	std::wstring level = L"../Data/Levels/Level" + std::to_wstring(m_Level)  + extension;
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	auto font2 = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 14);
 	dae::WallManager::GetInstance().ClearWalls();
 
 	bool r = dae::LevelCreator::CreateLevel(level, this);
@@ -37,7 +38,8 @@ void dae::SinglePlayerScene::Initialize()
 	CreatePlayer(font);
 	glm::ivec2 pos{ 0,50 };
 	glm::ivec2 pos2{ 0,35 };
-	CreateInfo(font, pos2, pos);
+
+	CreateInfo(font2, pos2, pos);
 
 	Scene::Initialize();
 
@@ -211,13 +213,16 @@ void  dae::SinglePlayerScene::CreateInfo(std::shared_ptr<dae::Font>& font, glm::
 	How->AddComponent(new dae::TextComponent(How.get(), "HOW TO PLAY (Controller)", font));
 	How->SetPosition(0, 0);
 	Add(How);
-
+	How = std::make_shared<dae::GameObject>();
+	How->AddComponent(new dae::TextComponent(How.get(), "MOVE: DPAD arrows/ Arrow keys ", font));
+	How->SetPosition(pos2.x, pos2.y-15);
+	Add(How);
 	How = std::make_shared<dae::GameObject>();
 	How->AddComponent(new dae::TextComponent(How.get(), "PUSH: X/Space ", font));
 	How->SetPosition(pos2.x, pos2.y);
 	Add(How);
 	How = std::make_shared<dae::GameObject>();
-	How->AddComponent(new dae::TextComponent(How.get(), "Points: B ", font));
+	How->AddComponent(new dae::TextComponent(How.get(), "NextLevel: F1 ", font));
 	How->SetPosition(pos.x, pos.y);
 	Add(How);
 }

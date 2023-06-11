@@ -14,12 +14,16 @@ namespace dae
 		void Initialize() override;
 		void Update() override;
 
+		void HandleVersusPlayer(bool p);
+
 		
 
 		VersusScene(const VersusScene& other) = delete;
 		VersusScene(VersusScene&& other) = delete;
 		VersusScene& operator=(const VersusScene& other) = delete;
 		VersusScene& operator=(VersusScene&& other) = delete;
+
+		void GoToNextLevel();
 
 
 	private:
