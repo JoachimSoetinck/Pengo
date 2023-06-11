@@ -76,17 +76,21 @@ void load()
 
 
 	std::string buttonText{ "Single Player" };
-	glm::ivec2 position{ 150,80 };
+	glm::ivec2 position{ 150,120 };
 	CreateButton(buttonText, font2, position, Start, "Level01");
 
 	buttonText = "COOP";
-	position = { 150,200 };
+	position = { 150,240 };
 	CreateButton(buttonText, font2, position, Start, "COOP01");
 
 	buttonText = "VERSUS";
-	position = { 150,320 };
+	position = { 150,360 };
 	CreateButton(buttonText, font2, position, Start,"VERSUS01");
 
+	auto startP = std::make_shared<dae::GameObject>();
+	startP->AddComponent(new dae::RenderComponent(startP.get(), "../Data/Pengo.jpg"));
+	startP->SetPosition(150, 0);
+	Start->Add(startP);
 
 	
 	Start->Initialize();
@@ -94,7 +98,7 @@ void load()
 
 	auto score = std::make_shared<dae::GameObject>();
 	score->AddComponent(new dae::HighScoreComponent(score.get(), "../Data/highscores.txt"));
-	score->SetPosition(0, 0);
+	score->SetPosition(0,0);
 	scores->Add(score);
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SDLSoundSystem>()); 
