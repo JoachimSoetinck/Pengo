@@ -12,7 +12,7 @@ namespace dae
 	class SinglePlayerScene : public Scene
 	{
 	public:
-		SinglePlayerScene(const std::string& name, const std::string& nextLevel);
+		SinglePlayerScene(const std::string& name, int levelToload,const std::string& nextLevel);
 
 		void Initialize() override;
 		void Update() override;
@@ -37,7 +37,7 @@ namespace dae
 		void CreatePlayer(std::shared_ptr<dae::Font>& font);
 		void CreateInfo(std::shared_ptr<dae::Font>& font, glm::ivec2& pos2, glm::ivec2& pos);
 
-		
+		int m_Level;
 
 		float m_Elapsed{ 0.0f }, m_SpawnTimer{ 2.0f };
 		int m_NrOfEnemiesInLevel{ 3 };

@@ -15,7 +15,7 @@
 #include "WallManagers.h"
 #include "HighScoreComponent.h"
 
-dae::CoopScene::CoopScene(const std::string& name, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}, m_Player2{nullptr}
+dae::CoopScene::CoopScene(const std::string& name, int levelToload, const std::string& nextLevel) :Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}, m_Player2{nullptr}, m_Level{levelToload}
 {
 }
 
@@ -23,7 +23,10 @@ void dae::CoopScene::Initialize()
 {
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
+	std::wstring myString = L"data";
+	std::wstring extension = L".json";
+	std::wstring level = L"../Data/Levels/Level" + m_Level + extension;
+	bool r = dae::LevelCreator::CreateLevel(level, this);
 
 
 	CreatePlayer(font);

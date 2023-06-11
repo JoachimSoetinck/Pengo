@@ -19,17 +19,20 @@
 
 
 
-dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::string& nextLevel) : Scene(name), m_NextLevel{ nextLevel }, m_Player1{nullptr}
+dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, int levelToload, const std::string& nextLevel) : Scene(name), m_NextLevel{ nextLevel }, m_Player1{ nullptr }, m_Level{ levelToload }
 {
 }
 
 void dae::SinglePlayerScene::Initialize()
 {
+	std::wstring myString = L"data";
+	std::wstring extension = L".json";
+	std::wstring level = L"../Data/Levels/Level" + std::to_wstring(m_Level)  + extension;
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	dae::WallManager::GetInstance().ClearWalls();
 
-	bool r = dae::LevelCreator::CreateLevel(L"../Data/Levels/Level1.json", this);
+	bool r = dae::LevelCreator::CreateLevel(level, this);
 
 	CreatePlayer(font);
 	glm::ivec2 pos{ 0,50 };
@@ -129,20 +132,20 @@ void dae::SinglePlayerScene::HandleEnemies()
 void dae::SinglePlayerScene::GoToNextLevel()
 {
 	dae::InputManager::GetInstance().ClearControlls();
-	
+
 	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
 	Sleep(100);
-	
+
 	s->Initialize();
 
 	for (auto o : s->GetObjects())
 	{
 		if (o->GetComponent<PengoComponent>())
 		{
-			
+
 			o->GetComponent<PengoComponent>()->Start();
 			o->GetComponent<PengoComponent>()->GivePoints(m_Player1->GetScore());
-			
+
 
 		}
 
@@ -194,6 +197,7 @@ void dae::SinglePlayerScene::CreatePlayer(std::shared_ptr<dae::Font>& font)
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADRight, SDL_SCANCODE_RIGHT, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Right), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonDPADLeft, SDL_SCANCODE_LEFT, std::make_shared<dae::MoveCommand>(go, dae::PengoComponent::PengoState::Left), 0, dae::InputManager::EInputState::Pressed);
 	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonX, SDL_SCANCODE_SPACE, std::make_shared<dae::PushCommand>(go), 0, dae::InputManager::EInputState::Pressed);
+	dae::InputManager::GetInstance().AddCommand(dae::XboxController::Button::ButtonLeftThumb, SDL_SCANCODE_F1, std::make_shared<dae::GoToNextLevelCommand>(go, m_NextLevel), 0, dae::InputManager::EInputState::Pressed);
 
 
 

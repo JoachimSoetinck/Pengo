@@ -1,5 +1,9 @@
 #include "CustomCommands.h"
 #include <ServiceLocator.h>
+#include "HighScoreComponent.h"
+#include "InputManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 
 dae::MoveCommand::MoveCommand(std::shared_ptr<GameObject> obj, PengoComponent::PengoState movingDirection) : m_pObject{ obj }, m_PlayerState{ movingDirection }
@@ -29,8 +33,8 @@ void dae::PushCommand::Execute()
 	dae::ServiceLocator::GetSoundSystem()->PlaySound(0);
 	if (m_pObject->GetComponent<dae::PengoComponent>())
 		m_pObject->GetComponent<dae::PengoComponent>()->Push();
-	else if(m_pObject->GetComponent<dae::SnoBeeCompontent>())
-		m_pObject->GetComponent<dae::SnoBeeCompontent>()->Push(); 
+	else if (m_pObject->GetComponent<dae::SnoBeeCompontent>())
+		m_pObject->GetComponent<dae::SnoBeeCompontent>()->Push();
 
 }
 
@@ -51,4 +55,37 @@ dae::GivePointsCommand::GivePointsCommand(std::shared_ptr<GameObject> obj, int N
 void dae::GivePointsCommand::Execute()
 {
 	m_pObject->GetComponent<PengoComponent>()->GivePoints(100);
+}
+
+dae::GoToNextLevelCommand::GoToNextLevelCommand(std::shared_ptr<GameObject> obj, std::string level) : m_pObject{ obj }, m_NextLevel{ level }
+{
+
+
+}
+
+void dae::GoToNextLevelCommand::Execute()
+{
+	
+	dae::SceneManager::GetInstance().GetCurrentScene()->ClearLevel();
+
+	auto s = dae::SceneManager::GetInstance().GetScene(m_NextLevel);
+	dae::InputManager::GetInstance().ClearControlls();
+	Sleep(100);
+
+	s->Initialize();
+
+	for (auto o : s->GetObjects())
+	{
+		if (o->GetComponent<PengoComponent>())
+		{
+
+			o->GetComponent<PengoComponent>()->Start();
+
+
+		}
+
+		
+	}
+	
+	dae::SceneManager::GetInstance().SetActiveScene(m_NextLevel);
 }

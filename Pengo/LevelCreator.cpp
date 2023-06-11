@@ -39,7 +39,7 @@ bool dae::LevelCreator::CreateLevel(const std::wstring& filePath, Scene* scene)
 		fclose(pFile);
 	}
 
-	//const rapidjson::Value& testValue = jsonFile["levelData"];
+	const rapidjson::Value& testValue = jsonFile["levelData"];
 	const rapidjson::Value& r = jsonFile["BlockColums"];
 	const rapidjson::Value& c = jsonFile["BlockRows"];
 	const rapidjson::Value& positionBlocks = jsonFile["BlockSpawns"];

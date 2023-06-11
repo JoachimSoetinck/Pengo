@@ -48,8 +48,19 @@ namespace dae {
 	private:
 		std::shared_ptr<GameObject> m_pObject;
 	};
+
+
+	class GoToNextLevelCommand : public Command
+	{
+	public:
+		GoToNextLevelCommand(std::shared_ptr<GameObject> obj, std::string m_NextLevel);
+		void Execute() override;
+
+	private:
+		std::shared_ptr<GameObject> m_pObject;
+
+		std::string m_NextLevel;
+	};
 }
-class CustomCommands
-{
-};
+
 

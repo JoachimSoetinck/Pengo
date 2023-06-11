@@ -8,7 +8,7 @@ namespace dae
 	class VersusScene final : public Scene
 	{
 	public:
-		VersusScene(const std::string& name, const std::string& nextLevel);
+		VersusScene(const std::string& name, int levelToload, const std::string& nextLevel);
 		~VersusScene();
 
 		void Initialize() override;
@@ -28,6 +28,7 @@ namespace dae
 		void CreateInfo(std::shared_ptr<Font>& font, glm::ivec2& pos2, glm::ivec2& pos);
 		bool FindVersusPlayer();
 
+		int m_Level;
 		std::string m_NextLevel{};
 		
 	};
