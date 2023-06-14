@@ -1,4 +1,4 @@
-# Tron
+# Pengo
 DAE Programming 4 Project: Engine + Game
 
 ## Engine Features:
